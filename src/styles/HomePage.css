@@ -46,7 +46,7 @@
   flex-direction: column;
   justify-content: center;
   padding: 5rem;
-  background-image: url("../src/assets/images/main-page-background-image.jpg");
+  background-image: url("/assets/images/main-page-background-image.jpg");
   background-position: calc(50% - 20px) center;
   border: 10px solid black;
   width: 60%;

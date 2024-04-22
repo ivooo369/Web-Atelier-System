@@ -9,7 +9,7 @@ export default function Footer() {
         className="facebook-link"
       >
         <img
-          src="../src/assets/images/facebook-icon.png"
+          src="assets/images/facebook-icon.png"
           alt="Facebook Icon"
           className="facebook-icon"
         />

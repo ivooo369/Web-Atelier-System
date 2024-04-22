@@ -58,7 +58,7 @@ export default function GalleryPage() {
           <img
             key={number}
             className="atelier-images"
-            src={`src/assets/images/image-${number}.jpg`}
+            src={`assets/images/image-${number}.jpg`}
             alt={`Image-${number}`}
             onClick={() => openModal(number)}
           />
@@ -78,7 +78,7 @@ export default function GalleryPage() {
             <div className="modal">
               <img
                 className="modal-image"
-                src={`src/assets/images/image-${selectedImage}.jpg`}
+                src={`assets/images/image-${selectedImage}.jpg`}
                 alt={`Image-${selectedImage}`}
               />
             </div>

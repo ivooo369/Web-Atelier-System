@@ -1,47 +1,51 @@
 import { Link, Outlet, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import Button from "@mui/material/Button";
 
 export default function CalculatorHeader() {
   const location = useLocation();
 
-  const getTitle = () => {
+  useEffect(() => {
     if (location.pathname === "/calculator") {
       document.title = "БРИКС ООД / Калкулатор";
-      return "Калкулатор";
     } else {
       document.title = "БРИКС ООД / Количка";
-      return "Количка";
     }
-  };
+  }, [location.pathname]);
 
   return (
     <>
       <header className="calculator-header">
         <Link to="/calculator" className="calculator-links">
-          <h2>БРИКС ООД / {getTitle()}</h2>
+          <h2>
+            БРИКС ООД /{" "}
+            {location.pathname === "/calculator" ? "Калкулатор" : "Количка"}
+          </h2>
         </Link>
         <div className="buttons-container">
-          <Link to="/calculator/cart" className="calculator-links">
+          {location.pathname === "/calculator" && (
+            <Link to="/calculator/cart" className="calculator-links">
+              <Button
+                variant="contained"
+                className="link-buttons"
+                id="shopping-cart-button"
+              >
+                <span className="material-symbols-outlined">shopping_cart</span>
+                Количка
+              </Button>
+            </Link>
+          )}
+          {location.pathname === "/calculator" && (
             <Button
               variant="contained"
               className="link-buttons"
-              id="shopping-cart-button"
-            >
-              <span className="material-symbols-outlined">shopping_cart</span>
-              Количка
-            </Button>
-          </Link>
-          {getTitle() === "Калкулатор" && (
-            <Button
-              variant="contained"
-              className="link-buttons"
-              id="start-over-button"
+              id="refresh-button"
             >
               <span className="material-symbols-outlined">refresh</span>
-              Започни отначало
+              Нулирай
             </Button>
           )}
-          {getTitle() === "Количка" && (
+          {location.pathname === "/calculator/cart" && (
             <Link to="/calculator" className="calculator-links">
               <Button
                 variant="contained"
@@ -53,6 +57,16 @@ export default function CalculatorHeader() {
               </Button>
             </Link>
           )}
+          <Link to="/" className="calculator-links">
+            <Button
+              variant="contained"
+              className="link-buttons"
+              id="start-button"
+            >
+              <span className="material-symbols-outlined">home</span>
+              Начало
+            </Button>
+          </Link>
         </div>
       </header>
       <Outlet />

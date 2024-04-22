@@ -4,11 +4,11 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   build: {
+    assetsDir: 'assets',
     rollupOptions: {
-      external: [
-        'react-icons',
-        'react-color'
-      ]
-    }
-  }
+      input: {
+        main: './index.html',
+      },
+    },
+  },
 });

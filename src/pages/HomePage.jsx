@@ -109,7 +109,6 @@ export default function HomePage() {
             className="product-custom-button new-products-and-calculator-custom-buttons"
             role="button"
             to="/calculator"
-            target="_blank"
           >
             <span className="material-symbols-outlined">calculate</span>
             <span className="text">Калкулатор</span>
