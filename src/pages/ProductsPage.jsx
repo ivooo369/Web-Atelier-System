@@ -1,8 +1,8 @@
-import "../styles/Products.css";
+import "../styles/App.css";
 
-export default function Products() {
+export default function ProductsPage() {
   return (
-    <header className="products-header">
+    <header className="page-header">
       <span className="material-symbols-outlined">grid_view</span>
       <h1>Нови продукти</h1>
     </header>

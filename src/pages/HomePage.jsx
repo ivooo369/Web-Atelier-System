@@ -1,6 +1,7 @@
-import "../styles/Home.css";
+import "../styles/HomePage.css";
+import { Link } from "react-router-dom";
 
-export default function Home() {
+export default function HomePage() {
   return (
     <>
       <header className="atelier-information-area">
@@ -30,54 +31,89 @@ export default function Home() {
       </header>
       <div className="products-information-area">
         <div className="products-buttons-grid">
-          <button className="product-custom-button" role="button">
+          <Link
+            className="product-custom-button"
+            role="button"
+            to="/products/frames"
+          >
             <span className="material-symbols-outlined">photo_frame</span>
             <span className="text">Рамки</span>
-          </button>
-          <button className="product-custom-button" role="button">
+          </Link>
+          <Link
+            className="product-custom-button"
+            role="button"
+            to="/products/profiles"
+          >
             <span className="material-symbols-outlined">photo_library</span>
             <span className="text">Профили</span>
-          </button>
-          <button className="product-custom-button" role="button">
+          </Link>
+          <Link
+            className="product-custom-button"
+            role="button"
+            to="/products/matboards"
+          >
             <span className="material-symbols-outlined">draft</span>
             <span className="text">Паспарту</span>
-          </button>
-          <button className="product-custom-button" role="button">
+          </Link>
+          <Link
+            className="product-custom-button"
+            role="button"
+            to="/products/gobelins"
+          >
             <span className="material-symbols-outlined">imagesmode</span>
-            <span className="text">Гоблини</span>
-          </button>
-          <button className="product-custom-button" role="button">
+            <span className="text">Гоблени</span>
+          </Link>
+          <Link
+            className="product-custom-button"
+            role="button"
+            to="/products/panels"
+          >
             <span className="material-symbols-outlined">edit_document</span>
             <span className="text">Пана</span>
-          </button>
-          <button className="product-custom-button" role="button">
+          </Link>
+          <Link
+            className="product-custom-button"
+            role="button"
+            to="/products/mirrors"
+          >
             <span className="material-symbols-outlined">capture</span>
             <span className="text">Огледала</span>
-          </button>
-          <button className="product-custom-button" role="button">
+          </Link>
+          <Link
+            className="product-custom-button"
+            role="button"
+            to="/products/icons"
+          >
             <span className="material-symbols-outlined">church</span>
             <span className="text">Икони</span>
-          </button>
-          <button className="product-custom-button" role="button">
+          </Link>
+          <Link
+            className="product-custom-button"
+            role="button"
+            to="/products/art-materials"
+          >
             <span className="material-symbols-outlined">palette</span>
             <span className="text">Арт материали</span>
-          </button>
+          </Link>
         </div>
         <div className="new-products-and-calculator-buttons-grid">
-          <button
+          <Link
             className="product-custom-button new-products-and-calculator-custom-buttons"
             role="button"
+            to="/products/new-products"
           >
             <span className="material-symbols-outlined">grid_view</span>
             <span className="text">Нови продукти</span>
-          </button>
-          <button
+          </Link>
+          <Link
             className="product-custom-button new-products-and-calculator-custom-buttons"
             role="button"
+            to="/calculator"
+            target="_blank"
           >
             <span className="material-symbols-outlined">calculate</span>
             <span className="text">Калкулатор</span>
-          </button>
+          </Link>
         </div>
       </div>
       <main>

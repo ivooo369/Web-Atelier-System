@@ -1,12 +1,7 @@
-import "../styles/Header.css";
+import "../../styles/Layout.css";
 import { useState, useEffect, Fragment } from "react";
 import { Link } from "react-router-dom";
-import {
-  styled,
-  alpha,
-  createTheme,
-  ThemeProvider,
-} from "@mui/material/styles";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -16,36 +11,18 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
-import SearchIcon from "@mui/icons-material/Search";
-import InputBase from "@mui/material/InputBase";
 import Menu from "@mui/material/Menu";
 import Hidden from "@mui/material/Hidden";
+import {
+  productsMenuItems,
+  productsMenuIcons,
+  productsMenuRoutes,
+} from "../../utils/menuData";
+import SearchBar from "../others/SearchBar";
 
 const BrandText = "Ателие БРИКС";
 const pages = ["Начало", "Продукти", "Галерия", "Контакти"];
 const pageRoutes = ["/", "/products", "/gallery", "/contacts"];
-const productsMenuItems = [
-  "Нови продукти",
-  "Рамки",
-  "Профили",
-  "Паспарту",
-  "Гоблини",
-  "Пана",
-  "Огледала",
-  "Икони",
-  "Арт материали",
-];
-const productsMenuIcons = [
-  "grid_view",
-  "photo_frame",
-  "photo_library",
-  "draft",
-  "imagesmode",
-  "edit_document",
-  "capture",
-  "church",
-  "palette",
-];
 
 const theme = createTheme({
   palette: {
@@ -64,39 +41,6 @@ const theme = createTheme({
     },
   },
 });
-
-const Search = styled("div")(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  width: "auto",
-  marginRight: theme.spacing(1),
-  [theme.breakpoints.up("sm")]: {
-    marginRight: theme.spacing(2),
-  },
-  "& button": {
-    justifyContent: "end",
-    paddingRight: "1rem",
-    color: "white",
-  },
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  width: "100%",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: "1rem",
-    transition: theme.transitions.create("width"),
-    [theme.breakpoints.up("sm")]: {
-      width: "15ch",
-    },
-  },
-}));
 
 export default function Header() {
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
@@ -152,12 +96,21 @@ export default function Header() {
     <ThemeProvider theme={theme}>
       <AppBar position="sticky" color="primary">
         <Container maxWidth="xl">
-          <Toolbar disableGutters>
+          <Toolbar
+            disableGutters
+            sx={{
+              "@media (max-width: 580px)": {
+                flexDirection: "column",
+                padding: 1,
+              },
+            }}
+          >
             <Typography
               variant="h5"
               noWrap
               component={Link}
               to="/"
+              className="logo"
               sx={{
                 fontFamily: "monospace",
                 fontWeight: 900,
@@ -202,14 +155,22 @@ export default function Header() {
                         }}
                       >
                         {productsMenuItems.map((product, index) => (
-                          <Link key={product} className="products-menu-links">
-                            <span className="material-symbols-outlined">
-                              {productsMenuIcons[index]}
-                            </span>
+                          <Link
+                            key={product}
+                            className="products-menu-links"
+                            to={`/products/${productsMenuRoutes[index]}`}
+                          >
                             <MenuItem
                               onClick={() => setProductsMenuAnchorEl(null)}
-                              sx={{ fontWeight: 700 }}
+                              sx={{
+                                fontWeight: 700,
+                                paddingTop: 0,
+                                paddingBottom: 0,
+                              }}
                             >
+                              <span className="material-symbols-outlined">
+                                {productsMenuIcons[index]}
+                              </span>
                               {product}
                             </MenuItem>
                           </Link>
@@ -231,28 +192,20 @@ export default function Header() {
                 </Fragment>
               ))}
             </Hidden>
-
-            <Search sx={{ marginLeft: 3 }}>
-              <StyledInputBase
-                placeholder="Търси…"
-                inputProps={{ "aria-label": "search" }}
-              />
-              <Button>
-                <SearchIcon />
-              </Button>
-            </Search>
-
-            <Hidden mdUp>
-              <IconButton
-                size="large"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                color="inherit"
-                onClick={handleMenuOpen}
-              >
-                <MenuIcon />
-              </IconButton>
-            </Hidden>
+            <div className="searchbar-and-menu">
+              <SearchBar />
+              <Hidden mdUp>
+                <IconButton
+                  size="large"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  color="inherit"
+                  onClick={handleMenuOpen}
+                >
+                  <MenuIcon />
+                </IconButton>
+              </Hidden>
+            </div>
             <Menu
               open={Boolean(menuAnchorEl)}
               anchorEl={menuAnchorEl}

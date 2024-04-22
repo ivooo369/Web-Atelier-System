@@ -1,20 +1,17 @@
-* {
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-}
+@import url("MediaQueries.css");
 
 .atelier-information-area {
   display: flex;
   justify-content: center;
   gap: 10rem;
-  padding: 2rem;
+  padding: 1.5rem;
   background-image: linear-gradient(
     to top,
     #d5d4d0 0%,
-    #d5d4d0 1%,
+    #c9c9c9 1%,
     #eeeeec 31%,
     #efeeec 75%,
-    #e9e9e7 100%
+    #c9c9c9 100%
   );
 }
 
@@ -45,15 +42,16 @@
 }
 
 .products-information-area {
-  background-image: linear-gradient(60deg, #29323c 0%, #485563 100%);
-}
-
-.products-information-area {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  place-self: center;
   padding: 5rem;
+  background-image: url("../src/assets/images/main-page-background-image.jpg");
+  background-position: calc(50% - 20px) center;
+  border: 10px solid black;
+  width: 60%;
+  margin: 3rem auto 0 auto;
+  border-radius: 5px;
 }
 
 .products-buttons-grid {
@@ -65,7 +63,6 @@
 
 .product-custom-button {
   display: flex;
-  justify-content: center;
   align-items: center;
   gap: 0.4rem;
   appearance: none;
@@ -133,8 +130,7 @@
   align-self: center;
   gap: 1.5rem;
   place-self: center;
-  margin-top: 5rem;
-  width: 40%;
+  margin-top: 3rem;
 }
 
 .new-products-and-calculator-custom-buttons {
@@ -152,7 +148,7 @@ main {
 }
 
 .content {
-  margin: 1.5rem auto 3rem auto;
+  margin-top: 1.5rem;
 }
 
 .atelier-name {
