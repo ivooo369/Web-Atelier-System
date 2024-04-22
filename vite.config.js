@@ -6,7 +6,8 @@ export default defineConfig({
   build: {
     rollupOptions: {
       external: [
-        'react-icons/fa' 
+        'react-icons/fa',
+        'react-color'
       ]
     }
   }
