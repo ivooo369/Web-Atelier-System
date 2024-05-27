@@ -1,9 +1,10 @@
 import { Link, Outlet, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 
 export default function CalculatorHeader() {
   const location = useLocation();
+  const [cartItemCount, setCartItemCount] = useState(0);
 
   useEffect(() => {
     if (location.pathname === "/calculator") {
@@ -13,11 +14,16 @@ export default function CalculatorHeader() {
     }
   }, [location.pathname]);
 
+  useEffect(() => {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    setCartItemCount(cart.length);
+  }, [location.pathname]);
+
   return (
     <>
       <header className="calculator-header">
         <Link to="/calculator" className="calculator-links">
-          <h2>
+          <h2 className="calculator-title">
             БРИКС ООД /{" "}
             {location.pathname === "/calculator" ? "Калкулатор" : "Количка"}
           </h2>
@@ -31,7 +37,7 @@ export default function CalculatorHeader() {
                 id="shopping-cart-button"
               >
                 <span className="material-symbols-outlined">shopping_cart</span>
-                Количка
+                Количка ({cartItemCount})
               </Button>
             </Link>
           )}
@@ -40,6 +46,7 @@ export default function CalculatorHeader() {
               variant="contained"
               className="link-buttons"
               id="refresh-button"
+              onClick={() => window.location.reload()}
             >
               <span className="material-symbols-outlined">refresh</span>
               Нулирай
@@ -57,16 +64,6 @@ export default function CalculatorHeader() {
               </Button>
             </Link>
           )}
-          <Link to="/" className="calculator-links">
-            <Button
-              variant="contained"
-              className="link-buttons"
-              id="start-button"
-            >
-              <span className="material-symbols-outlined">home</span>
-              Начало
-            </Button>
-          </Link>
         </div>
       </header>
       <Outlet />

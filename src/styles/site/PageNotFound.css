@@ -1,0 +1,26 @@
+.page-not-found-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.page-not-found-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: linear-gradient(60deg, #a6b7ce 0%, #9fb2c7 0%);
+  padding: 5rem;
+  border-radius: 10px;
+}
+
+.page-not-found-content .material-symbols-outlined {
+  font-size: 5rem;
+  color: #b80606;
+}
+
+.back-to-home-page-link {
+  text-decoration: none;
+  color: #b80606;
+}

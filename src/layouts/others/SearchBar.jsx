@@ -1,4 +1,6 @@
-import "../../styles/Layout.css";
+import "../../styles/others/Layout.css";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { styled, alpha } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import SearchIcon from "@mui/icons-material/Search";
@@ -35,8 +37,17 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function SearchBar() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const navigateTo = useNavigate();
+
+  const handleSearch = () => {
+    if (searchTerm.trim() !== "") {
+      navigateTo(`/search?query=${encodeURIComponent(searchTerm)}`);
+    }
+  };
+
   return (
-    <div className="search-bar-frames">
+    <div className="search-bar">
       <Search
         sx={{
           "@media (max-width: 390px)": {
@@ -52,8 +63,9 @@ export default function SearchBar() {
         <StyledInputBase
           placeholder="Търси…"
           inputProps={{ "aria-label": "search" }}
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <Button>
+        <Button onClick={handleSearch}>
           <SearchIcon className="search-icon" />
         </Button>
       </Search>

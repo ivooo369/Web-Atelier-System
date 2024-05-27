@@ -1,4 +1,4 @@
-import "../../styles/ScrollToTopButton.css";
+import "../../styles/others/ScrollToTopButton.css";
 import { useState, useEffect } from "react";
 import { FaArrowCircleUp } from "react-icons/fa";
 

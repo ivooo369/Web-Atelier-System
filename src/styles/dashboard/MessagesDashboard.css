@@ -1,0 +1,59 @@
+.messages-container {
+  max-width: 50rem;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.message-item {
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  list-style-type: none;
+}
+
+.message-details {
+  margin-bottom: 0.5rem;
+}
+
+.detail-label {
+  font-weight: bold;
+  color: #333333;
+}
+
+.detail-value {
+  color: #666666;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+}
+
+.delete-message-button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.delete-message-button {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  font-weight: bold;
+  margin-top: 0.5rem;
+  background-color: #9e0000;
+  color: #f9f9f9;
+  border: none;
+  padding: 0.6rem 0.8rem 0.6rem 0.6rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.delete-message-button:hover {
+  background-color: #810000;
+}
+
+.no-messages {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+}

@@ -10,24 +10,25 @@ export default function BasicSelect({
   menuItems,
   value,
   handleChange,
+  fullWidth,
+  disabled,
 }) {
   return (
-    <div>
-      <FormControl fullWidth>
-        <InputLabel id={labelId}>{label}</InputLabel>
-        <Select
-          labelId={labelId}
-          value={value}
-          onChange={handleChange}
-          label={label}
-        >
-          {menuItems.map((item) => (
-            <MenuItem key={item.value} value={item.value}>
-              {item.label}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-    </div>
+    <FormControl fullWidth={fullWidth}>
+      <InputLabel id={labelId}>{label}</InputLabel>
+      <Select
+        labelId={labelId}
+        value={value}
+        onChange={(e) => handleChange(e.target.value)}
+        label={label}
+        disabled={disabled}
+      >
+        {menuItems.map((menuItem) => (
+          <MenuItem key={menuItem.value} value={menuItem.value}>
+            {menuItem.label}
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
   );
 }

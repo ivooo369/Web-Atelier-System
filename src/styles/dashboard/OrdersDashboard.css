@@ -1,0 +1,92 @@
+.orders-container {
+  max-width: 50rem;
+  margin: auto;
+  padding: 1.5rem;
+}
+
+.no-orders {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.order-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  list-style: none;
+  border: 1px solid #ddd;
+  padding: 2rem;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  text-align: center;
+}
+
+.order-details {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 1rem;
+}
+
+.detail-value {
+  font-weight: bold;
+  color: #000000;
+}
+
+.delete-order-button-container {
+  text-align: right;
+}
+
+.delete-order-button {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  font-weight: bold;
+  margin-top: 0.5rem;
+  background-color: #9e0000;
+  color: #f9f9f9;
+  border: none;
+  padding: 0.6rem 0.8rem 0.6rem 0.6rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.delete-order-button:hover {
+  background-color: #810000;
+}
+
+.date-and-button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+body .MuiTypography-body1 {
+  font-weight: bold;
+  padding: 0;
+}
+
+.whole-order-total-price-container {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  font-size: 1.1rem;
+}
+
+.whole-order-total-price {
+  background: linear-gradient(
+    60deg,
+    rgb(41 50 60 / 85%) 0%,
+    rgb(72 85 99 / 85%) 100%
+  );
+  color: #ffffff;
+  padding: 0.3rem 0.5rem;
+  border-radius: 5px;
+}

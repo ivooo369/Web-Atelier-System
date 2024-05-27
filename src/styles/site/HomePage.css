@@ -1,0 +1,161 @@
+.atelier-information-area {
+  display: flex;
+  justify-content: center;
+  gap: 10rem;
+  padding: 1.5rem;
+  background-image: linear-gradient(
+    to top,
+    #d5d4d0 0%,
+    #c9c9c9 0%,
+    #eeeeec 0%,
+    #efeeec 0%,
+    #c9c9c9 50%
+  );
+}
+
+.phone-and-location-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+}
+
+.atelier-information-field {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.atelier-information-area .material-symbols-outlined {
+  font-size: 2.2rem;
+}
+
+.product-custom-button .material-symbols-outlined {
+  font-size: 1.2rem;
+}
+
+.atelier-main-information {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.products-information-area {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 5rem;
+  background-image: url("/assets/images/main-page-background-image.jpg");
+  background-position: calc(50% - 20px) center;
+  border: 10px solid black;
+  width: 60%;
+  margin: 3rem auto 0 auto;
+  border-radius: 5px;
+}
+
+.products-buttons-grid {
+  display: grid;
+  grid-template: repeat(2, 1fr) / repeat(4, 1fr);
+  gap: 1.5rem;
+  place-self: center;
+}
+
+.product-custom-button {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  appearance: none;
+  background-color: #ffffff;
+  border-width: 0;
+  box-sizing: border-box;
+  color: #000000;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: bold;
+  letter-spacing: 0;
+  line-height: 1em;
+  margin: 0;
+  opacity: 1;
+  outline: 0;
+  padding: 1em;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-rendering: geometricprecision;
+  text-transform: uppercase;
+  transition: opacity 300ms cubic-bezier(0.694, 0, 0.335, 1),
+    background-color 100ms cubic-bezier(0.694, 0, 0.335, 1),
+    color 100ms cubic-bezier(0.694, 0, 0.335, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+
+.product-custom-button:before {
+  animation: opacityFallbackOut 0.5s step-end forwards;
+  backface-visibility: hidden;
+  background-color: #ebebeb;
+  clip-path: polygon(-1% 0, 0 0, -25% 100%, -1% 100%);
+  content: "";
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  transform: translateZ(0);
+  transition: clip-path 0.5s cubic-bezier(0.165, 0.84, 0.44, 1),
+    -webkit-clip-path 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+  width: 100%;
+}
+
+.product-custom-button:hover:before {
+  animation: opacityFallbackIn 0s step-start forwards;
+  clip-path: polygon(0 0, 101% 0, 101% 101%, 0 101%);
+}
+
+.product-custom-button:after {
+  background-color: #ffffff;
+}
+
+.product-custom-button span {
+  z-index: 1;
+  position: relative;
+}
+
+.new-products-and-calculator-buttons-grid {
+  display: grid;
+  grid-template: 1fr / repeat(2, 1fr);
+  align-self: center;
+  gap: 1.5rem;
+  place-self: center;
+  margin-top: 3rem;
+}
+
+.new-products-and-calculator-custom-buttons {
+  font-size: 1.15rem;
+  border: 5px double black;
+}
+
+.new-products-and-calculator-custom-buttons .material-symbols-outlined {
+  font-size: 1.4rem;
+}
+
+main {
+  font-size: 1.2rem;
+  width: 70%;
+  margin: auto;
+  padding: 3rem 0;
+  text-align: justify;
+}
+
+main ul {
+  margin: 2rem 0 2rem 5rem;
+}
+
+.content {
+  margin-top: 0.5rem;
+}
+
+.atelier-name {
+  text-align: center;
+}

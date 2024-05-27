@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
 import { useEffect } from "react";
-import "../../styles/Layout.css";
+import "../../styles/others/Layout.css";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 
@@ -40,13 +40,13 @@ export default function BasicButtonGroup({
       aria-label="Basic button group"
       id="button-group"
     >
-      <div className="product-filter-buttons">
+      <div className="product-">
         <Button>{firstMaterial}</Button>
         <Button>{secondMaterial}</Button>
         <Button>{thirdMaterial}</Button>
       </div>
       {firstUsage && (
-        <div className="product-filter-buttons">
+        <div className="product-">
           <Button>{firstUsage}</Button>
           <Button>{secondUsage}</Button>
           <Button>{thirdUsage}</Button>

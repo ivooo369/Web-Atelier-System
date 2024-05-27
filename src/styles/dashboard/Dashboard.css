@@ -1,0 +1,43 @@
+.dashboard-header {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  text-align: center;
+  background: linear-gradient(
+    60deg,
+    rgb(41 50 60 / 85%) 0%,
+    rgb(72 85 99 / 85%) 100%
+  );
+  color: #ffffff;
+  padding: 1rem 1.5rem 1.5rem 1.5rem;
+}
+
+.dashboard-container .page-header {
+  margin: 0;
+}
+
+.dashboard-links-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+#dashboard-products-button,
+#dashboard-orders-button,
+#dashboard-messages-button,
+#exit-from-dashboard-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #333333;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-weight: 600;
+  margin: 0 auto;
+  font-size: 1rem;
+}
+
+.dashboard-links {
+  text-decoration: none;
+}

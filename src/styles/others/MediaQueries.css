@@ -1,0 +1,481 @@
+@media only screen and (max-width: 1470px) {
+  body .products-grid-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  body .calculator-page {
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+    gap: 3rem;
+  }
+  .calculator-page .panel-headers {
+    width: 50%;
+  }
+  .panel-headers {
+    min-width: 70%;
+  }
+}
+
+@media only screen and (max-width: 1355px) {
+  .products-buttons-grid {
+    grid-template: repeat(4, 1fr) / repeat(2, 1fr);
+  }
+  .products-information-area {
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+  }
+  .atelier-information-area {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+    padding: 1rem;
+  }
+  main {
+    padding: 1rem 0;
+  }
+  .content {
+    margin-top: 1rem;
+  }
+  .new-products-and-calculator-buttons-grid {
+    margin-top: 2rem;
+    gap: 1rem;
+  }
+  .cart-page .content-containers {
+    width: 100%;
+    margin: 0;
+  }
+  body .cart-page {
+    padding: 3rem 0;
+  }
+}
+
+@media only screen and (max-width: 1165px) {
+  body .products-grid-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media only screen and (max-width: 1050px) {
+  .contacts-information-container {
+    flex-direction: column;
+    text-align: center;
+    gap: 3rem;
+  }
+  .company-information {
+    gap: 1rem;
+  }
+  .atelier-images-grid {
+    grid-template: repeat(8, 1fr) / repeat(2, 1fr);
+  }
+  .atelier-images:nth-child(odd) {
+    justify-self: end;
+  }
+  .atelier-images:nth-child(even) {
+    justify-self: start;
+  }
+  .products-container {
+    flex-direction: column;
+  }
+  .products-container .add-product-form {
+    width: calc(100vw - 5rem);
+    margin: auto;
+  }
+  .view-products-container {
+    margin: auto;
+    max-width: calc(100% - 5rem);
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .calculator-header {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .calculator-page .panel-headers {
+    width: 75%;
+  }
+  body .products-grid-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .sign-in-form,
+  .sign-up-form,
+  body .edit-form {
+    width: 40rem;
+  }
+  body .dashboard-products-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  body .view-products-container {
+    max-height: 100%;
+  }
+}
+
+@media only screen and (max-width: 810px) {
+  .new-products-and-calculator-buttons-grid {
+    grid-template: repeat(2, 1fr) / 1fr;
+  }
+  .products-information-area {
+    padding: 2rem 0;
+    border: none;
+    border-radius: 0;
+    margin-top: 0;
+    width: 100%;
+  }
+  .calculator-page .calculator-products-grid,
+  .calculator-page .matboards-grid {
+    grid-template: repeat(9, 1fr) / repeat(1, 1fr);
+    gap: 1rem;
+  }
+  .details-container-grid {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+  .cart-page {
+    padding: 0;
+  }
+  body .logo {
+    margin: 0;
+  }
+  body .MuiToolbar-root {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 0;
+    gap: 1rem;
+  }
+  .product-details-container {
+    width: auto;
+  }
+  .details-page-image {
+    max-width: 30rem;
+  }
+  body .no-products-found-message {
+    padding: 3rem;
+    width: calc(80% - 10rem);
+  }
+  .calculator-products-images-container,
+  .frame-wrapper,
+  .select-inner-frame-message {
+    max-width: 600px;
+    max-height: 400px;
+  }
+  .calculator-page .panel-headers {
+    width: 90%;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .sign-in-form,
+  .sign-up-form,
+  body .edit-form {
+    width: 30rem;
+  }
+}
+
+@media only screen and (max-width: 650px) {
+  body .dashboard-links-container {
+    display: grid;
+    grid-template: repeat(4, 1fr) / 1fr;
+    justify-items: center;
+    gap: 0.1rem;
+  }
+  .dashboard-links {
+    width: 9rem;
+  }
+  .products-container .dashboard-products-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .products-container .view-products-container {
+    max-height: 100%;
+  }
+  .calculator-products-images-container,
+  .frame-wrapper,
+  .select-inner-frame-message {
+    max-width: 495px;
+    max-height: 330px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .atelier-images-grid {
+    grid-template: repeat(16, 1fr) / repeat(1, 1fr);
+  }
+  .atelier-images-grid .atelier-images {
+    justify-self: center;
+  }
+  body .calculator-header {
+    padding: 1rem 0;
+  }
+  .image-choice-container {
+    flex-direction: column;
+    padding: 1rem;
+  }
+  .buttons-container {
+    flex-direction: column;
+  }
+  .cart-page .content-containers {
+    width: auto;
+  }
+  .login-form-container {
+    width: 20rem;
+  }
+  .products-container .dashboard-products-container {
+    grid-template-columns: repeat(1, 1fr);
+    justify-content: center;
+  }
+  body .products-grid-container {
+    padding: 0 5rem;
+    margin-top: 0;
+  }
+  .dashboard-products-container .product-card {
+    margin: auto;
+  }
+  .select-containers {
+    flex-direction: column;
+  }
+}
+
+@media only screen and (max-width: 530px) {
+  .sign-in-form,
+  .sign-up-form,
+  body .edit-form {
+    width: 25rem;
+  }
+  body .orders-container {
+    max-width: 100%;
+    padding: 1.5rem 0;
+  }
+  .whole-order-total-price-container {
+    flex-direction: column;
+  }
+  .calculator-products-images-container,
+  .frame-wrapper,
+  .select-inner-frame-message {
+    max-width: 400px;
+    max-height: 300px;
+  }
+  .hanging-examples {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+}
+
+@media only screen and (max-width: 505px) {
+  .products-buttons-grid {
+    grid-template: repeat(1, 1fr) / repeat(1, 1fr);
+    width: 100%;
+    gap: 1rem;
+  }
+  .new-products-and-calculator-buttons-grid {
+    margin-top: 2rem;
+    gap: 1rem;
+    width: 80%;
+  }
+  .logo {
+    margin-bottom: 1rem;
+  }
+  footer {
+    flex-direction: column;
+  }
+  .arrow-buttons {
+    width: 80%;
+  }
+  .form-input {
+    width: 100%;
+  }
+  .login-form-container {
+    width: 15rem;
+  }
+  body .products-grid-container {
+    padding: 0 3rem;
+  }
+  .details-page-image {
+    max-width: 20rem;
+  }
+  .results-page .page-header {
+    font-size: 0.7rem;
+  }
+  body .no-products-found-message {
+    font-size: 1.2rem;
+    padding: 1.5rem;
+    width: calc(100% - 10rem);
+  }
+  .cart-and-purchase-content {
+    padding: 3rem 1rem 3rem 0.3rem;
+  }
+  main {
+    width: 90%;
+  }
+  main ul {
+    margin: 1rem 0 1rem 3rem;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .sign-in-form,
+  .sign-up-form,
+  body .edit-form {
+    width: 20rem;
+  }
+  .dashboard-products-container .product-card {
+    width: 10rem;
+  }
+  body .view-products-container {
+    padding-left: 0;
+  }
+  .dashboard-and-calculator-search-inputs,
+  .view-products-container .MuiInputBase-root {
+    margin-left: 0.5rem;
+  }
+  .view-products-container .MuiInputBase-root {
+    width: 100%;
+  }
+  .products-container .view-products-container {
+    max-width: calc(100% - 3.2rem);
+  }
+  .calculator-products-images-container,
+  .frame-wrapper,
+  .select-inner-frame-message {
+    max-width: 300px;
+    max-height: 200px;
+  }
+  .bg-color-and-image-choice-container {
+    width: 320px;
+  }
+  .cart-and-purchase-content .MuiCardContent-root {
+    padding: 0.5rem;
+  }
+}
+
+@media only screen and (max-width: 370px) {
+  .sign-in-form,
+  .sign-up-form,
+  body .edit-form {
+    width: 15rem;
+  }
+  .MuiInputBase-root .MuiButtonBase-root {
+    width: 2rem;
+    height: 2rem;
+  }
+  #dashboard-image-preview-container {
+    flex-direction: column;
+  }
+  body #dashboard-remove-preview-image-button {
+    margin: auto;
+  }
+  .bg-color-and-image-choice-container {
+    width: 270px;
+  }
+  .image-choice-container {
+    padding: 0;
+  }
+  .file-input {
+    border: none;
+  }
+}
+
+@media only screen and (max-width: 350px) {
+  .dashboard-title {
+    font-size: 1.7rem;
+  }
+  body .dashboard-links-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  body .products-grid-container {
+    padding: 0;
+  }
+  .products-grid-container .product-card {
+    width: 70%;
+  }
+  .page-header {
+    font-size: 0.8rem;
+  }
+  .details-page-image {
+    max-width: 15rem;
+  }
+  .product-details-container {
+    padding: 1rem;
+    margin: 1.5rem auto;
+  }
+  .results-page .page-header {
+    font-size: 0.6rem;
+  }
+  .products-container .view-products-container {
+    max-width: calc(100% - rem);
+  }
+  body .css-bam3gn-MuiPaper-root-MuiCard-root {
+    max-width: 18rem;
+    width: auto;
+  }
+  .image-choice-container {
+    border: none;
+  }
+}
+
+@media only screen and (max-width: 300px) {
+  .products-information-area {
+    padding: 1.5rem 0;
+  }
+  .products-buttons-grid {
+    gap: 0.5rem;
+  }
+  .new-products-and-calculator-buttons-grid {
+    margin-top: 1.5rem;
+    gap: 0.5rem;
+  }
+  .new-products-and-calculator-custom-buttons {
+    padding: 0.5em;
+  }
+  footer {
+    font-size: 0.7rem;
+  }
+  .calculator-page .image-choice-container {
+    padding: 0;
+    font-size: 0.9rem;
+    text-align: center;
+  }
+  body .calculator-header {
+    text-align: center;
+  }
+  /* body .calculator-page {
+    padding: 3rem 0;
+  } */
+  .frame-container {
+    width: 100%;
+  }
+  .modal {
+    width: 12rem;
+    height: 12rem;
+  }
+  .arrow-buttons {
+    width: 50%;
+  }
+  .login-form-title {
+    font-size: 1.2rem;
+  }
+  .login-form-container {
+    width: 10rem;
+  }
+  .error-message {
+    font-size: 1rem;
+  }
+  .dashboard-title {
+    font-size: 1.2rem;
+  }
+  .results-page .page-header {
+    font-size: 0.5rem;
+  }
+  body .no-products-found-message {
+    font-size: 1rem;
+    padding: 1rem;
+    width: calc(100% - 5rem);
+  }
+  .sign-in-form,
+  .sign-up-form,
+  body .edit-form {
+    width: 12rem;
+  }
+}

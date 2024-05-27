@@ -1,0 +1,25 @@
+.products-grid-container .product-card {
+  background-color: #ffffff;
+  margin: auto;
+  gap: 0.3rem;
+  padding: 1.5rem 0.5rem;
+  font-weight: bold;
+  text-wrap: wrap;
+}
+
+.product-card img {
+  max-height: 100px;
+  margin-bottom: 0.5rem;
+}
+
+.products-container ul {
+  margin-bottom: 2rem;
+}
+
+li button {
+  background-color: #ffffff;
+}
+
+li svg {
+  color: #000000;
+}
