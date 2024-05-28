@@ -72,7 +72,7 @@ export default function CartPage() {
     setCartItems(updatedCartItems);
 
     const total = updatedCartItems.reduce(
-      (acc, item) => acc + parseFloat(item.price),
+      (acc, item) => acc + parseFloat(item.price * item.framesQuantity),
       0
     );
     setTotalPrice(total);

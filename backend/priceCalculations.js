@@ -39,7 +39,6 @@ export const calculateSinglePrice = (
     !isNaN(laborPrice1) &&
     !isNaN(frameHeight) 
   ) {
-    // console.log(matboardWidth);
     const perimeter = calculatePerimeter(frameWidth, frameHeight);
     const totalProfilePrice1 = calculateProfilePrice(perimeter, profilePricePerMeter1);
     const totalProfilePrice2 = !isNaN(profilePricePerMeter2)
