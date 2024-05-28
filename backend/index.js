@@ -2,7 +2,6 @@ import express from 'express';
 import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url'; 
-
 import authRouter from './auth.js'; 
 import siteProductsRoutes from './siteProductsRoutes.js';
 import contactsRoutes from './contactsRoutes.js';
@@ -31,6 +30,8 @@ app.use('/admin/dashboard/messages', messagesRoutes);
 app.use('/admin/dashboard/orders', ordersRoutes);
 app.use('/calculator', calculatorRoutes);
 
-app.listen(3000, () => {
-  console.log('Сървърът е стартиран на порт 3000');
+const port = process.env.PORT || 3000; 
+
+app.listen(port, () => {
+  console.log(`Сървърът е стартиран на порт ${port}`);
 });
