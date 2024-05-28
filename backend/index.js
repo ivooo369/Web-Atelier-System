@@ -1,5 +1,8 @@
 import express from 'express';
 import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url'; 
+
 import authRouter from './auth.js'; 
 import siteProductsRoutes from './siteProductsRoutes.js';
 import contactsRoutes from './contactsRoutes.js';
@@ -9,9 +12,15 @@ import messagesRoutes from './messagesRoutes.js';
 import ordersRoutes from "./ordersRoutes.js"
 import calculatorRoutes from './calculatorRoutes.js';
 
+const __filename = fileURLToPath(import.meta.url); 
+const __dirname = path.dirname(__filename); 
+
 const app = express();
 app.use(express.json());
 app.use(cors());
+
+app.use('/', express.static(path.join(__dirname, '..', 'dist')));
+app.use('/assets', express.static(path.join(__dirname, '..', 'dist', 'assets')));
 
 app.use(authRouter);
 app.use('/products', siteProductsRoutes);
