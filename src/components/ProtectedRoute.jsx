@@ -1,25 +1,22 @@
-import { Navigate, Outlet } from "react-router-dom";
-import { decode } from "jwt-decode";
+/* eslint-disable react/prop-types */
+import { Navigate } from "react-router-dom";
 
-const ProtectedRoute = () => {
+export default function ProtectedRoute({ component: Dashboard, ...rest }) {
   const isAuthenticated = localStorage.getItem("adminAuthToken");
 
   if (!isAuthenticated) {
-    return <Navigate to="/admin/login" />;
+    return <Navigate to="admin/login" />;
   }
 
   try {
-    const token = decode(isAuthenticated);
+    const token = JSON.parse(atob(isAuthenticated.split(".")[1]));
     const currentTime = Math.floor(Date.now() / 1000);
     if (token.exp < currentTime) {
-      localStorage.removeItem("adminAuthToken");
-      return <Navigate to="/admin/login" />;
+      return <Navigate to="admin/login" />;
     }
   } catch (error) {
-    return <Navigate to="/admin/login" />;
+    return <Navigate to="admin/login" />;
   }
 
-  return <Outlet />;
-};
-
-export default ProtectedRoute;
+  return <Dashboard {...rest} />;
+}
