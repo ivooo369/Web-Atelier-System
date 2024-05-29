@@ -63,7 +63,7 @@ function App() {
               <Route path="cart" element={<CartPage />} />
             </Route>
           </Route>
-          <Route path="admin">
+          <Route path="/admin">
             <Route index element={<PageNotFound />} />
             <Route path="login" element={<AdminLogin />} />
             <Route path="dashboard" element={<ProtectedRoute />}>
