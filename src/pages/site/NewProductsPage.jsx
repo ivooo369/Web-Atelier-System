@@ -21,7 +21,7 @@ export default function NewProductsPage() {
     const fetchNewProducts = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/products/new-products"
+          "https://website-project-lbpd.onrender.com/products/new-products"
         );
         const sortedProducts = response.data.sort((a, b) => {
           return (
