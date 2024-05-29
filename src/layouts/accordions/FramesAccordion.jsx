@@ -16,7 +16,7 @@ export default function FramesAccordion({
   handleExpansionChange,
   text,
   onSelectFrameImage,
-  category,
+  framesCategory,
   onSelectFrame,
   isInnerFrameSelected,
 }) {
@@ -29,7 +29,7 @@ export default function FramesAccordion({
   useEffect(() => {
     const fetchFrames = async () => {
       try {
-        console.log("Fetching frames for category:", category);
+        console.log("Fetching frames for category:", "Рамки");
         const response = await axios.get(`${apiUrl}/calculator`, {
           params: { category: "Рамки" },
         });
@@ -41,7 +41,7 @@ export default function FramesAccordion({
     };
 
     fetchFrames();
-  }, [category]);
+  }, [framesCategory]);
 
   const handlePageChange = (event, value) => {
     setCurrentPage(value);
@@ -73,7 +73,7 @@ export default function FramesAccordion({
 
   const filteredFrames = frames.filter((frame) => {
     return (
-      frame.product_category === category &&
+      frame.product_category === framesCategory &&
       ((frame.product_name &&
         frame.product_name.toLowerCase().includes(searchTerm)) ||
         (frame.product_category &&

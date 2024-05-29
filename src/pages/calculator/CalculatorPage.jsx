@@ -231,29 +231,31 @@ export default function CalculatorPage() {
         />
         <FramesAccordion
           title="Вътрешна рамка"
-          text="Рамка, която се поставя непосредствено до картината"
           id="inner-frame"
           expanded={expanded}
           handleExpansionChange={handleExpansionChange}
+          text="Рамка, която се поставя непосредствено до картината"
           onSelectFrameImage={(image) => {
             setSelectedInnerFrameImage(image);
             setIsInnerFrameSelected(true);
           }}
-          isInnerFrameSelected={isInnerFrameSelected}
+          // framesCategory="Рамки"
           onSelectFrame={(frameName) => handleFrameSelect(frameName, true)}
+          isInnerFrameSelected={isInnerFrameSelected}
         />
         <FramesAccordion
           title="Външна рамка"
-          text="Рамка, която се поставя върху вътрешната рамка"
           id="outer-frame"
           expanded={expanded}
           handleExpansionChange={handleExpansionChange}
+          text="Рамка, която се поставя върху вътрешната рамка"
           onSelectFrameImage={(image) => {
             setSelectedOuterFrameImage(image);
             setIsInnerFrameSelected(false);
           }}
-          isInnerFrameSelected={selectedInnerFrameName}
+          // framesCategory="Рамки"
           onSelectFrame={(frameName) => handleFrameSelect(frameName, false)}
+          isInnerFrameSelected={selectedInnerFrameName}
         />
         <MatboardsAccordion
           title="Паспарту"
@@ -270,6 +272,7 @@ export default function CalculatorPage() {
           frameWidth={selectedFrameWidth}
           frameHeight={selectedFrameHeight}
           isInnerFrameSelected={selectedInnerFrameName}
+          // category="Паспарту"
         />
         <CheckboxAccordion
           title="Стъкло"

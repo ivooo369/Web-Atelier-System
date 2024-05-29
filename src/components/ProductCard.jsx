@@ -5,7 +5,7 @@ export default function ProductCard({ product }) {
   return (
     <div className="product-card" key={product.product_id}>
       <img
-        src={`/backend/${product.product_image_path}`}
+        src={`/productImages/${product.product_image_path}`}
         alt={product.product_name}
         className="product-image"
       />
