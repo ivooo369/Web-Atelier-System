@@ -26,6 +26,7 @@ app.use(cors(corsOptions));
 
 app.use('/', express.static(path.join(__dirname, '..', 'dist')));
 app.use('/assets', express.static(path.join(__dirname, '..', 'dist', 'assets')));
+app.use(express.static(path.join(__dirname, '..', 'public')));
 
 app.use(authRouter);
 app.use(authAdminRouter);
