@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from "react-router-dom";
-import jwt_decode from "jwt-decode";
+import { decode } from "jwt-decode";
 
 const ProtectedRoute = () => {
   const isAuthenticated = localStorage.getItem("adminAuthToken");
@@ -9,7 +9,7 @@ const ProtectedRoute = () => {
   }
 
   try {
-    const token = jwt_decode(isAuthenticated);
+    const token = decode(isAuthenticated);
     const currentTime = Math.floor(Date.now() / 1000);
     if (token.exp < currentTime) {
       localStorage.removeItem("adminAuthToken");
