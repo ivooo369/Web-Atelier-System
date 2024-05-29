@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 import { Navigate } from "react-router-dom";
-import jwt_decode from "jwt-decode";
 
 export default function ProtectedRoute({ component: Dashboard, ...rest }) {
   const isAuthenticated = localStorage.getItem("adminAuthToken");
@@ -10,14 +9,12 @@ export default function ProtectedRoute({ component: Dashboard, ...rest }) {
   }
 
   try {
-    const token = jwt_decode(isAuthenticated);
+    const token = JSON.parse(atob(isAuthenticated.split(".")[1]));
     const currentTime = Math.floor(Date.now() / 1000);
     if (token.exp < currentTime) {
-      localStorage.removeItem("adminAuthToken");
       return <Navigate to="/admin/login" />;
     }
   } catch (error) {
-    console.error("Invalid token:", error);
     return <Navigate to="/admin/login" />;
   }
 
