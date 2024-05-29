@@ -38,7 +38,7 @@ export default function FramesPage() {
     const fetchFrames = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/products/frames"
+          "https://website-project-lbpd.onrender.com/products/frames"
         );
         setFrames(response.data);
       } catch (error) {
