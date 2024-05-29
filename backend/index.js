@@ -23,14 +23,14 @@ app.use('/', express.static(path.join(__dirname, '..', 'dist')));
 app.use('/assets', express.static(path.join(__dirname, '..', 'dist', 'assets')));
 
 app.use(authUserRouter);
+app.use('/admin/login', authAdminRouter);
 app.use('/products', siteProductsRoutes);
 app.use('/contacts', contactsRoutes);
-app.use('/calculator', calculatorRoutes);
 app.use('/admin/dashboard', dashboardRoutes);
 app.use('/admin/dashboard/products', dashboardProductsRoutes);
 app.use('/admin/dashboard/messages', messagesRoutes);
 app.use('/admin/dashboard/orders', ordersRoutes);
-app.use(authAdminRouter);
+app.use('/calculator', calculatorRoutes);
 
 const port = process.env.PORT || 3000; 
 
