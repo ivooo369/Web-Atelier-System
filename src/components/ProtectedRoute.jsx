@@ -1,7 +1,7 @@
-/* eslint-disable react/prop-types */
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
+import jwt_decode from "jwt-decode";
 
-export default function ProtectedRoute({ component: Dashboard, ...rest }) {
+const ProtectedRoute = () => {
   const isAuthenticated = localStorage.getItem("adminAuthToken");
 
   if (!isAuthenticated) {
@@ -9,14 +9,17 @@ export default function ProtectedRoute({ component: Dashboard, ...rest }) {
   }
 
   try {
-    const token = JSON.parse(atob(isAuthenticated.split(".")[1]));
+    const token = jwt_decode(isAuthenticated);
     const currentTime = Math.floor(Date.now() / 1000);
     if (token.exp < currentTime) {
+      localStorage.removeItem("adminAuthToken");
       return <Navigate to="/admin/login" />;
     }
   } catch (error) {
     return <Navigate to="/admin/login" />;
   }
 
-  return <Dashboard {...rest} />;
-}
+  return <Outlet />;
+};
+
+export default ProtectedRoute;

@@ -66,11 +66,8 @@ function App() {
           <Route path="admin">
             <Route index element={<PageNotFound />} />
             <Route path="login" element={<AdminLogin />} />
-            <Route
-              path="dashboard"
-              element={<ProtectedRoute component={Dashboard} />}
-            >
-              <Route index element={<ProductsDashboard />} />
+            <Route path="dashboard" element={<ProtectedRoute />}>
+              <Route index element={<Dashboard />} />
               <Route path="products" element={<ProductsDashboard />} />
               <Route
                 path="products/edit/:productId"
