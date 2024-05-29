@@ -21,7 +21,7 @@ router.get('/new-products', async (req, res) => {
 router.get('/frames', async (req, res) => {
   try {
     const connection = await pool.getConnection();
-    const [rows] = await connection.query('SELECT * FROM products WHERE product_category = "Рамки"');
+    const [rows] = await connection.query('SELECT * FROM products WHERE product_category = ?', ['Рамки']);
     connection.release();
 
     res.status(200).json(rows);
