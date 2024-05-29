@@ -304,6 +304,7 @@ ul {
   align-items: center;
   font-weight: 500;
   gap: 0.5rem;
+  padding-bottom: 0.2rem;
   border-bottom: 1px solid black;
 }
 

@@ -62,7 +62,7 @@ export default function MatboardsAccordion({
       setActiveMatboard(null);
       setMatboardWidth("");
     } else {
-      onSelectMatboardImage(`/backend/${matboard.product_image_path}`);
+      onSelectMatboardImage(`/${matboard.product_image_path}`);
       onSelectMatboard(matboard.product_name);
       setActiveMatboard(matboard.product_id);
     }
@@ -192,7 +192,7 @@ export default function MatboardsAccordion({
                   onClick={() => handleMatboardSelect(matboard)}
                 >
                   <img
-                    src={`/backend/${matboard.product_image_path}`}
+                    src={`/${matboard.product_image_path}`}
                     alt={matboard.product_name}
                     className="calculator-products-images"
                   />
