@@ -62,19 +62,19 @@ function App() {
               <Route index element={<CalculatorPage />} />
               <Route path="cart" element={<CartPage />} />
             </Route>
-          </Route>
-          <Route path="admin">
-            <Route index element={<PageNotFound />} />
-            <Route path="login" element={<AdminLogin />} />
-            <Route path="dashboard" element={<ProtectedRoute />}>
-              <Route index element={<Dashboard />} />
-              <Route path="products" element={<ProductsDashboard />} />
-              <Route
-                path="products/edit/:productId"
-                element={<EditProductPage />}
-              />
-              <Route path="orders" element={<OrdersDashboard />} />
-              <Route path="messages" element={<MessagesDashboard />} />
+            <Route path="admin">
+              <Route index element={<PageNotFound />} />
+              <Route path="login" element={<AdminLogin />} />
+              <Route path="dashboard" element={<ProtectedRoute />}>
+                <Route index element={<Dashboard />} />
+                <Route path="products" element={<ProductsDashboard />} />
+                <Route
+                  path="products/edit/:productId"
+                  element={<EditProductPage />}
+                />
+                <Route path="orders" element={<OrdersDashboard />} />
+                <Route path="messages" element={<MessagesDashboard />} />
+              </Route>
             </Route>
           </Route>
           <Route path="*" element={<PageNotFound />} />
