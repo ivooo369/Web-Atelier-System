@@ -1,9 +1,9 @@
 import axios from "axios";
 
-export const fetchPrices = async (frameName) => {
+export const fetchPrices = async (frameName, frameCategory) => {
   try {
-    const response = await axios.get("https://website-project-lbpd.onrender.com/calculator/price", {
-      params: { frameName },
+    const response = await axios.get("/calculator/price", {
+      params: { frameName, frameCategory },
     });
 
     return {
@@ -11,7 +11,7 @@ export const fetchPrices = async (frameName) => {
       laborPrice: parseFloat(response.data.laborPrice),
     };
   } catch (error) {
-    console.error("Error fetching prices:", error);
+    console.error("Грешка при извличане на цените:", error);
     return { profilePricePerMeter: NaN, laborPrice: NaN };
   }
 };

@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url'; 
-import authUserRouter from './authUserRoutes.js';
+import authRouter from './auth.js'; 
 import authAdminRouter from './authAdminRoutes.js';
 import siteProductsRoutes from './siteProductsRoutes.js';
 import contactsRoutes from './contactsRoutes.js';
@@ -15,15 +15,20 @@ import calculatorRoutes from './calculatorRoutes.js';
 const __filename = fileURLToPath(import.meta.url); 
 const __dirname = path.dirname(__filename); 
 
+const corsOptions = {
+  origin: ['http://localhost:5173', 'https://website-project-lbpd.onrender.com'],
+  optionsSuccessStatus: 200,
+};
+
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors(corsOptions));
 
 app.use('/', express.static(path.join(__dirname, '..', 'dist')));
 app.use('/assets', express.static(path.join(__dirname, '..', 'dist', 'assets')));
 
-app.use(authUserRouter);
-app.use('/admin/login', authAdminRouter);
+app.use(authRouter);
+app.use(authAdminRouter);
 app.use('/products', siteProductsRoutes);
 app.use('/contacts', contactsRoutes);
 app.use('/admin/dashboard', dashboardRoutes);

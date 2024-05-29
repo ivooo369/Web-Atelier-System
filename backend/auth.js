@@ -7,18 +7,49 @@ import cors from 'cors';
 
 const app = express();
 const pool = mysql.createPool(config);
-const authUserRouter = express.Router();
+const authRouter = express.Router();
 
 app.use(express.json());
 app.use(cors());
-app.use(authUserRouter);
+app.use(authRouter);
+
+// const generateAdminToken = (adminId) => {
+//   const token = jwt.sign({ adminId }, 'adminAuthKey', { expiresIn: '1s' });
+//   return token;
+// };
 
 const generateCustomerToken = (customerEmail) => {
   const token = jwt.sign({ email: customerEmail }, 'customerAuthKey', { expiresIn: '1h' }); 
   return token;
 }
 
-authUserRouter.post('/sign-in', async (req, res) => {
+// authRouter.post('/admin/login', async (req, res) => {
+//   const { adminUsername, adminPassword } = req.body; 
+
+//   try {
+//     const connection = await mysql.createConnection(config);
+//     const [rows] = await connection.execute('SELECT * FROM admin WHERE admin_username = ?', [adminUsername]);
+//     connection.end();
+
+//     if (rows.length === 0) {
+//       return res.status(404).json({ message: 'Потребителят не е намерен!' });
+//     }
+
+//     const hashedPasswordFromDB = rows[0].admin_password;
+//     const match = await bcrypt.compare(adminPassword, hashedPasswordFromDB);
+
+//     if (!match) {
+//       return res.status(401).json({ message: 'Невалидни данни за вход!' });
+//     }
+
+//     const token = generateAdminToken(rows[0].userId); 
+//     res.status(200).json({ message: 'Влизането е успешно!', token });
+//   } catch (error) {
+//     res.status(500).json({ error: 'Грешка при влизане!' });
+//   }
+// });
+
+authRouter.post('/sign-in', async (req, res) => {
   const { customerEmail, customerPassword } = req.body; 
 
   try {
@@ -44,7 +75,7 @@ authUserRouter.post('/sign-in', async (req, res) => {
   }
 });
 
-authUserRouter.post('/sign-up', async (req, res) => {
+authRouter.post('/sign-up', async (req, res) => {
   try {
     const {
       customerName,
@@ -78,4 +109,4 @@ authUserRouter.post('/sign-up', async (req, res) => {
 });
 
 
-export default authUserRouter;
+export default authRouter;

@@ -28,15 +28,16 @@ router.get('/', async (req, res) => {
 router.get('/price', async (req, res) => {
   try {
     const frameName = req.query.frameName;
+    const frameCategory = req.query.frameCategory;
     const connection = await pool.getConnection();
     const [rows] = await connection.query(
-      'SELECT product_price FROM products WHERE product_name = ? AND product_category = "Профили"',
-      [frameName]
+      'SELECT product_price FROM products WHERE product_name = ? AND product_category = ?',
+      [frameName, frameCategory]
     );
 
     const [laborRows] = await connection.query(
-      'SELECT product_price FROM products WHERE product_name = ? AND product_category = "Рамки"',
-      [frameName]
+      'SELECT product_price FROM products WHERE product_name = ? AND product_category = ?',
+      [frameName, frameCategory]
     );
 
     connection.release();

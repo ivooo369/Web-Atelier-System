@@ -12,6 +12,8 @@ import InputAdornment from "@mui/material/InputAdornment";
 import FormHelperText from "@mui/material/FormHelperText";
 import axios from "axios";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export default function MatboardsAccordion({
   title,
   id,
@@ -37,12 +39,9 @@ export default function MatboardsAccordion({
   useEffect(() => {
     const fetchMatboards = async () => {
       try {
-        const response = await axios.get(
-          "https://website-project-lbpd.onrender.com/calculator",
-          {
-            params: { category: "Паспарту" },
-          }
-        );
+        const response = await axios.get(`${apiUrl}/calculator`, {
+          params: { category: "Паспарту" },
+        });
         setMatboards(response.data);
       } catch (error) {
         console.error("Грешка при извличане на паспартутата:", error);

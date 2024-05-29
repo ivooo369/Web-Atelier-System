@@ -7,6 +7,8 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Pagination from "@mui/material/Pagination";
 import axios from "axios";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export default function FramesAccordion({
   title,
   id,
@@ -27,12 +29,11 @@ export default function FramesAccordion({
   useEffect(() => {
     const fetchFrames = async () => {
       try {
-        const response = await axios.get(
-          "https://website-project-lbpd.onrender.com/calculator",
-          {
-            params: { category: "Рамки" },
-          }
-        );
+        console.log("Fetching frames for category:", category);
+        const response = await axios.get(`${apiUrl}/calculator`, {
+          params: { category: "Рамки" },
+        });
+        console.log("Response data:", response.data);
         setFrames(response.data);
       } catch (error) {
         console.error("Грешка при извличане на рамките:", error);
