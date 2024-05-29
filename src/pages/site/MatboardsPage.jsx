@@ -25,7 +25,7 @@ export default function MatboardsPage() {
     const fetchMatboards = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/products/matboards"
+          "https://website-project-lbpd.onrender.com/products/matboards"
         );
         handleSortChange("");
         handleSortChange("name_asc");

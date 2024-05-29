@@ -18,7 +18,7 @@ export default function MirrorsPage() {
     const fetchMirrors = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/products/mirrors"
+          "https://website-project-lbpd.onrender.com/products/mirrors"
         );
         handleSortChange("");
         handleSortChange("name_asc");

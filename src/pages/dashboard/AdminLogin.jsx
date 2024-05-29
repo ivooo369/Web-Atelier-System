@@ -15,10 +15,13 @@ export default function Dashboard() {
   const loginUser = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:3000/admin/login", {
-        adminUsername,
-        adminPassword,
-      });
+      const response = await axios.post(
+        "https://website-project-lbpd.onrender.com/admin/login",
+        {
+          adminUsername,
+          adminPassword,
+        }
+      );
       const { data } = response;
       if (data.message === "Влизането е успешно!") {
         const token = data.token;

@@ -31,7 +31,7 @@ export default function ContactForm() {
     }
 
     try {
-      await axios.post("http://localhost:3000/contacts", {
+      await axios.post("https://website-project-lbpd.onrender.com/contacts", {
         name,
         email,
         topic,

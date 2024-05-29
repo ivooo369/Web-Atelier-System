@@ -27,9 +27,12 @@ export default function FramesAccordion({
   useEffect(() => {
     const fetchFrames = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/calculator", {
-          params: { category: "Рамки" },
-        });
+        const response = await axios.get(
+          "https://website-project-lbpd.onrender.com/calculator",
+          {
+            params: { category: "Рамки" },
+          }
+        );
         setFrames(response.data);
       } catch (error) {
         console.error("Грешка при извличане на рамките:", error);

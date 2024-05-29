@@ -26,7 +26,9 @@ export default function Dashboard() {
 
   async function fetchData() {
     try {
-      const response = await fetch("http://localhost:3000/admin/dashboard");
+      const response = await fetch(
+        "https://website-project-lbpd.onrender.com/admin/dashboard"
+      );
       if (!response.ok) {
         throw new Error("Грешка при извличане на броя!");
       }

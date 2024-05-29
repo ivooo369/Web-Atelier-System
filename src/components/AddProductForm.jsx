@@ -115,10 +115,13 @@ export default function AddProductForm({ onProductsUpdate }) {
       }
     });
 
-    fetch("http://localhost:3000/admin/dashboard/products", {
-      method: "POST",
-      body: formDataWithImage,
-    })
+    fetch(
+      "https://website-project-lbpd.onrender.com/admin/dashboard/products",
+      {
+        method: "POST",
+        body: formDataWithImage,
+      }
+    )
       .then((response) => {
         if (!response.ok) {
           return response.json().then((error) => {

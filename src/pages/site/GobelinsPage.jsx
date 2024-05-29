@@ -25,7 +25,7 @@ export default function GobelinsPage() {
     const fetchGobelins = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/products/gobelins"
+          "https://website-project-lbpd.onrender.com/products/gobelins"
         );
         handleSortChange("");
         handleSortChange("name_asc");

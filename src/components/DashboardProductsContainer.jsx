@@ -30,7 +30,8 @@ export default function DashboardProductsContainer({ productsUpdated }) {
   const fetchProductsByCategory = async (productCategory, pageNumber = 1) => {
     try {
       setLoading(true);
-      let url = "http://localhost:3000/admin/dashboard/products";
+      let url =
+        "https://website-project-lbpd.onrender.com/admin/dashboard/products";
       if (productCategory !== "Всички") {
         url += `/${productCategory}`;
       }
@@ -72,7 +73,7 @@ export default function DashboardProductsContainer({ productsUpdated }) {
     try {
       setLoading(true);
       const response = await axios.delete(
-        `http://localhost:3000/admin/dashboard/products/${productId}`
+        `https://website-project-lbpd.onrender.com/admin/dashboard/products/${productId}`
       );
       if (response.status === 200) {
         const updatedProducts = products.filter(

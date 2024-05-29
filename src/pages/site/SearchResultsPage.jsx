@@ -15,7 +15,7 @@ export default function SearchResultsPage() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/products/search?name=${encodeURIComponent(
+          `https://website-project-lbpd.onrender.com/products/search?name=${encodeURIComponent(
             searchTerm
           )}`
         );

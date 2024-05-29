@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const fetchPrices = async (frameName) => {
   try {
-    const response = await axios.get("http://localhost:3000/calculator/price", {
+    const response = await axios.get("https://website-project-lbpd.onrender.com/calculator/price", {
       params: { frameName },
     });
 

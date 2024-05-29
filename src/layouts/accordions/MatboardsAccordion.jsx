@@ -37,9 +37,12 @@ export default function MatboardsAccordion({
   useEffect(() => {
     const fetchMatboards = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/calculator", {
-          params: { category: "Паспарту" },
-        });
+        const response = await axios.get(
+          "https://website-project-lbpd.onrender.com/calculator",
+          {
+            params: { category: "Паспарту" },
+          }
+        );
         setMatboards(response.data);
       } catch (error) {
         console.error("Грешка при извличане на паспартутата:", error);

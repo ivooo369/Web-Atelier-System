@@ -18,7 +18,7 @@ export default function IconsPage() {
     const fetchIcons = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/products/icons"
+          "https://website-project-lbpd.onrender.com/products/icons"
         );
         handleSortChange("");
         handleSortChange("name_asc");

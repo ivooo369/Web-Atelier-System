@@ -27,7 +27,7 @@ export default function EditProductPage() {
     const fetchProduct = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/admin/dashboard/products/edit/${productId}`
+          `https://website-project-lbpd.onrender.com/admin/dashboard/products/edit/${productId}`
         );
         const {
           product_name,
@@ -60,7 +60,7 @@ export default function EditProductPage() {
         }
 
         const productsResponse = await axios.get(
-          `http://localhost:3000/admin/dashboard/products?category=${product_category}`
+          `https://website-project-lbpd.onrender.com/admin/dashboard/products?category=${product_category}`
         );
         const existingProductsData = productsResponse.data.map((product) => ({
           productName: product.product_name,
@@ -196,7 +196,7 @@ export default function EditProductPage() {
       formDataToSend.append("productImage", formData.productImage);
 
       const response = await axios.put(
-        `http://localhost:3000/admin/dashboard/products/edit/${productId}`,
+        `https://website-project-lbpd.onrender.com/admin/dashboard/products/edit/${productId}`,
         formDataToSend,
         { headers: { "Content-Type": "multipart/form-data" } }
       );

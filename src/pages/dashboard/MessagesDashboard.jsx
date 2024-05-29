@@ -9,7 +9,7 @@ export default function MessagesDashboard() {
     const fetchMessages = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/admin/dashboard/messages"
+          "https://website-project-lbpd.onrender.com/admin/dashboard/messages"
         );
         const formattedMessages = response.data.map((message) => ({
           ...message,
@@ -46,7 +46,7 @@ export default function MessagesDashboard() {
   const handleDeleteMessage = async (messageId) => {
     try {
       await axios.delete(
-        `http://localhost:3000/admin/dashboard/messages/${messageId}`
+        `https://website-project-lbpd.onrender.com/admin/dashboard/messages/${messageId}`
       );
       setMessages(
         messages.filter((message) => message.message_id !== messageId)

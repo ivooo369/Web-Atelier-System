@@ -12,7 +12,7 @@ export default function ProductDetailsPage() {
     const fetchProductDetails = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/products/details/${productId}`
+          `https://website-project-lbpd.onrender.com/products/details/${productId}`
         );
         setProduct(response.data);
       } catch (error) {

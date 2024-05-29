@@ -18,7 +18,7 @@ export default function PanelsPage() {
     const fetchPanels = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/products/panels"
+          "https://website-project-lbpd.onrender.com/products/panels"
         );
         handleSortChange("");
         handleSortChange("name_asc");

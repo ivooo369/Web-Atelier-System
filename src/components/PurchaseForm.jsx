@@ -19,7 +19,7 @@ export default function PurchaseForm({
     if (customerEmail) {
       axios
         .get(
-          `http://localhost:3000/calculator/cart/user/?email=${customerEmail}`
+          `https://website-project-lbpd.onrender.com/calculator/cart/user/?email=${customerEmail}`
         )
         .then((response) => {
           const user = response.data;
@@ -98,7 +98,10 @@ export default function PurchaseForm({
     };
 
     axios
-      .post("http://localhost:3000/calculator/cart", orderData)
+      .post(
+        "https://website-project-lbpd.onrender.com/calculator/cart",
+        orderData
+      )
       .then((response) => {
         console.log(response.data);
         clearCart();

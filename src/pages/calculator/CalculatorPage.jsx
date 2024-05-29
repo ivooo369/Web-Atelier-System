@@ -232,7 +232,7 @@ export default function CalculatorPage() {
         <FramesAccordion
           title="Вътрешна рамка"
           text="Рамка, която се поставя непосредствено до картината"
-          id="frame-1"
+          id="inner-frame"
           expanded={expanded}
           handleExpansionChange={handleExpansionChange}
           onSelectFrameImage={(image) => {
@@ -245,7 +245,7 @@ export default function CalculatorPage() {
         <FramesAccordion
           title="Външна рамка"
           text="Рамка, която се поставя върху вътрешната рамка"
-          id="frame-2"
+          id="outer-frame"
           expanded={expanded}
           handleExpansionChange={handleExpansionChange}
           onSelectFrameImage={(image) => {

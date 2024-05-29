@@ -34,7 +34,7 @@ export default function ProfilesPage() {
     const fetchProfiles = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/products/profiles"
+          "https://website-project-lbpd.onrender.com/products/profiles"
         );
         handleSortChange("");
         handleSortChange("name_asc");

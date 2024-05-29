@@ -34,7 +34,7 @@ router.get('/frames', async (req, res) => {
 router.get('/profiles', async (req, res) => {
   try {
     const connection = await pool.getConnection();
-    const [rows] = await connection.query('SELECT * FROM products WHERE product_category = "Профили"');
+    const [rows] = await connection.query('SELECT * FROM products WHERE product_category = ?', ['Профили']);
     connection.release();
 
     res.status(200).json(rows);
@@ -47,7 +47,7 @@ router.get('/profiles', async (req, res) => {
 router.get('/matboards', async (req, res) => {
   try {
     const connection = await pool.getConnection();
-    const [rows] = await connection.query('SELECT * FROM products WHERE product_category = "Паспарту"');
+    const [rows] = await connection.query('SELECT * FROM products WHERE product_category = ?', ['Паспарту']);
     connection.release();
 
     res.status(200).json(rows);
@@ -60,7 +60,7 @@ router.get('/matboards', async (req, res) => {
 router.get('/gobelins', async (req, res) => {
   try {
     const connection = await pool.getConnection();
-    const [rows] = await connection.query('SELECT * FROM products WHERE product_category = "Гоблени"');
+    const [rows] = await connection.query('SELECT * FROM products WHERE product_category = ?', ['Гоблени']);
     connection.release();
 
     res.status(200).json(rows);
@@ -73,7 +73,7 @@ router.get('/gobelins', async (req, res) => {
 router.get('/panels', async (req, res) => {
   try {
     const connection = await pool.getConnection();
-    const [rows] = await connection.query('SELECT * FROM products WHERE product_category = "Пана"');
+    const [rows] = await connection.query('SELECT * FROM products WHERE product_category = ?', ['Пана']);
     connection.release();
 
     res.status(200).json(rows);
@@ -86,7 +86,7 @@ router.get('/panels', async (req, res) => {
 router.get('/mirrors', async (req, res) => {
   try {
     const connection = await pool.getConnection();
-    const [rows] = await connection.query('SELECT * FROM products WHERE product_category = "Огледала"');
+    const [rows] = await connection.query('SELECT * FROM products WHERE product_category = ?', ['Огледала']);
     connection.release();
 
     res.status(200).json(rows);
@@ -99,7 +99,7 @@ router.get('/mirrors', async (req, res) => {
 router.get('/icons', async (req, res) => {
   try {
     const connection = await pool.getConnection();
-    const [rows] = await connection.query('SELECT * FROM products WHERE product_category = "Икони"');
+    const [rows] = await connection.query('SELECT * FROM products WHERE product_category = ?', ['Икони']);
     connection.release();
 
     res.status(200).json(rows);
@@ -112,7 +112,7 @@ router.get('/icons', async (req, res) => {
 router.get('/art-materials', async (req, res) => {
   try {
     const connection = await pool.getConnection();
-    const [rows] = await connection.query('SELECT * FROM products WHERE product_category = "Арт материали"');
+    const [rows] = await connection.query('SELECT * FROM products WHERE product_category = ?', ['Арт материали']);
     connection.release();
 
     res.status(200).json(rows);

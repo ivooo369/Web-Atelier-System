@@ -46,13 +46,16 @@ export default function SignInPage() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:3000/sign-in", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ customerEmail, customerPassword }),
-      });
+      const response = await fetch(
+        "https://website-project-lbpd.onrender.com/sign-in",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ customerEmail, customerPassword }),
+        }
+      );
       const data = await response.json();
 
       if (!response.ok) {

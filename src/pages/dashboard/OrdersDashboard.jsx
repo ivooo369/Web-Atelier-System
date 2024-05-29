@@ -10,7 +10,7 @@ export default function OrdersDashboard() {
     const fetchOrders = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/admin/dashboard/orders"
+          "https://website-project-lbpd.onrender.com/admin/dashboard/orders"
         );
         const formattedOrders = response.data.map((order) => ({
           ...order,
@@ -44,7 +44,7 @@ export default function OrdersDashboard() {
   const handleDeleteOrder = async (orderId) => {
     try {
       await axios.delete(
-        `http://localhost:3000/admin/dashboard/orders/${orderId}`
+        `https://website-project-lbpd.onrender.com/admin/dashboard/orders/${orderId}`
       );
       setOrders(orders.filter((order) => order.order_id !== orderId));
     } catch (error) {

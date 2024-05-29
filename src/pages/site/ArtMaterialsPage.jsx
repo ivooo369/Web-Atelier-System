@@ -18,7 +18,7 @@ export default function ArtMaterialsPage() {
     const fetchArtMaterials = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/products/art-materials"
+          "https://website-project-lbpd.onrender.com/products/art-materials"
         );
         handleSortChange("");
         handleSortChange("name_asc");
