@@ -3,17 +3,28 @@ import mysql from 'mysql2/promise';
 import config from './db.config.js';
 import fs from 'fs';
 import multer from 'multer';
+import path from 'path';
+import { getDirName } from '../src/utils/getDirName.js';
 
 const router = express.Router();
 
+const __dirname = getDirName(import.meta.url);
+
+
+// Update the path to go up one level to access the 'public' folder
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, 'productImages'); 
-    },
-    filename: function (req, file, cb) {
-      cb(null, file.originalname); 
-    }
-  });
+  destination: (req, file, cb) => {
+    const uploadDir = path.join(__dirname, '..', 'public', 'productImages');
+
+    // Create the directory if it doesn't exist
+    fs.mkdirSync(uploadDir, { recursive: true });
+
+    cb(null, uploadDir);
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + '-' + file.originalname);
+  }
+});
 
 const upload = multer({ storage: storage });
 const pool = mysql.createPool(config);
@@ -44,7 +55,7 @@ router.post('/', upload.single('image'), async (req, res) => {
           productDescription
       } = req.body;
 
-      const productImagePath = req.file.path; 
+      const productImagePath = req.file.path.replace('public', '');
       const connection = await pool.getConnection();
 
       const [existingProduct] = await connection.query(
@@ -224,7 +235,6 @@ router.put('/edit/:productId', upload.single('productImage'), async (req, res) =
       res.status(500).json({ error: 'Възникна грешка при редактиране на продукта!' });
   }
 });
-
   
   router.delete('/:productId', async (req, res) => {
     const { productId } = req.params;
