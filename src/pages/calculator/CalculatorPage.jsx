@@ -46,7 +46,7 @@ export default function CalculatorPage() {
     const frameImagePath = queryParams.get("framePath");
     if (frameImagePath) {
       setSelectedInnerFrameName(frameName);
-      setSelectedInnerFrameImage(`/backend/${frameImagePath}`);
+      setSelectedInnerFrameImage(`/${frameImagePath}`);
     }
   }, [location.search]);
 

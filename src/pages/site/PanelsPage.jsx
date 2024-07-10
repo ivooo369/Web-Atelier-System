@@ -7,6 +7,8 @@ import ProductCard from "../../components/ProductCard";
 import useProductSorting from "../../components/useProductSorting";
 import { sortOptions } from "../../utils/sortOptions";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export default function PanelsPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 20;
@@ -17,9 +19,7 @@ export default function PanelsPage() {
   useEffect(() => {
     const fetchPanels = async () => {
       try {
-        const response = await axios.get(
-          "https://website-project-lbpd.onrender.com/products/panels"
-        );
+        const response = await axios.get(`${apiUrl}/products/panels`);
         handleSortChange("");
         handleSortChange("name_asc");
         setProducts(response.data);

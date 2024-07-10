@@ -10,6 +10,8 @@ import FormControl from "@mui/material/FormControl";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export default function SignUpPage() {
   const navigateTo = useNavigate();
   const [formData, setFormData] = useState({
@@ -99,16 +101,13 @@ export default function SignUpPage() {
     }
 
     try {
-      const response = await fetch(
-        "https://website-project-lbpd.onrender.com/sign-up",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+      const response = await fetch(`${apiUrl}/sign-up`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
       const data = await response.json();
 

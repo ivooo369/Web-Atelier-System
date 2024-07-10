@@ -3,6 +3,8 @@ import { useNavigate, Link, Outlet } from "react-router-dom";
 import Button from "@mui/material/Button";
 import "../../styles/dashboard/Dashboard.css";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export default function Dashboard() {
   const navigateTo = useNavigate();
   const [counts, setCounts] = useState({
@@ -26,9 +28,7 @@ export default function Dashboard() {
 
   async function fetchData() {
     try {
-      const response = await fetch(
-        "https://website-project-lbpd.onrender.com/admin/dashboard"
-      );
+      const response = await fetch(`${apiUrl}/admin/dashboard`);
       if (!response.ok) {
         throw new Error("Грешка при извличане на броя!");
       }

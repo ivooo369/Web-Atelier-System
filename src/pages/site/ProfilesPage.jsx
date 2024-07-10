@@ -11,6 +11,8 @@ import {
   profileUsageOptions,
 } from "../../utils/selectOptions";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export default function ProfilesPage() {
   const [selectedMaterial, setSelectedMaterial] = useState("");
   const [selectedUsage, setSelectedUsage] = useState("");
@@ -33,9 +35,7 @@ export default function ProfilesPage() {
   useEffect(() => {
     const fetchProfiles = async () => {
       try {
-        const response = await axios.get(
-          "https://website-project-lbpd.onrender.com/products/profiles"
-        );
+        const response = await axios.get(`${apiUrl}/products/profiles`);
         handleSortChange("");
         handleSortChange("name_asc");
         setProducts(response.data);

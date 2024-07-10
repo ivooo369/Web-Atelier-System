@@ -8,6 +8,8 @@ import useProductSorting from "../../components/useProductSorting";
 import { sortOptions } from "../../utils/sortOptions";
 import { gobelinTypesOptions } from "../../utils/selectOptions";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export default function GobelinsPage() {
   const [selectedType, setSelectedType] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -24,9 +26,7 @@ export default function GobelinsPage() {
   useEffect(() => {
     const fetchGobelins = async () => {
       try {
-        const response = await axios.get(
-          "https://website-project-lbpd.onrender.com/products/gobelins"
-        );
+        const response = await axios.get(`${apiUrl}/products/gobelins`);
         handleSortChange("");
         handleSortChange("name_asc");
         setProducts(response.data);

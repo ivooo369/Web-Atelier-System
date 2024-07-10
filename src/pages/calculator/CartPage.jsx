@@ -5,6 +5,8 @@ import PurchaseForm from "../../components/PurchaseForm";
 import Cart from "../../components/Cart";
 import "../../styles/calculator/CartPage.css";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export default function CartPage() {
   const [userData, setUserData] = useState({
     name: "",
@@ -21,9 +23,7 @@ export default function CartPage() {
     const customerEmail = localStorage.getItem("customerEmail");
     if (customerEmail) {
       axios
-        .get(
-          `https://website-project-lbpd.onrender.com/calculator/cart/user/?email=${customerEmail}`
-        )
+        .get(`${apiUrl}/calculator/cart/user/?email=${customerEmail}`)
         .then((response) => {
           const user = response.data;
           setUserData({

@@ -10,6 +10,8 @@ import FormControl from "@mui/material/FormControl";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export default function SignInPage() {
   const [customerEmail, setCustomerEmail] = useState("");
   const [customerPassword, setCustomerPassword] = useState("");
@@ -46,16 +48,13 @@ export default function SignInPage() {
     e.preventDefault();
 
     try {
-      const response = await fetch(
-        "https://website-project-lbpd.onrender.com/sign-in",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ customerEmail, customerPassword }),
-        }
-      );
+      const response = await fetch(`${apiUrl}/sign-in`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ customerEmail, customerPassword }),
+      });
       const data = await response.json();
 
       if (!response.ok) {

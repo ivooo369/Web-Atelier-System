@@ -2,22 +2,21 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import "../../styles/dashboard/MessagesDashboard.css";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export default function MessagesDashboard() {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const response = await axios.get(
-          "https://website-project-lbpd.onrender.com/admin/dashboard/messages"
-        );
+        const response = await axios.get(`${apiUrl}/admin/dashboard/messages`);
         const formattedMessages = response.data.map((message) => ({
           ...message,
           message_submission_date: formatMessageDate(
             message.message_submission_date
           ),
         }));
-
         setMessages(formattedMessages.reverse());
       } catch (error) {
         console.error("Грешка при извличане на съобщенията:", error);
@@ -45,9 +44,7 @@ export default function MessagesDashboard() {
 
   const handleDeleteMessage = async (messageId) => {
     try {
-      await axios.delete(
-        `https://website-project-lbpd.onrender.com/admin/dashboard/messages/${messageId}`
-      );
+      await axios.delete(`${apiUrl}/admin/dashboard/messages/${messageId}`);
       setMessages(
         messages.filter((message) => message.message_id !== messageId)
       );

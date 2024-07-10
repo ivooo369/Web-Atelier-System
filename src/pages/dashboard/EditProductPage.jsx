@@ -11,6 +11,8 @@ import {
   gobelinTypesFormOptions,
 } from "../../utils/selectOptions";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export default function EditProductPage() {
   const [formData, setFormData] = useState({});
   const [imagePreview, setImagePreview] = useState(null);
@@ -27,7 +29,7 @@ export default function EditProductPage() {
     const fetchProduct = async () => {
       try {
         const response = await axios.get(
-          `https://website-project-lbpd.onrender.com/admin/dashboard/products/edit/${productId}`
+          `${apiUrl}/admin/dashboard/products/edit/${productId}`
         );
         const {
           product_name,
@@ -56,11 +58,11 @@ export default function EditProductPage() {
         setOriginalProductName(product_name || "");
 
         if (product_image_path) {
-          setImagePreview(`/backend/${product_image_path}`);
+          setImagePreview(`/${product_image_path}`);
         }
 
         const productsResponse = await axios.get(
-          `https://website-project-lbpd.onrender.com/admin/dashboard/products?category=${product_category}`
+          `${apiUrl}/admin/dashboard/products?category=${product_category}`
         );
         const existingProductsData = productsResponse.data.map((product) => ({
           productName: product.product_name,
@@ -196,7 +198,7 @@ export default function EditProductPage() {
       formDataToSend.append("productImage", formData.productImage);
 
       const response = await axios.put(
-        `https://website-project-lbpd.onrender.com/admin/dashboard/products/edit/${productId}`,
+        `${apiUrl}/admin/dashboard/products/edit/${productId}`,
         formDataToSend,
         { headers: { "Content-Type": "multipart/form-data" } }
       );

@@ -3,15 +3,15 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Card, CardContent, Typography } from "@mui/material";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export default function OrdersDashboard() {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get(
-          "https://website-project-lbpd.onrender.com/admin/dashboard/orders"
-        );
+        const response = await axios.get(`${apiUrl}/admin/dashboard/orders`);
         const formattedOrders = response.data.map((order) => ({
           ...order,
           order_submission_date: formatOrderDate(order.order_submission_date),
@@ -43,9 +43,7 @@ export default function OrdersDashboard() {
 
   const handleDeleteOrder = async (orderId) => {
     try {
-      await axios.delete(
-        `https://website-project-lbpd.onrender.com/admin/dashboard/orders/${orderId}`
-      );
+      await axios.delete(`${apiUrl}/admin/dashboard/orders/${orderId}`);
       setOrders(orders.filter((order) => order.order_id !== orderId));
     } catch (error) {
       console.error("Грешка при изтриване на поръчката:", error);

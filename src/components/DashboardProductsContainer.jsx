@@ -12,6 +12,8 @@ import {
   gobelinTypesOptions,
 } from "../utils/selectOptions";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export default function DashboardProductsContainer({ productsUpdated }) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -30,8 +32,7 @@ export default function DashboardProductsContainer({ productsUpdated }) {
   const fetchProductsByCategory = async (productCategory, pageNumber = 1) => {
     try {
       setLoading(true);
-      let url =
-        "https://website-project-lbpd.onrender.com/admin/dashboard/products";
+      let url = `${apiUrl}/admin/dashboard/products`;
       if (productCategory !== "Всички") {
         url += `/${productCategory}`;
       }
@@ -73,7 +74,7 @@ export default function DashboardProductsContainer({ productsUpdated }) {
     try {
       setLoading(true);
       const response = await axios.delete(
-        `https://website-project-lbpd.onrender.com/admin/dashboard/products/${productId}`
+        `${apiUrl}/admin/dashboard/products/${productId}`
       );
       if (response.status === 200) {
         const updatedProducts = products.filter(
@@ -198,7 +199,7 @@ export default function DashboardProductsContainer({ productsUpdated }) {
               <div className="product-card" key={filteredProduct.product_id}>
                 {filteredProduct.product_image_path && (
                   <img
-                    src={`/backend/${filteredProduct.product_image_path}`}
+                    src={`/${filteredProduct.product_image_path}`}
                     alt={filteredProduct.product_name_path}
                     className="product-image"
                   />

@@ -3,6 +3,8 @@ import axios from "axios";
 import { useLocation } from "react-router-dom";
 import ProductCard from "../../components/ProductCard";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export default function SearchResultsPage() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -15,9 +17,7 @@ export default function SearchResultsPage() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `https://website-project-lbpd.onrender.com/products/search?name=${encodeURIComponent(
-            searchTerm
-          )}`
+          `${apiUrl}/products/search?name=${encodeURIComponent(searchTerm)}`
         );
         setProducts(response.data);
         setLoading(false);

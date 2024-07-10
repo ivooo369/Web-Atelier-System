@@ -6,6 +6,8 @@ import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import Button from "@mui/material/Button";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export default function Dashboard() {
   const [adminUsername, setAdminUsername] = useState("");
   const [adminPassword, setAdminPassword] = useState("");
@@ -15,7 +17,7 @@ export default function Dashboard() {
   const loginUser = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:3000/admin/login", {
+      const response = await axios.post(`${apiUrl}/admin/login`, {
         adminUsername,
         adminPassword,
       });

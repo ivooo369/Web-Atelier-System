@@ -6,6 +6,8 @@ import ProductCard from "../../components/ProductCard";
 import { frameSortOptions } from "../../utils/sortOptions";
 import { materialOptions, frameUsageOptions } from "../../utils/selectOptions";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export default function FramesPage() {
   const [selectedMaterial, setSelectedMaterial] = useState("");
   const [selectedUsage, setSelectedUsage] = useState("");
@@ -37,9 +39,7 @@ export default function FramesPage() {
   useEffect(() => {
     const fetchFrames = async () => {
       try {
-        const response = await axios.get(
-          "https://website-project-lbpd.onrender.com/products/frames"
-        );
+        const response = await axios.get(`${apiUrl}/products/frames`);
         setFrames(response.data);
       } catch (error) {
         console.error("Грешка при извличане на рамките:", error);

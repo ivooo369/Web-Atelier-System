@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export default function ProductDetailsPage() {
   const [product, setProduct] = useState(null);
   const { productId } = useParams();
@@ -12,7 +14,7 @@ export default function ProductDetailsPage() {
     const fetchProductDetails = async () => {
       try {
         const response = await axios.get(
-          `https://website-project-lbpd.onrender.com/products/details/${productId}`
+          `${apiUrl}/products/details/${productId}`
         );
         setProduct(response.data);
       } catch (error) {

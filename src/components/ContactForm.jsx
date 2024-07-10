@@ -3,6 +3,8 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import axios from "axios";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export default function ContactForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -31,7 +33,7 @@ export default function ContactForm() {
     }
 
     try {
-      await axios.post("https://website-project-lbpd.onrender.com/contacts", {
+      await axios.post(`${apiUrl}/contacts`, {
         name,
         email,
         topic,

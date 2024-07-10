@@ -11,6 +11,8 @@ import {
 } from "../utils/selectOptions";
 import { requiredFieldsByCategory } from "../utils/requiredFields";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export default function AddProductForm({ onProductsUpdate }) {
   const [formData, setFormData] = useState({
     productName: "",
@@ -88,7 +90,7 @@ export default function AddProductForm({ onProductsUpdate }) {
 
     if (!formData.productCategory) {
       setNotification({
-        message: "Моля, изберете категория на продукта!",
+        message: "Please select a product category!",
         type: "error",
       });
       return;
@@ -99,7 +101,7 @@ export default function AddProductForm({ onProductsUpdate }) {
 
     if (missingFields.length > 0) {
       const errorMessage =
-        "Моля, попълнете всички задължителни полета и качете снимка на продукта!";
+        "Please fill in all required fields and upload a product image!";
       setNotification({ message: errorMessage, type: "error" });
       return;
     }
@@ -115,13 +117,10 @@ export default function AddProductForm({ onProductsUpdate }) {
       }
     });
 
-    fetch(
-      "https://website-project-lbpd.onrender.com/admin/dashboard/products",
-      {
-        method: "POST",
-        body: formDataWithImage,
-      }
-    )
+    fetch(`${apiUrl}/admin/dashboard/products`, {
+      method: "POST",
+      body: formDataWithImage,
+    })
       .then((response) => {
         if (!response.ok) {
           return response.json().then((error) => {

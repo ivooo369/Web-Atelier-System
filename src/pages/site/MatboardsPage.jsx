@@ -8,6 +8,8 @@ import useProductSorting from "../../components/useProductSorting";
 import { sortOptions } from "../../utils/sortOptions";
 import { matboardMaterialOptions } from "../../utils/selectOptions";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export default function MatboardsPage() {
   const [selectedMaterial, setSelectedMaterial] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -24,9 +26,7 @@ export default function MatboardsPage() {
   useEffect(() => {
     const fetchMatboards = async () => {
       try {
-        const response = await axios.get(
-          "https://website-project-lbpd.onrender.com/products/matboards"
-        );
+        const response = await axios.get(`${apiUrl}/products/matboards`);
         handleSortChange("");
         handleSortChange("name_asc");
         setProducts(response.data);

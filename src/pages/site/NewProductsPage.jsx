@@ -6,6 +6,8 @@ import BasicSelect from "../../layouts/others/Select";
 import ProductCard from "../../components/ProductCard";
 import { productCategories } from "../../utils/selectOptions";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export default function NewProductsPage() {
   const [newProducts, setNewProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -20,9 +22,7 @@ export default function NewProductsPage() {
   useEffect(() => {
     const fetchNewProducts = async () => {
       try {
-        const response = await axios.get(
-          "https://website-project-lbpd.onrender.com/products/new-products"
-        );
+        const response = await axios.get(`${apiUrl}/products/new-products`);
         const sortedProducts = response.data.sort((a, b) => {
           return (
             new Date(b.product_release_date) - new Date(a.product_release_date)
