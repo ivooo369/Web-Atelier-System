@@ -4,7 +4,7 @@ import ContactForm from "../../components/ContactForm";
 
 export default function ContactPage() {
   return (
-    <div className="contacts-container">
+    <div className="contacts-container pages">
       <header className="page-header">
         <span className="material-symbols-outlined">location_on</span>
         <h1>Контакти</h1>

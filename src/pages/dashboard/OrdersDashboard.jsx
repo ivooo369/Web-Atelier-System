@@ -1,7 +1,7 @@
 import "../../styles/dashboard/OrdersDashboard.css";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { Card, CardContent, Typography } from "@mui/material";
+import axios from "axios";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -57,7 +57,7 @@ export default function OrdersDashboard() {
   };
 
   return (
-    <>
+    <div className="pages">
       <div className="page-header">
         <h1>Поръчки</h1>
       </div>
@@ -226,6 +226,6 @@ export default function OrdersDashboard() {
           </ul>
         )}
       </div>
-    </>
+    </div>
   );
 }

@@ -1,17 +1,14 @@
 /* eslint-disable react/prop-types */
 import "../../styles/dashboard/ProductsDashboard.css";
 import { useState, useEffect, useRef } from "react";
-import axios from "axios";
-import { TextField, Button, Box } from "@mui/material";
-import BasicSelect from "../../layouts/others/Select";
 import { useParams, useNavigate } from "react-router-dom";
-import {
-  frameUsageFormOptions,
-  profileUsageFormOptions,
-  gobelinTypesFormOptions,
-} from "../../utils/selectOptions";
+import { Button, Box } from "@mui/material";
+import FormField from "../../layouts/others/FormField";
+import { getFormFields } from "../../utils/formFields";
+import axios from "axios";
 
 const apiUrl = import.meta.env.VITE_API_URL;
+const functionOfTheComponent = "edit";
 
 export default function EditProductPage() {
   const [formData, setFormData] = useState({});
@@ -21,9 +18,14 @@ export default function EditProductPage() {
   const [existingProducts, setExistingProducts] = useState([]);
   const [originalProductName, setOriginalProductName] = useState("");
   const fileInputRef = useRef(null);
-
   const { productId } = useParams();
   const navigateTo = useNavigate();
+
+  const fields = getFormFields(
+    formData,
+    materialOptions,
+    functionOfTheComponent
+  );
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -115,19 +117,6 @@ export default function EditProductPage() {
     };
   }, [notification]);
 
-  const getTypeOptions = (category) => {
-    switch (category) {
-      case "Рамки":
-        return frameUsageFormOptions;
-      case "Профили":
-        return profileUsageFormOptions;
-      case "Гоблени":
-        return gobelinTypesFormOptions;
-      default:
-        return [];
-    }
-  };
-
   const handleChange = (field, value) => {
     if (field === "productImage") {
       const file = value;
@@ -210,7 +199,7 @@ export default function EditProductPage() {
         });
         setTimeout(() => {
           navigateTo("/admin/dashboard/products");
-        }, 3000);
+        }, 1500);
       } else {
         throw new Error("Неуспешно редактиране на продукта!");
       }
@@ -223,70 +212,8 @@ export default function EditProductPage() {
     }
   };
 
-  const formFields = [
-    { label: "Наименование", field: "productName", type: "text" },
-    {
-      label: "Материал",
-      field: "productMaterial",
-      type: "select",
-      menuItems: materialOptions.map((option) => ({
-        value: option,
-        label: option,
-      })),
-      disabled:
-        formData.productCategory === "" ||
-        ["Рамки", "Профили", "Паспарту"].includes(formData.productCategory)
-          ? false
-          : true,
-    },
-    {
-      label: formData.productCategory === "Гоблени" ? "Вид" : "Предназначение",
-      field: "productType",
-      type: "select",
-      menuItems: getTypeOptions(formData.productCategory),
-      disabled:
-        formData.productCategory === ""
-          ? false
-          : !["Рамки", "Профили", "Гоблени"].includes(formData.productCategory),
-    },
-    {
-      label: "Ширина (мм)",
-      field: "productWidth",
-      type: "number",
-    },
-    {
-      label: "Височина (мм)",
-      field: "productHeight",
-      type: "number",
-    },
-    {
-      label:
-        "Цена " +
-        (formData.productCategory === "Рамки"
-          ? "за труд (лв.)"
-          : formData.productCategory === "Профили"
-          ? "(лв./м)"
-          : formData.productCategory === "Паспарту"
-          ? "(лв./бр.)"
-          : "(лв.)"),
-
-      field: "productPrice",
-      type: "number",
-    },
-    { label: "Описание", field: "productDescription", type: "textarea" },
-    { label: "Изображение", field: "productImage", type: "file" },
-  ].filter((field) => {
-    if (formData.productCategory === "Арт материали") {
-      return field.field !== "productWidth" && field.field !== "productHeight";
-    } else if (formData.productCategory === "") {
-      return true;
-    } else {
-      return true;
-    }
-  });
-
   return (
-    <div className="products-container">
+    <div className="products-container pages">
       <form
         className="product-forms edit-form"
         onSubmit={handleEditProduct}
@@ -297,18 +224,21 @@ export default function EditProductPage() {
           Категория: {formData.productCategory}
         </h3>
         <Box>
-          {formFields.map((field, index) => {
+          {fields.map((field, index) => {
             if (field.disabled) {
               return null;
             }
             return (
               <Box key={index} mb={2}>
-                <FormField
-                  {...field}
-                  value={formData[field.field]}
-                  handleChange={(value) => handleChange(field.field, value)}
-                  fileInputRef={field.type === "file" ? fileInputRef : null}
-                />
+                {!field.hidden && (
+                  <FormField
+                    {...field}
+                    value={formData[field.field]}
+                    handleChange={(value) => handleChange(field.field, value)}
+                    fileInputRef={field.type === "file" ? fileInputRef : null}
+                    functionOfTheComponent={functionOfTheComponent}
+                  />
+                )}
               </Box>
             );
           })}
@@ -346,75 +276,4 @@ export default function EditProductPage() {
       </form>
     </div>
   );
-}
-
-function FormField({
-  label,
-  field,
-  type,
-  menuItems,
-  value = "",
-  handleChange,
-  fileInputRef,
-}) {
-  if (type === "select") {
-    return (
-      <BasicSelect
-        label={label}
-        labelId={`${field}-label`}
-        menuItems={menuItems}
-        value={value}
-        handleChange={handleChange}
-        fullWidth
-      />
-    );
-  } else if (type === "textarea") {
-    return (
-      <TextField
-        label={label}
-        multiline
-        rows={3}
-        value={value}
-        onChange={(e) => handleChange(e.target.value)}
-        fullWidth
-      />
-    );
-  } else if (type === "file") {
-    return (
-      <Box>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e) => handleChange(e.target.files[0])}
-          style={{ display: "none" }}
-          id="upload-button"
-          ref={fileInputRef}
-        />
-        <label htmlFor="upload-button">
-          <Button
-            variant="outlined"
-            component="span"
-            fullWidth
-            sx={{ textTransform: "none", height: "100%" }}
-          >
-            {value
-              ? typeof value === "string"
-                ? value
-                : value.name
-              : "Качете изображение"}
-          </Button>
-        </label>
-      </Box>
-    );
-  } else {
-    return (
-      <TextField
-        label={label}
-        type={type}
-        value={value}
-        onChange={(e) => handleChange(e.target.value)}
-        fullWidth
-      />
-    );
-  }
 }

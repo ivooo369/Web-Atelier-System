@@ -116,18 +116,16 @@ authRouter.post("/sign-up", async (req, res) => {
         customerAddress,
         customerPhone,
       ]
-    ); // Използваме хешираната парола тук
+    );
     connection.release();
 
     const token = generateCustomerToken(customerEmail);
 
-    res
-      .status(201)
-      .json({
-        message: "Клиентът е успешно добавен!",
-        customer_id: result.insertId,
-        token,
-      });
+    res.status(201).json({
+      message: "Клиентът е успешно добавен!",
+      customer_id: result.insertId,
+      token,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Грешка при добавяне на клиент!" });

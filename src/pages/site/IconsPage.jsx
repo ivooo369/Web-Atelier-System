@@ -1,16 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
-import axios from "axios";
 import PaginationButtons from "../../layouts/others/PaginationButtons";
 import BasicSelect from "../../layouts/others/Select";
 import ProductCard from "../../components/ProductCard";
-import useProductSorting from "../../components/useProductSorting";
+import Skeleton from "@mui/material/Skeleton";
+import useProductSorting from "../../utils/useProductSorting";
 import { sortOptions } from "../../utils/sortOptions";
+import axios from "axios";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function IconsPage() {
   const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(true);
   const productsPerPage = 20;
 
   const { products, sortOption, handleSortChange, setProducts } =
@@ -25,6 +27,8 @@ export default function IconsPage() {
         setProducts(response.data);
       } catch (error) {
         console.error("Грешка при извличане на иконите:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -40,7 +44,7 @@ export default function IconsPage() {
   };
 
   return (
-    <div className="site-products-container">
+    <div className="site-products-container pages">
       <header className="page-header">
         <span className="material-symbols-outlined">church</span>
         <h1>Икони</h1>
@@ -54,16 +58,22 @@ export default function IconsPage() {
           handleChange={handleSortChange}
           fullWidth
         />
-        {products.length > 0 && (
+        {loading || products.length > 0 ? (
           <PaginationButtons
             productsPerPage={productsPerPage}
             totalProducts={products.length}
             paginate={paginate}
             currentPage={currentPage}
           />
-        )}
+        ) : null}
       </div>
-      {products.length > 0 ? (
+      {loading ? (
+        <div className="loading-container">
+          {[...Array(productsPerPage)].map((_, index) => (
+            <Skeleton key={index} animation="wave" height={150} />
+          ))}
+        </div>
+      ) : products.length > 0 ? (
         <div>
           <div className="products-grid-container">
             {currentIcons.map((icon) => (

@@ -48,7 +48,7 @@ export default function GalleryPage() {
   }, []);
 
   return (
-    <>
+    <div className="pages">
       <header className="page-header">
         <span className="material-symbols-outlined">photo_library</span>
         <h1>Галерия</h1>
@@ -85,6 +85,6 @@ export default function GalleryPage() {
           </div>
         </>
       )}
-    </>
+    </div>
   );
 }

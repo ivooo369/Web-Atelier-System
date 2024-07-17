@@ -2,7 +2,6 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import PaginationButtons from "../layouts/others/PaginationButtons";
 import BasicSelect from "../layouts/others/Select";
 import {
@@ -11,6 +10,7 @@ import {
   matboardMaterialOptions,
   gobelinTypesOptions,
 } from "../utils/selectOptions";
+import axios from "axios";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 

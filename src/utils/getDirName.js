@@ -1,6 +1,5 @@
-// utils/getDirname.js
-import { fileURLToPath } from 'url';
-import path from 'path';
+import { fileURLToPath } from "url";
+import path from "path";
 
 export const getDirName = (metaUrl) => {
   const __filename = fileURLToPath(metaUrl);

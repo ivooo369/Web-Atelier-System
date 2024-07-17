@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import "../../styles/site/NewProductsPage.css";
 import PaginationButtons from "../../layouts/others/PaginationButtons";
 import BasicSelect from "../../layouts/others/Select";
 import ProductCard from "../../components/ProductCard";
+import Skeleton from "@mui/material/Skeleton";
 import { productCategories } from "../../utils/selectOptions";
+import axios from "axios";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -12,6 +13,7 @@ export default function NewProductsPage() {
   const [newProducts, setNewProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(true);
   const productsPerPage = 20;
 
   const handleCategoryChange = (category) => {
@@ -31,6 +33,8 @@ export default function NewProductsPage() {
         setNewProducts(sortedProducts);
       } catch (error) {
         console.error("Грешка при извличане на новите продукти:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -56,7 +60,7 @@ export default function NewProductsPage() {
   };
 
   return (
-    <div className="site-products-container">
+    <div className="site-products-container pages">
       <header className="page-header">
         <span className="material-symbols-outlined">grid_view</span>
         <h1>Нови продукти</h1>
@@ -70,30 +74,34 @@ export default function NewProductsPage() {
           handleChange={handleCategoryChange}
           fullWidth
         />
-        {filteredProducts.length > 0 && (
+        {loading || filteredProducts.length > 0 ? (
           <PaginationButtons
             productsPerPage={productsPerPage}
             totalProducts={filteredProducts.length}
             paginate={paginate}
             currentPage={currentPage}
           />
-        )}
+        ) : null}
       </div>
-      {filteredProducts.length > 0 ? (
+      {loading ? (
+        <div className="loading-container">
+          {[...Array(productsPerPage)].map((_, index) => (
+            <Skeleton key={index} animation="wave" height={150} />
+          ))}
+        </div>
+      ) : filteredProducts.length > 0 ? (
         <div>
           <div className="products-grid-container">
             {currentProducts.map((product) => (
               <ProductCard product={product} key={product.product_id} />
             ))}
           </div>
-          {filteredProducts.length > 0 && (
-            <PaginationButtons
-              productsPerPage={productsPerPage}
-              totalProducts={filteredProducts.length}
-              paginate={paginate}
-              currentPage={currentPage}
-            />
-          )}
+          <PaginationButtons
+            productsPerPage={productsPerPage}
+            totalProducts={filteredProducts.length}
+            paginate={paginate}
+            currentPage={currentPage}
+          />
         </div>
       ) : (
         <p className="no-products-found-message">Няма намерени продукти!</p>

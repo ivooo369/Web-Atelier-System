@@ -6,12 +6,11 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-
 import {
   fetchPrices,
   calculateSinglePrice,
   calculateFinalPriceWithQuantity,
-} from "../../../backend/priceCalculations";
+} from "../../utils/priceCalculations";
 
 export default function PriceAccordion({
   expanded,
@@ -37,8 +36,8 @@ export default function PriceAccordion({
 
   useEffect(() => {
     const updatePrice = async () => {
-      const pricesFrame1 = await fetchPrices(selectedInnerFrameName);
-      const pricesFrame2 = selectedOuterFrameName
+      const innderFrame = await fetchPrices(selectedInnerFrameName);
+      const outerFrame = selectedOuterFrameName
         ? await fetchPrices(selectedOuterFrameName)
         : { profilePricePerMeter: 0, laborPrice: 0 };
 
@@ -53,10 +52,10 @@ export default function PriceAccordion({
         : 0;
 
       const price = calculateSinglePrice(
-        pricesFrame1.profilePricePerMeter,
-        pricesFrame1.laborPrice,
-        pricesFrame2.profilePricePerMeter,
-        pricesFrame2.laborPrice,
+        innderFrame.profilePricePerMeter,
+        innderFrame.laborPrice,
+        outerFrame.profilePricePerMeter,
+        outerFrame.laborPrice,
         frameWidth,
         frameHeight,
         selectedSubframe,

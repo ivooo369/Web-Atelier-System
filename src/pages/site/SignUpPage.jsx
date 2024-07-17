@@ -9,6 +9,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import axios from "axios";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -101,21 +102,9 @@ export default function SignUpPage() {
     }
 
     try {
-      const response = await fetch(`${apiUrl}/sign-up`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await axios.post(`${apiUrl}/sign-up`, formData);
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error);
-      }
-
-      localStorage.setItem("customerAuthToken", data.token);
+      localStorage.setItem("customerAuthToken", response.data.token);
       localStorage.setItem("customerEmail", formData.customerEmail);
 
       setSuccessMessage("Регистрацията е успешна!");
@@ -124,15 +113,17 @@ export default function SignUpPage() {
       setTimeout(() => {
         navigateTo("/");
         window.location.reload();
-      }, 3000);
+      }, 1500);
     } catch (error) {
-      setErrorMessage(error.message || "Грешка при регистрацията!");
+      setErrorMessage(
+        error.response?.data.message || "Грешка при регистрацията!"
+      );
       console.error("Грешка при регистрация:", error);
     }
   };
 
   return (
-    <div className="sign-up-page-container">
+    <div className="sign-up-page-container pages">
       <form className="sign-up-form" onSubmit={handleSignUp}>
         <h2>Създаване на нов акаунт</h2>
         <div className="inputs-container">

@@ -10,7 +10,7 @@ export default function ProductsDashboard() {
   };
 
   return (
-    <>
+    <div className="pages">
       <div className="page-header">
         <h1>Продукти</h1>
       </div>
@@ -18,6 +18,6 @@ export default function ProductsDashboard() {
         <AddProductForm onProductsUpdate={handleProductsUpdate} />
         <DashboardProductsContainer productsUpdated={productsUpdated} />
       </div>
-    </>
+    </div>
   );
 }

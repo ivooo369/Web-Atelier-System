@@ -29,11 +29,9 @@ export default function FramesAccordion({
   useEffect(() => {
     const fetchFrames = async () => {
       try {
-        console.log("Fetching frames for category:", "Рамки");
         const response = await axios.get(`${apiUrl}/calculator`, {
           params: { category: "Рамки" },
         });
-        console.log("Response data:", response.data);
         setFrames(response.data);
       } catch (error) {
         console.error("Грешка при извличане на рамките:", error);

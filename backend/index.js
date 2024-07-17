@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import path from "path";
+import helmet from "helmet";
 import { fileURLToPath } from "url";
 import authRouter from "./auth.js";
 import authAdminRouter from "./authAdminRoutes.js";
@@ -26,6 +27,7 @@ const corsOptions = {
 const app = express();
 app.use(express.json());
 app.use(cors(corsOptions));
+app.use(helmet());
 
 app.use("/", express.static(path.join(__dirname, "..", "dist")));
 app.use(

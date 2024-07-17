@@ -1,18 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
-import axios from "axios";
 import PaginationButtons from "../../layouts/others/PaginationButtons";
 import BasicSelect from "../../layouts/others/Select";
 import ProductCard from "../../components/ProductCard";
-import useProductSorting from "../../components/useProductSorting";
+import Skeleton from "@mui/material/Skeleton";
+import useProductSorting from "../../utils/useProductSorting";
 import { sortOptions } from "../../utils/sortOptions";
 import { matboardMaterialOptions } from "../../utils/selectOptions";
+import axios from "axios";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function MatboardsPage() {
   const [selectedMaterial, setSelectedMaterial] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(true);
   const productsPerPage = 20;
 
   const { products, sortOption, handleSortChange, setProducts } =
@@ -32,6 +34,8 @@ export default function MatboardsPage() {
         setProducts(response.data);
       } catch (error) {
         console.error("Грешка при извличане на паспартутата:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -57,7 +61,7 @@ export default function MatboardsPage() {
   };
 
   return (
-    <div className="site-products-container">
+    <div className="site-products-container pages">
       <header className="page-header">
         <span className="material-symbols-outlined">draft</span>
         <h1>Паспарту</h1>
@@ -81,30 +85,34 @@ export default function MatboardsPage() {
             fullWidth
           />
         </div>
-        {filteredMatboards.length > 0 && (
+        {loading || filteredMatboards.length > 0 ? (
           <PaginationButtons
             productsPerPage={productsPerPage}
             totalProducts={filteredMatboards.length}
             paginate={paginate}
             currentPage={currentPage}
           />
-        )}
+        ) : null}
       </div>
-      {filteredMatboards.length > 0 ? (
+      {loading ? (
+        <div className="loading-container">
+          {[...Array(productsPerPage)].map((_, index) => (
+            <Skeleton key={index} animation="wave" height={150} />
+          ))}
+        </div>
+      ) : filteredMatboards.length > 0 ? (
         <div>
           <div className="products-grid-container">
             {currentMatboards.map((matboard) => (
               <ProductCard product={matboard} key={matboard.product_id} />
             ))}
           </div>
-          {filteredMatboards.length > 0 && (
-            <PaginationButtons
-              productsPerPage={productsPerPage}
-              totalProducts={filteredMatboards.length}
-              paginate={paginate}
-              currentPage={currentPage}
-            />
-          )}
+          <PaginationButtons
+            productsPerPage={productsPerPage}
+            totalProducts={filteredMatboards.length}
+            paginate={paginate}
+            currentPage={currentPage}
+          />
         </div>
       ) : (
         <p className="no-products-found-message">Няма намерени продукти!</p>

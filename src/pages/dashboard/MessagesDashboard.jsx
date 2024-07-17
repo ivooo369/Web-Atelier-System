@@ -1,6 +1,6 @@
+import "../../styles/dashboard/MessagesDashboard.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import "../../styles/dashboard/MessagesDashboard.css";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -54,7 +54,7 @@ export default function MessagesDashboard() {
   };
 
   return (
-    <>
+    <div className="pages">
       <div className="page-header">
         <h1>Съобщения</h1>
       </div>
@@ -107,6 +107,6 @@ export default function MessagesDashboard() {
           </ul>
         )}
       </div>
-    </>
+    </div>
   );
 }

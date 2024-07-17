@@ -9,6 +9,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import axios from "axios";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -48,35 +49,30 @@ export default function SignInPage() {
     e.preventDefault();
 
     try {
-      const response = await fetch(`${apiUrl}/sign-in`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ customerEmail, customerPassword }),
+      const response = await axios.post(`${apiUrl}/sign-in`, {
+        customerEmail,
+        customerPassword,
       });
-      const data = await response.json();
 
-      if (!response.ok) {
-        throw new Error(data.message);
-      }
-      localStorage.setItem("customerAuthToken", data.token);
+      localStorage.setItem("customerAuthToken", response.data.token);
       localStorage.setItem("customerEmail", customerEmail);
       setSuccessMessage("Успешно влизане в акаунта!");
       setErrorMessage("");
       setTimeout(() => {
         navigateTo("/");
         window.location.reload();
-      }, 3000);
+      }, 1500);
     } catch (error) {
       console.error("Грешка при влизане в акаунта!", error.message);
-      setErrorMessage(error.message);
+      setErrorMessage(
+        error.response?.data.message || "Грешка при влизане в акаунта!"
+      );
       setSuccessMessage("");
     }
   };
 
   return (
-    <div className="sign-in-page-container">
+    <div className="sign-in-page-container pages">
       <form className="sign-in-form" onSubmit={handleSignIn}>
         <h2>Влизане в акаунт</h2>
         <div className="inputs-container">

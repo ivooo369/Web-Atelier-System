@@ -1,13 +1,15 @@
 import "../../styles/site/ProductDetailsPage.css";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import { Link } from "react-router-dom";
+import Skeleton from "@mui/material/Skeleton";
+import axios from "axios";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function ProductDetailsPage() {
   const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
   const { productId } = useParams();
 
   useEffect(() => {
@@ -19,18 +21,38 @@ export default function ProductDetailsPage() {
         setProduct(response.data);
       } catch (error) {
         console.error("Грешка при извличане на детайлите за продукта:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchProductDetails();
   }, [productId]);
 
+  if (loading) {
+    return (
+      <div className="pages">
+        <header className="page-header">
+          <h1>Детайли за продукта</h1>
+        </header>
+        <div className="product-details-container">
+          <Skeleton variant="text" width="60%" animation="wave" />
+          <Skeleton variant="rectangular" height={400} animation="wave" />
+          <Skeleton variant="text" width="80%" animation="wave" />
+          <Skeleton variant="text" width="70%" animation="wave" />
+          <Skeleton variant="text" width="80%" animation="wave" />
+          <Skeleton variant="text" width="50%" animation="wave" />
+        </div>
+      </div>
+    );
+  }
+
   if (!product) {
-    return <p>Зареждане на данни за продукта...</p>;
+    return <p>Няма намерени данни за продукта!</p>;
   }
 
   return (
-    <>
+    <div className="pages">
       <header className="page-header">
         <h1>Детайли за продукта</h1>
       </header>
@@ -105,6 +127,6 @@ export default function ProductDetailsPage() {
         </p>
         <p className="product-description">{product.product_description}</p>
       </div>
-    </>
+    </div>
   );
 }

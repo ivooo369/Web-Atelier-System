@@ -1,9 +1,12 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import axios from "axios";
+
+const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function PurchaseForm({
   userData,
@@ -13,14 +16,13 @@ export default function PurchaseForm({
 }) {
   const [emailError, setEmailError] = useState(false);
   const [notification, setNotification] = useState({ message: "", type: "" });
+  const navigateTo = useNavigate();
 
   useEffect(() => {
     const customerEmail = localStorage.getItem("customerEmail");
     if (customerEmail) {
       axios
-        .get(
-          `https://website-project-lbpd.onrender.com/calculator/cart/user/?email=${customerEmail}`
-        )
+        .get(`${apiUrl}/calculator/cart/user/?email=${customerEmail}`)
         .then((response) => {
           const user = response.data;
           setUserData({
@@ -98,12 +100,8 @@ export default function PurchaseForm({
     };
 
     axios
-      .post(
-        "https://website-project-lbpd.onrender.com/calculator/cart",
-        orderData
-      )
-      .then((response) => {
-        console.log(response.data);
+      .post(`${apiUrl}/calculator/cart`, orderData)
+      .then(() => {
         clearCart();
         setUserData({
           ...userData,
@@ -113,6 +111,9 @@ export default function PurchaseForm({
           message: "Поръчката е успешно изпратена!",
           type: "success",
         });
+        setTimeout(() => {
+          navigateTo("/");
+        }, 1000);
       })
       .catch((error) => {
         console.error("Грешка при изпращане на поръчка:", error);

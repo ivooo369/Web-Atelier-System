@@ -1,9 +1,9 @@
+import "../../styles/calculator/CartPage.css";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import Button from "@mui/material/Button";
 import PurchaseForm from "../../components/PurchaseForm";
 import Cart from "../../components/Cart";
-import "../../styles/calculator/CartPage.css";
+import axios from "axios";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -79,7 +79,7 @@ export default function CartPage() {
   };
 
   return (
-    <div className="cart-page">
+    <div className="cart-page pages">
       <div className="content-containers">
         <div className="titles-container">
           <h1>Количка ({cartItems.length})</h1>

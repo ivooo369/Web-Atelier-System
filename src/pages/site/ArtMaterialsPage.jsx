@@ -1,16 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
-import axios from "axios";
 import PaginationButtons from "../../layouts/others/PaginationButtons";
 import BasicSelect from "../../layouts/others/Select";
 import ProductCard from "../../components/ProductCard";
-import useProductSorting from "../../components/useProductSorting";
+import Skeleton from "@mui/material/Skeleton";
+import useProductSorting from "../../utils/useProductSorting";
 import { sortOptions } from "../../utils/sortOptions";
+import axios from "axios";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function ArtMaterialsPage() {
   const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(true);
   const productsPerPage = 20;
 
   const { products, sortOption, handleSortChange, setProducts } =
@@ -25,6 +27,8 @@ export default function ArtMaterialsPage() {
         setProducts(response.data);
       } catch (error) {
         console.error("Грешка при извличане на арт материалите:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -43,7 +47,7 @@ export default function ArtMaterialsPage() {
   };
 
   return (
-    <div className="site-products-container">
+    <div className="site-products-container pages">
       <header className="page-header">
         <span className="material-symbols-outlined">palette</span>
         <h1>Арт материали</h1>
@@ -66,7 +70,13 @@ export default function ArtMaterialsPage() {
           />
         )}
       </div>
-      {products.length > 0 ? (
+      {loading ? (
+        <div className="loading-container">
+          {[...Array(productsPerPage)].map((_, index) => (
+            <Skeleton key={index} animation="wave" height={150} />
+          ))}
+        </div>
+      ) : products.length > 0 ? (
         <div>
           <div className="products-grid-container">
             {currentArtMaterials.map((artMaterial) => (

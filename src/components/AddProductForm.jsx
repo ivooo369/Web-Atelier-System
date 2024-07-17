@@ -1,17 +1,14 @@
 /* eslint-disable react/prop-types */
 import "../styles/dashboard/ProductsDashboard.css";
 import { useState, useEffect, useRef } from "react";
-import { TextField, Button, Box } from "@mui/material";
-import BasicSelect from "../layouts/others/Select";
-import {
-  productFormCategories,
-  frameUsageFormOptions,
-  profileUsageFormOptions,
-  gobelinTypesFormOptions,
-} from "../utils/selectOptions";
+import { Button, Box } from "@mui/material";
+import FormField from "../layouts/others/FormField";
 import { requiredFieldsByCategory } from "../utils/requiredFields";
+import { getFormFields } from "../utils/formFields";
+import axios from "axios";
 
 const apiUrl = import.meta.env.VITE_API_URL;
+const functionOfTheComponent = "add";
 
 export default function AddProductForm({ onProductsUpdate }) {
   const [formData, setFormData] = useState({
@@ -30,6 +27,12 @@ export default function AddProductForm({ onProductsUpdate }) {
   const [materialOptions, setMaterialOptions] = useState([]);
   const [notification, setNotification] = useState({ message: "", type: "" });
   const fileInputRef = useRef(null);
+
+  const fields = getFormFields(
+    formData,
+    materialOptions,
+    functionOfTheComponent
+  );
 
   useEffect(() => {
     if (notification.message) {
@@ -54,19 +57,6 @@ export default function AddProductForm({ onProductsUpdate }) {
     }
   }, [formData.productCategory]);
 
-  const getTypeOptions = (category) => {
-    switch (category) {
-      case "Рамки":
-        return frameUsageFormOptions;
-      case "Профили":
-        return profileUsageFormOptions;
-      case "Гоблени":
-        return gobelinTypesFormOptions;
-      default:
-        return [];
-    }
-  };
-
   const handleChange = (field, value) => {
     if (field === "productImage") {
       const file = value;
@@ -90,7 +80,7 @@ export default function AddProductForm({ onProductsUpdate }) {
 
     if (!formData.productCategory) {
       setNotification({
-        message: "Please select a product category!",
+        message: "Моля, изберете категория на продукта!",
         type: "error",
       });
       return;
@@ -101,7 +91,7 @@ export default function AddProductForm({ onProductsUpdate }) {
 
     if (missingFields.length > 0) {
       const errorMessage =
-        "Please fill in all required fields and upload a product image!";
+        "Моля, попълнете всички задължителни полета и качете снимка на продукта!";
       setNotification({ message: errorMessage, type: "error" });
       return;
     }
@@ -117,20 +107,9 @@ export default function AddProductForm({ onProductsUpdate }) {
       }
     });
 
-    fetch(`${apiUrl}/admin/dashboard/products`, {
-      method: "POST",
-      body: formDataWithImage,
-    })
-      .then((response) => {
-        if (!response.ok) {
-          return response.json().then((error) => {
-            throw new Error(error.error);
-          });
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Success:", data);
+    axios
+      .post(`${apiUrl}/admin/dashboard/products`, formDataWithImage)
+      .then(() => {
         setNotification({
           message: "Продуктът е добавен успешно!",
           type: "success",
@@ -171,74 +150,6 @@ export default function AddProductForm({ onProductsUpdate }) {
     }
   };
 
-  const formFields = [
-    {
-      label: "Категория",
-      field: "productCategory",
-      type: "select",
-      menuItems: productFormCategories,
-    },
-    { label: "Наименование", field: "productName", type: "text" },
-    {
-      label: "Материал",
-      field: "productMaterial",
-      type: "select",
-      menuItems: materialOptions.map((option) => ({
-        value: option,
-        label: option,
-      })),
-      disabled:
-        formData.productCategory === "" ||
-        ["Рамки", "Профили", "Паспарту"].includes(formData.productCategory)
-          ? false
-          : true,
-    },
-    {
-      label: formData.productCategory === "Гоблени" ? "Вид" : "Предназначение",
-      field: "productType",
-      type: "select",
-      menuItems: getTypeOptions(formData.productCategory),
-      disabled:
-        formData.productCategory === ""
-          ? false
-          : !["Рамки", "Профили", "Гоблени"].includes(formData.productCategory),
-    },
-    {
-      label: "Ширина (мм)",
-      field: "productWidth",
-      type: "number",
-    },
-    {
-      label: "Височина (мм)",
-      field: "productHeight",
-      type: "number",
-    },
-    {
-      label:
-        "Цена " +
-        (formData.productCategory === "Рамки"
-          ? "за труд (лв.)"
-          : formData.productCategory === "Профили"
-          ? "(лв./м)"
-          : formData.productCategory === "Паспарту"
-          ? "(лв./бр.)"
-          : "(лв.)"),
-
-      field: "productPrice",
-      type: "number",
-    },
-    { label: "Описание", field: "productDescription", type: "textarea" },
-    { label: "Изображение", field: "productImage", type: "file" },
-  ].filter((field) => {
-    if (formData.productCategory === "Арт материали") {
-      return field.field !== "productWidth" && field.field !== "productHeight";
-    } else if (formData.productCategory === "") {
-      return true;
-    } else {
-      return true;
-    }
-  });
-
   return (
     <form
       className="product-forms add-product-form"
@@ -246,7 +157,7 @@ export default function AddProductForm({ onProductsUpdate }) {
     >
       <h2 className="products-dashboard-titles">Добавяне на нов продукт</h2>
       <Box>
-        {formFields.map((field, index) => {
+        {fields.map((field, index) => {
           if (field.disabled) {
             return null;
           }
@@ -258,6 +169,7 @@ export default function AddProductForm({ onProductsUpdate }) {
                   value={formData[field.field]}
                   handleChange={(value) => handleChange(field.field, value)}
                   fileInputRef={field.type === "file" ? fileInputRef : null}
+                  functionOfTheComponent={functionOfTheComponent}
                 />
               )}
             </Box>
@@ -296,71 +208,4 @@ export default function AddProductForm({ onProductsUpdate }) {
       )}
     </form>
   );
-}
-
-function FormField({
-  label,
-  field,
-  type,
-  menuItems,
-  value = "",
-  handleChange,
-  fileInputRef,
-}) {
-  if (type === "select") {
-    return (
-      <BasicSelect
-        label={label}
-        labelId={`${field}-label`}
-        menuItems={menuItems}
-        value={value}
-        handleChange={handleChange}
-        fullWidth
-      />
-    );
-  } else if (type === "textarea") {
-    return (
-      <TextField
-        label={label}
-        multiline
-        rows={3}
-        value={value}
-        onChange={(e) => handleChange(e.target.value)}
-        fullWidth
-      />
-    );
-  } else if (type === "file") {
-    return (
-      <Box>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e) => handleChange(e.target.files[0])}
-          style={{ display: "none" }}
-          id="upload-button"
-          ref={fileInputRef}
-        />
-        <label htmlFor="upload-button">
-          <Button
-            variant="outlined"
-            component="span"
-            fullWidth
-            sx={{ textTransform: "none", height: "100%" }}
-          >
-            {value && value.name ? value.name : "Качете изображение"}
-          </Button>
-        </label>
-      </Box>
-    );
-  } else {
-    return (
-      <TextField
-        label={label}
-        type={type}
-        value={value}
-        onChange={(e) => handleChange(e.target.value)}
-        fullWidth
-      />
-    );
-  }
 }

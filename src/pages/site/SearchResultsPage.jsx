@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { useLocation } from "react-router-dom";
 import ProductCard from "../../components/ProductCard";
+import Skeleton from "@mui/material/Skeleton";
+import axios from "axios";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -20,9 +21,9 @@ export default function SearchResultsPage() {
           `${apiUrl}/products/search?name=${encodeURIComponent(searchTerm)}`
         );
         setProducts(response.data);
-        setLoading(false);
       } catch (error) {
         console.error(error);
+      } finally {
         setLoading(false);
       }
     };
@@ -31,13 +32,19 @@ export default function SearchResultsPage() {
   }, [location.search]);
 
   return (
-    <div className="results-page">
+    <div className="results-page pages">
       <header className="page-header">
         <span className="material-symbols-outlined">search</span>
         <h1>Резултати от търсенето</h1>
       </header>
       {loading ? (
-        <p>Loading...</p>
+        <div className="loading-container">
+          {[...Array(8)].map((_, index) => (
+            <div key={index} className="skeleton-product-card">
+              <Skeleton animation="wave" height={150} />
+            </div>
+          ))}
+        </div>
       ) : products.length > 0 ? (
         <div className="products-grid-container">
           {products.map((product) => (

@@ -1,7 +1,8 @@
+import "../../styles/dashboard/Dashboard.css";
 import { useEffect, useState } from "react";
 import { useNavigate, Link, Outlet } from "react-router-dom";
 import Button from "@mui/material/Button";
-import "../../styles/dashboard/Dashboard.css";
+import axios from "axios";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -28,19 +29,18 @@ export default function Dashboard() {
 
   async function fetchData() {
     try {
-      const response = await fetch(`${apiUrl}/admin/dashboard`);
-      if (!response.ok) {
+      const response = await axios.get(`${apiUrl}/admin/dashboard`);
+      if (!response.status === 200) {
         throw new Error("Грешка при извличане на броя!");
       }
-      const data = await response.json();
-      setCounts(data);
+      setCounts(response.data);
     } catch (error) {
       console.error(error);
     }
   }
 
   return (
-    <div className="dashboard-container">
+    <div className="dashboard-container pages">
       <header className="dashboard-header">
         <h1 className="dashboard-title">Администраторски панел</h1>
         <div className="dashboard-links-container">

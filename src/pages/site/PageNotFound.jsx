@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function PageNotFount() {
   return (
-    <div className="page-not-found-container">
+    <div className="page-not-found-container pages">
       <div className="page-not-found-content">
         <span className="material-symbols-outlined">warning</span>
         <div className="page-not-found-text">

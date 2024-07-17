@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function HomePage() {
   return (
-    <>
+    <div className="pages">
       <header className="atelier-information-area">
         <div className="phone-and-location-container">
           <span className="material-symbols-outlined">call</span>
@@ -180,6 +180,6 @@ export default function HomePage() {
           </p>
         </div>
       </main>
-    </>
+    </div>
   );
 }

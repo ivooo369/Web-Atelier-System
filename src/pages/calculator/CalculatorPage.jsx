@@ -154,7 +154,7 @@ export default function CalculatorPage() {
   };
 
   return (
-    <div className="calculator-page" style={{ backgroundColor: bgColor }}>
+    <div className="calculator-page pages" style={{ backgroundColor: bgColor }}>
       <div className="frame-container">
         <CalculatorVizualization
           containerWidth={containerWidth}

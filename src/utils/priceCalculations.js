@@ -1,14 +1,18 @@
 import axios from "axios";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export const fetchPrices = async (frameName, frameCategory) => {
   try {
-    const response = await axios.get("/calculator/price", {
+    const response = await axios.get(`${apiUrl}/calculator/price`, {
       params: { frameName, frameCategory },
     });
 
+    const { profilePrice, laborPrice } = response.data;
+
     return {
-      profilePricePerMeter: parseFloat(response.data.profilePrice),
-      laborPrice: parseFloat(response.data.laborPrice),
+      profilePricePerMeter: parseFloat(profilePrice),
+      laborPrice: parseFloat(laborPrice),
     };
   } catch (error) {
     console.error("Грешка при извличане на цените:", error);
@@ -17,10 +21,10 @@ export const fetchPrices = async (frameName, frameCategory) => {
 };
 
 export const calculateSinglePrice = (
-  profilePricePerMeter1,
-  laborPrice1,
-  profilePricePerMeter2,
-  laborPrice2,
+  profilePricePerMeterInnerFrame,
+  laborPriceInnerFrame,
+  profilePricePerMeterOuterFrame,
+  laborPriceOuterFrame,
   frameWidth,
   frameHeight,
   includeSubframe,
@@ -33,25 +37,46 @@ export const calculateSinglePrice = (
   matboardWidth
 ) => {
   if (
-    !isNaN(profilePricePerMeter1) &&
+    !isNaN(profilePricePerMeterInnerFrame) &&
     !isNaN(frameWidth) &&
     !isNaN(frameHeight) &&
-    !isNaN(laborPrice1) &&
-    !isNaN(frameHeight) 
+    !isNaN(laborPriceInnerFrame) &&
+    !isNaN(frameHeight)
   ) {
     const perimeter = calculatePerimeter(frameWidth, frameHeight);
-    const totalProfilePrice1 = calculateProfilePrice(perimeter, profilePricePerMeter1);
-    const totalProfilePrice2 = !isNaN(profilePricePerMeter2)
-      ? calculateProfilePrice(perimeter, profilePricePerMeter2)
+    const totalProfilePrice1 = calculateProfilePrice(
+      perimeter,
+      profilePricePerMeterInnerFrame
+    );
+    const totalProfilePrice2 = !isNaN(profilePricePerMeterOuterFrame)
+      ? calculateProfilePrice(perimeter, profilePricePerMeterOuterFrame)
       : 0;
-    const totalLaborPrice = laborPrice1 + (laborPrice2 || 0);
-    const subframePrice = includeSubframe ? calculateSubframePrice(perimeter) : 0;
-    const gobelinStretchingPrice = includeGobelinStretching ? calculateGobelinStretchingPrice(perimeter) : 0;
-    const hangingOptionPrice = includeHangingOption ? calculateHangingOptionPrice(frameWidth, frameHeight, includeHangingOption) : 0;
-    const backingPrice = includeBack ? calculateBackingPrice(frameWidth, frameHeight) : 0;
-    const glassPrice = includeGlass ? calculateGlassPrice(frameWidth, frameHeight) : 0;
-    const mirrorPrice = includeMirror ? calculateMirrorPrice(frameWidth, frameHeight) : 0;
-    const matboardPrice = includeMatboard ? calculateMatboardPrice(frameWidth, frameHeight, matboardWidth) : 0;
+    const totalLaborPrice = laborPriceInnerFrame + (laborPriceOuterFrame || 0);
+    const subframePrice = includeSubframe
+      ? calculateSubframePrice(perimeter)
+      : 0;
+    const gobelinStretchingPrice = includeGobelinStretching
+      ? calculateGobelinStretchingPrice(perimeter)
+      : 0;
+    const hangingOptionPrice = includeHangingOption
+      ? calculateHangingOptionPrice(
+          frameWidth,
+          frameHeight,
+          includeHangingOption
+        )
+      : 0;
+    const backingPrice = includeBack
+      ? calculateBackingPrice(frameWidth, frameHeight)
+      : 0;
+    const glassPrice = includeGlass
+      ? calculateGlassPrice(frameWidth, frameHeight)
+      : 0;
+    const mirrorPrice = includeMirror
+      ? calculateMirrorPrice(frameWidth, frameHeight)
+      : 0;
+    const matboardPrice = includeMatboard
+      ? calculateMatboardPrice(frameWidth, frameHeight, matboardWidth)
+      : 0;
 
     return calculateTotalPrice(
       totalProfilePrice1 + totalProfilePrice2,
@@ -79,7 +104,16 @@ export const calculateTotalPrice = (
   mirrorPrice,
   matboardPrice
 ) => {
-  const totalPrice = totalProfilePrice + laborPrice + subframePrice + gobelinStretchingPrice + hangingOptionPrice + backingPrice + glassPrice + mirrorPrice + matboardPrice;
+  const totalPrice =
+    totalProfilePrice +
+    laborPrice +
+    subframePrice +
+    gobelinStretchingPrice +
+    hangingOptionPrice +
+    backingPrice +
+    glassPrice +
+    mirrorPrice +
+    matboardPrice;
   return parseFloat(totalPrice.toFixed(2));
 };
 
@@ -106,7 +140,11 @@ export const calculateGobelinStretchingPrice = (perimeter) => {
   return perimeter * 0.05;
 };
 
-export const calculateHangingOptionPrice = (frameWidth, frameHeight, includeHangingOption) => {
+export const calculateHangingOptionPrice = (
+  frameWidth,
+  frameHeight,
+  includeHangingOption
+) => {
   if (includeHangingOption !== "не") {
     const largerDimension = Math.max(frameWidth, frameHeight);
     if (largerDimension <= 30) {
@@ -143,10 +181,10 @@ export const calculateMirrorPrice = (frameWidth, frameHeight) => {
 export const calculateMatboardPrice = (
   frameWidth,
   frameHeight,
-  matboardWidth,
+  matboardWidth
 ) => {
   if (matboardWidth >= frameWidth || matboardWidth >= frameHeight) {
-    return 0; 
+    return 0;
   }
   const totalWidth = frameWidth + 2 * matboardWidth;
   const totalHeight = frameHeight + 2 * matboardWidth;
@@ -156,6 +194,3 @@ export const calculateMatboardPrice = (
 
   return parseFloat(matboardPrice.toFixed(2));
 };
-
-
-

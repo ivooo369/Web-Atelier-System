@@ -3,8 +3,8 @@ import "../../styles/dashboard/AdminLogin.css";
 import "../../styles/others/MediaQueries.css";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import axios from "axios";
 import Button from "@mui/material/Button";
+import axios from "axios";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -36,7 +36,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="login-form-container">
+    <div className="login-form-container pages">
       <h3 className="login-form-title">Вход в администраторския панел</h3>
       <form className="admin-login-form" onSubmit={loginUser}>
         <div className="form-row">
