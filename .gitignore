@@ -15,7 +15,6 @@ dist-ssr
 .env.development
 .env.production
 package-lock.json
-productImages
 
 # Editor directories and files
 .vscode/*
