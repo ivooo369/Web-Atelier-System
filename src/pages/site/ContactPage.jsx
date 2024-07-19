@@ -1,6 +1,7 @@
 import "../../App.css";
 import "../../styles/site/ContactPage.css";
 import ContactForm from "../../components/ContactForm";
+import handleFullScreen from "../../utils/handleFullScreen";
 
 export default function ContactPage() {
   return (
@@ -10,12 +11,14 @@ export default function ContactPage() {
         <h1>Контакти</h1>
       </header>
       <div className="contacts-page-container">
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2877.664540324601!2d25.952323976654434!3d43.842053140195155!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40ae61f62eb25abb%3A0xdf9889386fa2171f!2z0JHRgNC40LrRgQ!5e0!3m2!1sbg!2sbg!4v1708361216627!5m2!1sbg!2sbg"
-          allowFullScreen=""
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-        ></iframe>
+        <img
+          src="./assets/images/google-maps-image.png"
+          alt="Google Maps Image"
+          className="google-maps-image"
+          onClick={() =>
+            handleFullScreen(document.querySelector(".google-maps-image"))
+          }
+        />
         <div
           className="contacts-information-container"
           style={{ display: "flex" }}

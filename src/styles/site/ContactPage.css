@@ -17,13 +17,10 @@
   gap: 1rem;
 }
 
-iframe {
-  margin: 0 auto;
-  border-radius: 3px;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  width: 75%;
-  height: 20rem;
-  border: none;
+.google-maps-image {
+  width: 1000px;
+  margin: auto;
+  cursor: pointer;
 }
 
 #contact-form-container {

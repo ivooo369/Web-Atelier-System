@@ -50,8 +50,8 @@ export default function CalculatorPage() {
     }
   }, [location.search]);
 
-  const handleFrameSelect = (frameName, isFrame1) => {
-    if (isFrame1) {
+  const handleFrameSelect = (frameName, isInnerFrame) => {
+    if (isInnerFrame) {
       setSelectedInnerFrameName(frameName);
     } else {
       setSelectedOuterFrameName(frameName);
@@ -138,21 +138,6 @@ export default function CalculatorPage() {
     }
   };
 
-  const handleFullScreen = (element) => {
-    if (element.requestFullscreen) {
-      element.requestFullscreen();
-    } else if (element.mozRequestFullScreen) {
-      // Firefox
-      element.mozRequestFullScreen();
-    } else if (element.webkitRequestFullscreen) {
-      // Chrome, Safari and Opera
-      element.webkitRequestFullscreen();
-    } else if (element.msRequestFullscreen) {
-      // IE/Edge
-      element.msRequestFullscreen();
-    }
-  };
-
   return (
     <div className="calculator-page pages" style={{ backgroundColor: bgColor }}>
       <div className="frame-container">
@@ -169,7 +154,6 @@ export default function CalculatorPage() {
           selectedFrameHeight={selectedFrameHeight}
           previewImage={previewImage}
           selectedMatboardWidth={selectedMatboardWidth}
-          handleFullScreen={handleFullScreen}
         />
         <div className="bg-color-and-image-choice-container">
           <div className="button-wrapper">

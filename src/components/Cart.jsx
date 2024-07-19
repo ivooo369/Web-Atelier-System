@@ -12,11 +12,11 @@ export default function Cart({ cartItems, deleteItem }) {
           <Card key={index} className="purchase-cards">
             <CardContent>
               <Typography variant="body1" color="textSecondary">
-                Вътрешна рамка: {item.frame1}
+                Вътрешна рамка: {item.innerFrame}
               </Typography>
-              {item.frame2 && (
+              {item.outerFrame && (
                 <Typography variant="body1" color="textSecondary">
-                  Външна рамка: {item.frame2}
+                  Външна рамка: {item.outerFrame}
                 </Typography>
               )}
               <Typography variant="body1" color="textSecondary">

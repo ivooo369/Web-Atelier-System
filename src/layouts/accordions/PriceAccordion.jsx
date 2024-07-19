@@ -101,8 +101,8 @@ export default function PriceAccordion({
         : 1;
 
       const cartData = {
-        frame1: selectedInnerFrameName,
-        frame2: selectedOuterFrameName,
+        innerFrame: selectedInnerFrameName,
+        outerFrame: selectedOuterFrameName,
         frameWidth: frameWidth,
         frameHeight: frameHeight,
         matboard: selectedMatboardName,

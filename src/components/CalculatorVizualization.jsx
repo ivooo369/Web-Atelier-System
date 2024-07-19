@@ -1,4 +1,6 @@
 /* eslint-disable react/prop-types */
+import handleFullScreen from "../utils/handleFullScreen";
+
 export default function CalculatorVizualization({
   containerWidth,
   containerHeight,
@@ -12,7 +14,6 @@ export default function CalculatorVizualization({
   selectedFrameHeight,
   previewImage,
   selectedMatboardWidth,
-  handleFullScreen,
 }) {
   return (
     <div
