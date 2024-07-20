@@ -27,7 +27,24 @@ const corsOptions = {
 const app = express();
 app.use(express.json());
 app.use(cors(corsOptions));
-app.use(helmet());
+
+app.use(
+  helmet.contentSecurityPolicy({
+    useDefaults: false,
+    directives: {
+      defaultSrc: ["'self'"],
+      imgSrc: [
+        "'self'",
+        "data:",
+        "https://api.maptiler.com",
+        "https://unpkg.com",
+      ],
+      scriptSrc: ["'self'", "https://unpkg.com"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://unpkg.com"],
+      connectSrc: ["'self'", "https://api.maptiler.com"],
+    },
+  })
+);
 
 app.use(express.static(path.join(__dirname, "..", "dist")));
 app.use(
