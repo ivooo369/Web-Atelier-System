@@ -40,7 +40,18 @@ app.use(
         "https://unpkg.com",
       ],
       scriptSrc: ["'self'", "https://unpkg.com"],
-      styleSrc: ["'self'", "'unsafe-inline'", "https://unpkg.com"],
+      styleSrc: [
+        "'self'",
+        "'unsafe-inline'",
+        "https://unpkg.com",
+        "https://fonts.googleapis.com",
+      ],
+      styleSrcElem: [
+        "'self'",
+        "'unsafe-inline'",
+        "https://unpkg.com",
+        "https://fonts.googleapis.com",
+      ],
       connectSrc: ["'self'", "https://api.maptiler.com"],
     },
   })
