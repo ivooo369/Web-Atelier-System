@@ -29,7 +29,7 @@ app.use(express.json());
 app.use(cors(corsOptions));
 app.use(helmet());
 
-app.use("/", express.static(path.join(__dirname, "..", "dist")));
+app.use(express.static(path.join(__dirname, "..", "dist")));
 app.use(
   "/assets",
   express.static(path.join(__dirname, "..", "dist", "assets"))
@@ -46,8 +46,12 @@ app.use("/admin/dashboard/messages", messagesRoutes);
 app.use("/admin/dashboard/orders", ordersRoutes);
 app.use("/calculator", calculatorRoutes);
 
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "..", "dist", "index.html"));
+});
+
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
-  console.log(`Сървърът е стартиран на порт ${port}`);
+  console.log(`Server is running on port ${port}`);
 });
