@@ -199,7 +199,7 @@ svg {
   padding: 1rem;
   font-size: 1rem;
   box-sizing: border-box;
-  border: 1px solid black;
+  border: 1px solid;
   border-radius: 5px;
 }
 
@@ -223,8 +223,8 @@ label:hover {
   margin: 1.5rem auto;
   text-align: left;
   padding: 1rem 0;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
 }
 
 .total-price-text {
@@ -323,7 +323,7 @@ label:hover {
 }
 
 .file-input {
-  border: 1px solid black;
+  border: 1px solid;
   border-radius: 5px;
   padding: 0.5rem;
   cursor: pointer;

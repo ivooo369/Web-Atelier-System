@@ -1,9 +1,21 @@
 import "../../App.css";
 import "../../styles/site/ContactPage.css";
 import ContactForm from "../../components/ContactForm";
-import handleFullScreen from "../../utils/handleFullScreen";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import L from "leaflet";
+
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl:
+    "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png",
+  iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png",
+  shadowUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png",
+});
 
 export default function ContactPage() {
+  const centerCoordinates = [43.8419, 25.9547];
+
   return (
     <div className="contacts-container pages">
       <header className="page-header">
@@ -11,18 +23,24 @@ export default function ContactPage() {
         <h1>Контакти</h1>
       </header>
       <div className="contacts-page-container">
-        <img
-          src="./assets/images/google-maps-image.png"
-          alt="Google Maps Image"
-          className="google-maps-image"
-          onClick={() =>
-            handleFullScreen(document.querySelector(".google-maps-image"))
-          }
-        />
-        <div
-          className="contacts-information-container"
-          style={{ display: "flex" }}
-        >
+        <div className="map-container">
+          <MapContainer
+            center={centerCoordinates}
+            zoom={15}
+            style={{ height: "100%", width: "100%", border: "3px double" }}
+          >
+            <TileLayer
+              url={
+                "https://api.maptiler.com/maps/basic/{z}/{x}/{y}.png?key=2qSkbNugJZHFID6tuGdb"
+              }
+              attribution='&copy; <a href="https://www.maptiler.com/copyright/" target="_blank">MapTiler</a> contributors'
+            />
+            <Marker position={centerCoordinates}>
+              <Popup>Atelier Briks, Ruse</Popup>
+            </Marker>
+          </MapContainer>
+        </div>
+        <div className="contacts-information-container">
           <div className="company-information" style={{ flex: 1 }}>
             <h2>БРИКС ООД</h2>
             <p className="address">

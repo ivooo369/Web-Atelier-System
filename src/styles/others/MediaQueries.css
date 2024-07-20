@@ -62,7 +62,7 @@
     text-align: center;
     gap: 3rem;
   }
-  .google-maps-image {
+  .map-container {
     width: 750px;
   }
   .company-information {
@@ -165,7 +165,7 @@
   .calculator-page .panel-headers {
     width: 90%;
   }
-  .google-maps-image {
+  .map-container {
     width: 500px;
   }
 }
@@ -264,7 +264,7 @@
     gap: 1rem;
     margin-top: 1rem;
   }
-  .google-maps-image {
+  .map-container {
     width: 400px;
   }
 }
@@ -353,7 +353,7 @@
   .cart-and-purchase-content .MuiCardContent-root {
     padding: 0.5rem;
   }
-  .google-maps-image {
+  .map-container {
     width: 350px;
   }
 }
@@ -383,7 +383,7 @@
   .file-input {
     border: none;
   }
-  .google-maps-image {
+  .map-container {
     width: 300px;
   }
 }
@@ -424,7 +424,7 @@
   .image-choice-container {
     border: none;
   }
-  .google-maps-image {
+  .map-container {
     width: 250px;
   }
 }

@@ -17,10 +17,15 @@
   gap: 1rem;
 }
 
-.google-maps-image {
+.map-container {
   width: 1000px;
+  height: 400px;
   margin: auto;
   cursor: pointer;
+}
+
+.leaflet-pane img {
+  box-shadow: none;
 }
 
 #contact-form-container {
