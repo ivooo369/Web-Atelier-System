@@ -52,6 +52,7 @@ app.use(
         "https://unpkg.com",
         "https://fonts.googleapis.com",
       ],
+      fontSrc: ["'self'", "https://fonts.gstatic.com"],
       connectSrc: ["'self'", "https://api.maptiler.com"],
     },
   })
