@@ -49,11 +49,10 @@ router.post("/", upload.single("image"), async (req, res) => {
       productDescription,
     } = req.body;
 
-    // Upload image to Cloudinary
     let cloudinaryImageUrl;
     if (req.file) {
       const result = await cloudinary.v2.uploader.upload(req.file.path, {
-        folder: "BRIKS", // Specify the folder here
+        folder: "BRIKS",
       });
       cloudinaryImageUrl = result.secure_url;
     }
@@ -77,7 +76,7 @@ router.post("/", upload.single("image"), async (req, res) => {
     switch (productCategory) {
       case "Паспарту":
         query =
-          "INSERT INTO products (product_category, product_name, product_material, product_width, product_height, product_price, product_description, product_image_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+          "INSERT INTO products (product_category, product_name, product_material, product_width, product_height, product_price, product_description, product_image_path, product_release_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         queryValues = [
           productCategory,
           productName,
@@ -87,11 +86,12 @@ router.post("/", upload.single("image"), async (req, res) => {
           productPrice,
           productDescription,
           cloudinaryImageUrl,
+          new Date(),
         ];
         break;
       case "Гоблени":
         query =
-          "INSERT INTO products (product_category, product_name, product_type, product_width, product_height, product_price, product_description, product_image_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+          "INSERT INTO products (product_category, product_name, product_type, product_width, product_height, product_price, product_description, product_image_path, product_release_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         queryValues = [
           productCategory,
           productName,
@@ -101,13 +101,14 @@ router.post("/", upload.single("image"), async (req, res) => {
           productPrice,
           productDescription,
           cloudinaryImageUrl,
+          new Date(),
         ];
         break;
       case "Пана":
       case "Огледала":
       case "Икони":
         query =
-          "INSERT INTO products (product_category, product_name, product_width, product_height, product_price, product_description, product_image_path) VALUES (?, ?, ?, ?, ?, ?, ?)";
+          "INSERT INTO products (product_category, product_name, product_width, product_height, product_price, product_description, product_image_path, product_release_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         queryValues = [
           productCategory,
           productName,
@@ -116,22 +117,24 @@ router.post("/", upload.single("image"), async (req, res) => {
           productPrice,
           productDescription,
           cloudinaryImageUrl,
+          new Date(),
         ];
         break;
       case "Арт материали":
         query =
-          "INSERT INTO products (product_category, product_name, product_price, product_description, product_image_path) VALUES (?, ?, ?, ?, ?)";
+          "INSERT INTO products (product_category, product_name, product_price, product_description, product_image_path, product_release_date) VALUES (?, ?, ?, ?, ?, ?)";
         queryValues = [
           productCategory,
           productName,
           productPrice,
           productDescription,
           cloudinaryImageUrl,
+          new Date(),
         ];
         break;
       default:
         query =
-          "INSERT INTO products (product_category, product_name, product_material, product_type, product_width, product_height, product_price, product_description, product_image_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+          "INSERT INTO products (product_category, product_name, product_material, product_type, product_width, product_height, product_price, product_description, product_image_path, product_release_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         queryValues = [
           productCategory,
           productName,
@@ -142,6 +145,7 @@ router.post("/", upload.single("image"), async (req, res) => {
           productPrice,
           productDescription,
           cloudinaryImageUrl,
+          new Date(),
         ];
         break;
     }
@@ -149,7 +153,6 @@ router.post("/", upload.single("image"), async (req, res) => {
     const [result] = await connection.query(query, queryValues);
     connection.release();
 
-    // Optionally delete the local file
     if (req.file) {
       fs.unlinkSync(req.file.path);
     }
@@ -227,7 +230,6 @@ router.put(
 
       let cloudinaryImageUrl;
       if (req.file) {
-        // Upload new image to Cloudinary with folder 'BRIKS'
         const result = await cloudinary.v2.uploader.upload(req.file.path, {
           folder: "BRIKS",
         });
@@ -330,16 +332,14 @@ router.put(
 
         await connection.query(query, queryValues);
 
-        // Optionally delete the old image from Cloudinary
         if (oldImageUrl) {
           const publicId = path.basename(
             oldImageUrl,
             path.extname(oldImageUrl)
           );
-          await cloudinary.v2.uploader.destroy(`BRIKS/${publicId}`); // Include the folder name
+          await cloudinary.v2.uploader.destroy(`BRIKS/${publicId}`);
         }
 
-        // Optionally delete the local file
         if (req.file) {
           fs.unlinkSync(req.file.path);
         }
@@ -461,10 +461,9 @@ router.delete("/:productId", async (req, res) => {
 
     res.status(200).json({ message: "Продуктът е изтрит успешно!" });
 
-    // Delete the image from Cloudinary
     if (imagePath) {
       const publicId = path.basename(imagePath, path.extname(imagePath));
-      await cloudinary.v2.uploader.destroy(`BRIKS/${publicId}`); // Include the folder name
+      await cloudinary.v2.uploader.destroy(`BRIKS/${publicId}`);
     }
   } catch (error) {
     console.error(error);
