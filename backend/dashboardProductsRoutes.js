@@ -4,6 +4,7 @@ import config from "./db.config.js";
 import fs from "fs";
 import multer from "multer";
 import path from "path";
+import cloudinary from "../cloudinary.config.js";
 import { getDirName } from "../src/utils/getDirName.js";
 
 const router = express.Router();
@@ -28,7 +29,6 @@ router.get("/", async (req, res) => {
     const connection = await pool.getConnection();
     const [rows] = await connection.query("SELECT * FROM products");
     connection.release();
-
     res.status(200).json(rows);
   } catch (error) {
     console.error(error);
@@ -49,12 +49,16 @@ router.post("/", upload.single("image"), async (req, res) => {
       productDescription,
     } = req.body;
 
-    const productImagePath = path.relative(
-      path.join(__dirname, "..", "public"),
-      req.file.path
-    );
-    const connection = await pool.getConnection();
+    // Upload image to Cloudinary
+    let cloudinaryImageUrl;
+    if (req.file) {
+      const result = await cloudinary.v2.uploader.upload(req.file.path, {
+        folder: "BRIKS", // Specify the folder here
+      });
+      cloudinaryImageUrl = result.secure_url;
+    }
 
+    const connection = await pool.getConnection();
     const [existingProduct] = await connection.query(
       "SELECT * FROM products WHERE product_category = ? AND product_name = ?",
       [productCategory, productName]
@@ -82,7 +86,7 @@ router.post("/", upload.single("image"), async (req, res) => {
           productHeight,
           productPrice,
           productDescription,
-          productImagePath,
+          cloudinaryImageUrl,
         ];
         break;
       case "Гоблени":
@@ -96,7 +100,7 @@ router.post("/", upload.single("image"), async (req, res) => {
           productHeight,
           productPrice,
           productDescription,
-          productImagePath,
+          cloudinaryImageUrl,
         ];
         break;
       case "Пана":
@@ -111,7 +115,7 @@ router.post("/", upload.single("image"), async (req, res) => {
           productHeight,
           productPrice,
           productDescription,
-          productImagePath,
+          cloudinaryImageUrl,
         ];
         break;
       case "Арт материали":
@@ -122,7 +126,7 @@ router.post("/", upload.single("image"), async (req, res) => {
           productName,
           productPrice,
           productDescription,
-          productImagePath,
+          cloudinaryImageUrl,
         ];
         break;
       default:
@@ -137,13 +141,18 @@ router.post("/", upload.single("image"), async (req, res) => {
           productHeight,
           productPrice,
           productDescription,
-          productImagePath,
+          cloudinaryImageUrl,
         ];
         break;
     }
 
     const [result] = await connection.query(query, queryValues);
     connection.release();
+
+    // Optionally delete the local file
+    if (req.file) {
+      fs.unlinkSync(req.file.path);
+    }
 
     res.status(201).json({
       message: "Продуктът е добавен успешно!",
@@ -166,7 +175,6 @@ router.get("/:productCategory", async (req, res) => {
       [productCategory]
     );
     connection.release();
-
     res.status(200).json(rows);
   } catch (error) {
     console.error(error);
@@ -217,12 +225,13 @@ router.put(
         productDescription,
       } = req.body;
 
-      let productImagePath;
-      if (req.file && req.file.path) {
-        productImagePath = path.relative(
-          path.join(__dirname, "..", "public"),
-          req.file.path
-        );
+      let cloudinaryImageUrl;
+      if (req.file) {
+        // Upload new image to Cloudinary with folder 'BRIKS'
+        const result = await cloudinary.v2.uploader.upload(req.file.path, {
+          folder: "BRIKS",
+        });
+        cloudinaryImageUrl = result.secure_url;
       }
 
       const connection = await pool.getConnection();
@@ -230,12 +239,12 @@ router.put(
       let query;
       let queryValues;
 
-      if (productImagePath) {
+      if (cloudinaryImageUrl) {
         const [oldProduct] = await connection.query(
           "SELECT product_image_path FROM products WHERE product_id = ?",
           [productId]
         );
-        const oldImagePath = oldProduct[0].product_image_path;
+        const oldImageUrl = oldProduct[0].product_image_path;
 
         switch (productCategory) {
           case "Паспарту":
@@ -249,7 +258,7 @@ router.put(
               productHeight,
               productPrice,
               productDescription,
-              productImagePath,
+              cloudinaryImageUrl,
               new Date(),
               productId,
             ];
@@ -265,7 +274,7 @@ router.put(
               productHeight,
               productPrice,
               productDescription,
-              productImagePath,
+              cloudinaryImageUrl,
               new Date(),
               productId,
             ];
@@ -282,7 +291,7 @@ router.put(
               productHeight,
               productPrice,
               productDescription,
-              productImagePath,
+              cloudinaryImageUrl,
               new Date(),
               productId,
             ];
@@ -295,7 +304,7 @@ router.put(
               productName,
               productPrice,
               productDescription,
-              productImagePath,
+              cloudinaryImageUrl,
               new Date(),
               productId,
             ];
@@ -312,7 +321,7 @@ router.put(
               productHeight,
               productPrice,
               productDescription,
-              productImagePath,
+              cloudinaryImageUrl,
               new Date(),
               productId,
             ];
@@ -321,12 +330,18 @@ router.put(
 
         await connection.query(query, queryValues);
 
-        const [count] = await connection.query(
-          "SELECT COUNT(*) AS count FROM products WHERE product_image_path = ? AND product_id != ?",
-          [oldImagePath, productId]
-        );
-        if (count[0].count === 0) {
-          fs.unlinkSync(path.join(__dirname, "..", "public", oldImagePath));
+        // Optionally delete the old image from Cloudinary
+        if (oldImageUrl) {
+          const publicId = path.basename(
+            oldImageUrl,
+            path.extname(oldImageUrl)
+          );
+          await cloudinary.v2.uploader.destroy(`BRIKS/${publicId}`); // Include the folder name
+        }
+
+        // Optionally delete the local file
+        if (req.file) {
+          fs.unlinkSync(req.file.path);
         }
       } else {
         switch (productCategory) {
@@ -442,18 +457,14 @@ router.delete("/:productId", async (req, res) => {
       productId,
     ]);
 
-    const [count] = await connection.query(
-      "SELECT COUNT(*) AS count FROM products WHERE product_image_path = ?",
-      [imagePath]
-    );
     connection.release();
 
     res.status(200).json({ message: "Продуктът е изтрит успешно!" });
 
-    const fullImagePath = path.join(__dirname, "..", "public", imagePath);
-
-    if (count[0].count === 0 && fs.existsSync(fullImagePath)) {
-      fs.unlinkSync(fullImagePath);
+    // Delete the image from Cloudinary
+    if (imagePath) {
+      const publicId = path.basename(imagePath, path.extname(imagePath));
+      await cloudinary.v2.uploader.destroy(`BRIKS/${publicId}`); // Include the folder name
     }
   } catch (error) {
     console.error(error);

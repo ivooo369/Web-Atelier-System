@@ -67,7 +67,7 @@ export default function ProductDetailsPage() {
           </p>
         </div>
         <img
-          src={`/${product.product_image_path}`}
+          src={`${product.product_image_path}`}
           alt={`${product.product_name}`}
           className="details-page-image"
         />

@@ -199,7 +199,7 @@ export default function DashboardProductsContainer({ productsUpdated }) {
               <div className="product-card" key={filteredProduct.product_id}>
                 {filteredProduct.product_image_path && (
                   <img
-                    src={`/${filteredProduct.product_image_path}`}
+                    src={`${filteredProduct.product_image_path}`}
                     alt={filteredProduct.product_name_path}
                     className="product-image"
                   />
