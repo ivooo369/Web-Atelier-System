@@ -37,6 +37,7 @@ app.use(
         "data:",
         "https://api.maptiler.com",
         "https://unpkg.com",
+        "https://res.cloudinary.com",
       ],
       scriptSrc: ["'self'", "https://unpkg.com"],
       styleSrc: [
