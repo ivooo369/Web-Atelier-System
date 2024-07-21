@@ -117,8 +117,12 @@ export default function DashboardProductsContainer({ productsUpdated }) {
         activeType === "Всички" || product.product_type === activeType
     )
     .filter((product) => {
-      const productName = product.product_name.toLowerCase();
-      const categoryName = product.product_category.toLowerCase();
+      const productName = product.product_name
+        ? product.product_name.toLowerCase()
+        : "";
+      const categoryName = product.product_category
+        ? product.product_category.toLowerCase()
+        : "";
       return (
         productName.includes(searchTerm) || categoryName.includes(searchTerm)
       );
