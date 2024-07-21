@@ -2,7 +2,7 @@ version: 1
 services:
   - type: web
     name: BRIKS
-    env: static
+    env: web
     staticPublishPath: dist
     routes:
       - type: rewrite
