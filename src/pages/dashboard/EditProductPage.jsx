@@ -17,6 +17,7 @@ export default function EditProductPage() {
   const [notification, setNotification] = useState({ message: "", type: "" });
   const [existingProducts, setExistingProducts] = useState([]);
   const [originalProductName, setOriginalProductName] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const fileInputRef = useRef(null);
   const { productId } = useParams();
   const navigateTo = useNavigate();
@@ -29,6 +30,7 @@ export default function EditProductPage() {
 
   useEffect(() => {
     const fetchProduct = async () => {
+      setIsLoading(true);
       try {
         const response = await axios.get(
           `${apiUrl}/admin/dashboard/products/edit/${productId}`
@@ -60,7 +62,7 @@ export default function EditProductPage() {
         setOriginalProductName(product_name || "");
 
         if (product_image_path) {
-          setImagePreview(`/${product_image_path}`);
+          setImagePreview(`${product_image_path}`);
         }
 
         const productsResponse = await axios.get(
@@ -77,6 +79,8 @@ export default function EditProductPage() {
           message: "Грешка при зареждане на продукта за редактиране!",
           type: "error",
         });
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -139,6 +143,7 @@ export default function EditProductPage() {
 
   const handleEditProduct = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     const requiredFields = [
       "productName",
@@ -154,6 +159,7 @@ export default function EditProductPage() {
           "Моля, попълнете всички полета и качете изображение за продукта!",
         type: "error",
       });
+      setIsLoading(false);
       return;
     }
 
@@ -169,13 +175,13 @@ export default function EditProductPage() {
           message: "Вече съществува продукт със същото име и категория!",
           type: "error",
         });
+        setIsLoading(false);
         return;
       }
     }
 
     try {
       const formDataToSend = new FormData();
-
       formDataToSend.append("productCategory", formData.productCategory);
       formDataToSend.append("productName", formData.productName);
       formDataToSend.append("productMaterial", formData.productMaterial);
@@ -209,6 +215,8 @@ export default function EditProductPage() {
         message: "Грешка при редактиране на продукта!",
         type: "error",
       });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -262,7 +270,12 @@ export default function EditProductPage() {
         <Button variant="contained" id="add-product-button" type="submit">
           Редактирай
         </Button>
-        {notification.message && (
+        {isLoading && (
+          <div className="notification-messages loading-message">
+            Редактиране на продукта...
+          </div>
+        )}
+        {notification.message && !isLoading && (
           <div
             className={`notification-messages ${
               notification.type === "success"

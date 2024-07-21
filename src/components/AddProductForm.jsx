@@ -26,6 +26,7 @@ export default function AddProductForm({ onProductsUpdate }) {
   const [imagePreview, setImagePreview] = useState(null);
   const [materialOptions, setMaterialOptions] = useState([]);
   const [notification, setNotification] = useState({ message: "", type: "" });
+  const [isLoading, setIsLoading] = useState(false);
   const fileInputRef = useRef(null);
 
   const fields = getFormFields(
@@ -75,14 +76,16 @@ export default function AddProductForm({ onProductsUpdate }) {
     }
   };
 
-  const handleAddProduct = (e) => {
+  const handleAddProduct = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     if (!formData.productCategory) {
       setNotification({
         message: "Моля, изберете категория на продукта!",
         type: "error",
       });
+      setIsLoading(false);
       return;
     }
 
@@ -93,6 +96,7 @@ export default function AddProductForm({ onProductsUpdate }) {
       const errorMessage =
         "Моля, попълнете всички задължителни полета и качете снимка на продукта!";
       setNotification({ message: errorMessage, type: "error" });
+      setIsLoading(false);
       return;
     }
 
@@ -107,20 +111,23 @@ export default function AddProductForm({ onProductsUpdate }) {
       }
     });
 
-    axios
-      .post(`${apiUrl}/admin/dashboard/products`, formDataWithImage)
-      .then(() => {
-        setNotification({
-          message: "Продуктът е добавен успешно!",
-          type: "success",
-        });
-        clearForm();
-        onProductsUpdate();
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        setNotification({ message: error.message, type: "error" });
+    try {
+      await axios.post(`${apiUrl}/admin/dashboard/products`, formDataWithImage);
+      setNotification({
+        message: "Продуктът е добавен успешно!",
+        type: "success",
       });
+      clearForm();
+      onProductsUpdate();
+    } catch (error) {
+      console.error("Error:", error);
+      setNotification({
+        message: "Грешка при добавяне на продукта!",
+        type: "error",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const clearForm = () => {
@@ -195,7 +202,12 @@ export default function AddProductForm({ onProductsUpdate }) {
       <Button variant="contained" id="add-product-button" type="submit">
         Добави нов продукт
       </Button>
-      {notification.message && (
+      {isLoading && (
+        <div className="notification-messages loading-message">
+          Добавяне на продукта...
+        </div>
+      )}
+      {notification.message && !isLoading && (
         <div
           className={`notification-messages ${
             notification.type === "success"

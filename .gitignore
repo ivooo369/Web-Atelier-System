@@ -15,7 +15,6 @@ dist-ssr
 .env.development
 .env.production
 package-lock.json
-cloudinary.config.js
 
 # Editor directories and files
 .vscode/*
