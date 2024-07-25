@@ -1,26 +1,12 @@
 import express from "express";
 import mysql from "mysql2/promise";
 import config from "./db.config.js";
-import fs from "fs";
 import multer from "multer";
 import path from "path";
 import cloudinary from "../cloudinary.config.js";
-import { getDirName } from "../src/utils/getDirName.js";
 
 const router = express.Router();
-const __dirname = getDirName(import.meta.url);
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const uploadDir = path.join(__dirname, "..", "public", "productImages");
-    fs.mkdirSync(uploadDir, { recursive: true });
-    cb(null, uploadDir);
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + "-" + file.originalname);
-  },
-});
-
+const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 const pool = mysql.createPool(config);
 
@@ -49,10 +35,15 @@ router.post("/", upload.single("image"), async (req, res) => {
       productDescription,
     } = req.body;
 
-    let cloudinaryImageUrl;
+    let cloudinaryImageUrl = null;
     if (req.file) {
-      const result = await cloudinary.v2.uploader.upload(req.file.path, {
-        folder: "BRIKS",
+      const result = await new Promise((resolve, reject) => {
+        cloudinary.v2.uploader
+          .upload_stream({ folder: "BRIKS" }, (error, result) => {
+            if (error) reject(error);
+            else resolve(result);
+          })
+          .end(req.file.buffer);
       });
       cloudinaryImageUrl = result.secure_url;
     }
@@ -153,10 +144,6 @@ router.post("/", upload.single("image"), async (req, res) => {
     const [result] = await connection.query(query, queryValues);
     connection.release();
 
-    if (req.file) {
-      fs.unlinkSync(req.file.path);
-    }
-
     res.status(201).json({
       message: "Продуктът е добавен успешно!",
       productId: result.insertId,
@@ -228,200 +215,117 @@ router.put(
         productDescription,
       } = req.body;
 
-      let cloudinaryImageUrl;
+      const connection = await pool.getConnection();
+      const [oldProduct] = await connection.query(
+        "SELECT product_image_path FROM products WHERE product_id = ?",
+        [productId]
+      );
+      const oldImageUrl = oldProduct[0].product_image_path;
+
+      let cloudinaryImageUrl = oldImageUrl;
+
       if (req.file) {
-        const result = await cloudinary.v2.uploader.upload(req.file.path, {
-          folder: "BRIKS",
+        const result = await new Promise((resolve, reject) => {
+          cloudinary.v2.uploader
+            .upload_stream({ folder: "BRIKS" }, (error, result) => {
+              if (error) reject(error);
+              else resolve(result);
+            })
+            .end(req.file.buffer);
         });
         cloudinaryImageUrl = result.secure_url;
       }
 
-      const connection = await pool.getConnection();
-
       let query;
       let queryValues;
 
-      if (cloudinaryImageUrl) {
-        const [oldProduct] = await connection.query(
-          "SELECT product_image_path FROM products WHERE product_id = ?",
-          [productId]
-        );
-        const oldImageUrl = oldProduct[0].product_image_path;
+      switch (productCategory) {
+        case "Паспарту":
+          query =
+            "UPDATE products SET product_category = ?, product_name = ?, product_material = ?, product_width = ?, product_height = ?, product_price = ?, product_description = ?, product_image_path = ?, product_release_date = ? WHERE product_id = ?";
+          queryValues = [
+            productCategory,
+            productName,
+            productMaterial,
+            productWidth,
+            productHeight,
+            productPrice,
+            productDescription,
+            cloudinaryImageUrl,
+            new Date(),
+            productId,
+          ];
+          break;
+        case "Гоблени":
+          query =
+            "UPDATE products SET product_category = ?, product_name = ?, product_type = ?, product_width = ?, product_height = ?, product_price = ?, product_description = ?, product_image_path = ?, product_release_date = ? WHERE product_id = ?";
+          queryValues = [
+            productCategory,
+            productName,
+            productType,
+            productWidth,
+            productHeight,
+            productPrice,
+            productDescription,
+            cloudinaryImageUrl,
+            new Date(),
+            productId,
+          ];
+          break;
+        case "Пана":
+        case "Огледала":
+        case "Икони":
+          query =
+            "UPDATE products SET product_category = ?, product_name = ?, product_width = ?, product_height = ?, product_price = ?, product_description = ?, product_image_path = ?, product_release_date = ? WHERE product_id = ?";
+          queryValues = [
+            productCategory,
+            productName,
+            productWidth,
+            productHeight,
+            productPrice,
+            productDescription,
+            cloudinaryImageUrl,
+            new Date(),
+            productId,
+          ];
+          break;
+        case "Арт материали":
+          query =
+            "UPDATE products SET product_category = ?, product_name = ?, product_price = ?, product_description = ?, product_image_path = ?, product_release_date = ? WHERE product_id = ?";
+          queryValues = [
+            productCategory,
+            productName,
+            productPrice,
+            productDescription,
+            cloudinaryImageUrl,
+            new Date(),
+            productId,
+          ];
+          break;
+        default:
+          query =
+            "UPDATE products SET product_category = ?, product_name = ?, product_material = ?, product_type = ?, product_width = ?, product_height = ?, product_price = ?, product_description = ?, product_image_path = ?, product_release_date = ? WHERE product_id = ?";
+          queryValues = [
+            productCategory,
+            productName,
+            productMaterial,
+            productType,
+            productWidth,
+            productHeight,
+            productPrice,
+            productDescription,
+            cloudinaryImageUrl,
+            new Date(),
+            productId,
+          ];
+          break;
+      }
 
-        switch (productCategory) {
-          case "Паспарту":
-            query =
-              "UPDATE products SET product_category = ?, product_name = ?, product_material = ?, product_width = ?, product_height = ?, product_price = ?, product_description = ?, product_image_path = ?, product_release_date = ? WHERE product_id = ?";
-            queryValues = [
-              productCategory,
-              productName,
-              productMaterial,
-              productWidth,
-              productHeight,
-              productPrice,
-              productDescription,
-              cloudinaryImageUrl,
-              new Date(),
-              productId,
-            ];
-            break;
-          case "Гоблени":
-            query =
-              "UPDATE products SET product_category = ?, product_name = ?, product_type = ?, product_width = ?, product_height = ?, product_price = ?, product_description = ?, product_image_path = ?, product_release_date = ? WHERE product_id = ?";
-            queryValues = [
-              productCategory,
-              productName,
-              productType,
-              productWidth,
-              productHeight,
-              productPrice,
-              productDescription,
-              cloudinaryImageUrl,
-              new Date(),
-              productId,
-            ];
-            break;
-          case "Пана":
-          case "Огледала":
-          case "Икони":
-            query =
-              "UPDATE products SET product_category = ?, product_name = ?, product_width = ?, product_height = ?, product_price = ?, product_description = ?, product_image_path = ?, product_release_date = ? WHERE product_id = ?";
-            queryValues = [
-              productCategory,
-              productName,
-              productWidth,
-              productHeight,
-              productPrice,
-              productDescription,
-              cloudinaryImageUrl,
-              new Date(),
-              productId,
-            ];
-            break;
-          case "Арт материали":
-            query =
-              "UPDATE products SET product_category = ?, product_name = ?, product_price = ?, product_description = ?, product_image_path = ?, product_release_date = ? WHERE product_id = ?";
-            queryValues = [
-              productCategory,
-              productName,
-              productPrice,
-              productDescription,
-              cloudinaryImageUrl,
-              new Date(),
-              productId,
-            ];
-            break;
-          default:
-            query =
-              "UPDATE products SET product_category = ?, product_name = ?, product_material = ?, product_type = ?, product_width = ?, product_height = ?, product_price = ?, product_description = ?, product_image_path = ?, product_release_date = ? WHERE product_id = ?";
-            queryValues = [
-              productCategory,
-              productName,
-              productMaterial,
-              productType,
-              productWidth,
-              productHeight,
-              productPrice,
-              productDescription,
-              cloudinaryImageUrl,
-              new Date(),
-              productId,
-            ];
-            break;
-        }
+      await connection.query(query, queryValues);
 
-        await connection.query(query, queryValues);
-
-        if (oldImageUrl) {
-          const publicId = path.basename(
-            oldImageUrl,
-            path.extname(oldImageUrl)
-          );
-          await cloudinary.v2.uploader.destroy(`BRIKS/${publicId}`);
-        }
-
-        if (req.file) {
-          fs.unlinkSync(req.file.path);
-        }
-      } else {
-        switch (productCategory) {
-          case "Паспарту":
-            query =
-              "UPDATE products SET product_category = ?, product_name = ?, product_material = ?, product_width = ?, product_height = ?, product_price = ?, product_description = ?, product_release_date = ? WHERE product_id = ?";
-            queryValues = [
-              productCategory,
-              productName,
-              productMaterial,
-              productWidth,
-              productHeight,
-              productPrice,
-              productDescription,
-              new Date(),
-              productId,
-            ];
-            break;
-          case "Гоблени":
-            query =
-              "UPDATE products SET product_category = ?, product_name = ?, product_type = ?, product_width = ?, product_height = ?, product_price = ?, product_description = ?, product_release_date = ? WHERE product_id = ?";
-            queryValues = [
-              productCategory,
-              productName,
-              productType,
-              productWidth,
-              productHeight,
-              productPrice,
-              productDescription,
-              new Date(),
-              productId,
-            ];
-            break;
-          case "Пана":
-          case "Огледала":
-          case "Икони":
-            query =
-              "UPDATE products SET product_category = ?, product_name = ?, product_width = ?, product_height = ?, product_price = ?, product_description = ?, product_release_date = ? WHERE product_id = ?";
-            queryValues = [
-              productCategory,
-              productName,
-              productWidth,
-              productHeight,
-              productPrice,
-              productDescription,
-              new Date(),
-              productId,
-            ];
-            break;
-          case "Арт материали":
-            query =
-              "UPDATE products SET product_category = ?, product_name = ?, product_price = ?, product_description = ?, product_release_date = ? WHERE product_id = ?";
-            queryValues = [
-              productCategory,
-              productName,
-              productPrice,
-              productDescription,
-              new Date(),
-              productId,
-            ];
-            break;
-          default:
-            query =
-              "UPDATE products SET product_category = ?, product_name = ?, product_material = ?, product_type = ?, product_width = ?, product_height = ?, product_price = ?, product_description = ?, product_release_date = ? WHERE product_id = ?";
-            queryValues = [
-              productCategory,
-              productName,
-              productMaterial,
-              productType,
-              productWidth,
-              productHeight,
-              productPrice,
-              productDescription,
-              new Date(),
-              productId,
-            ];
-            break;
-        }
-
-        await connection.query(query, queryValues);
+      if (cloudinaryImageUrl !== oldImageUrl && oldImageUrl) {
+        const publicId = path.basename(oldImageUrl, path.extname(oldImageUrl));
+        await cloudinary.v2.uploader.destroy(`BRIKS/${publicId}`);
       }
 
       connection.release();
