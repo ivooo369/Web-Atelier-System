@@ -203,7 +203,7 @@ export default function AddProductForm({ onProductsUpdate }) {
         Добави нов продукт
       </Button>
       {isLoading && (
-        <div className="notification-messages loading-message">
+        <div className="notification-messages loading-messages">
           Добавяне на продукта...
         </div>
       )}
