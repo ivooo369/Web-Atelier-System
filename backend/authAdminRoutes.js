@@ -13,7 +13,7 @@ app.use(cors());
 app.use(authAdminRouter);
 
 const generateAdminToken = (adminId) => {
-  const token = jwt.sign({ adminId }, "adminAuthKey", { expiresIn: "1s" });
+  const token = jwt.sign({ adminId }, "adminAuthKey", { expiresIn: "30s" });
   return token;
 };
 
