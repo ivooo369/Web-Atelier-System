@@ -49,7 +49,7 @@ export default function SignInPage() {
     e.preventDefault();
 
     try {
-      const response = await axios.post(`${apiUrl}/sign-in`, {
+      const response = await axios.post(`${apiUrl}/auth-user/sign-in`, {
         customerEmail,
         customerPassword,
       });

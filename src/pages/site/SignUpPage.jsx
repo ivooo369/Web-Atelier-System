@@ -102,7 +102,10 @@ export default function SignUpPage() {
     }
 
     try {
-      const response = await axios.post(`${apiUrl}/sign-up`, formData);
+      const response = await axios.post(
+        `${apiUrl}/auth-user/sign-up`,
+        formData
+      );
 
       localStorage.setItem("customerAuthToken", response.data.token);
       localStorage.setItem("customerEmail", formData.customerEmail);

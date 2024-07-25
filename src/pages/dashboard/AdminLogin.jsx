@@ -17,7 +17,7 @@ export default function Dashboard() {
   const loginUser = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${apiUrl}/admin/login`, {
+      const response = await axios.post(`${apiUrl}/auth-admin/admin/login`, {
         adminUsername,
         adminPassword,
       });

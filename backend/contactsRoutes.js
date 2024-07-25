@@ -9,11 +9,10 @@ router.post("/", async (req, res) => {
   try {
     const { name, email, topic, message } = req.body;
     const connection = await pool.getConnection();
-    const [result] = await connection.query(
+    await connection.query(
       "INSERT INTO messages (message_customer_name, message_customer_email, message_title, message_content, message_submission_date) VALUES (?, ?, ?, ?, ?)",
       [name, email, topic, message, new Date()]
     );
-    console.log("Добавено съобщение: ", result.insertId);
     connection.release();
     res.status(201).json({ message: "Съобщението беше запазено успешно!" });
   } catch (error) {
