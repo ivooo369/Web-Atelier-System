@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import "../../styles/dashboard/ProductsDashboard.css";
 import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
@@ -17,7 +16,7 @@ export default function EditProductPage() {
   const [notification, setNotification] = useState({ message: "", type: "" });
   const [existingProducts, setExistingProducts] = useState([]);
   const [originalProductName, setOriginalProductName] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const fileInputRef = useRef(null);
   const { productId } = useParams();
   const navigateTo = useNavigate();
@@ -30,7 +29,7 @@ export default function EditProductPage() {
 
   useEffect(() => {
     const fetchProduct = async () => {
-      setIsLoading(true);
+      setNotification({ message: "Зареждане...", type: "loading" });
       try {
         const response = await axios.get(
           `${apiUrl}/admin/dashboard/products/edit/${productId}`
@@ -73,6 +72,7 @@ export default function EditProductPage() {
           productId: product.product_id,
         }));
         setExistingProducts(existingProductsData);
+        setNotification({ message: "", type: "" });
       } catch (error) {
         console.error("Грешка при извличане на продукта:", error);
         setNotification({
@@ -110,7 +110,7 @@ export default function EditProductPage() {
 
   useEffect(() => {
     let hideNotificationTimer;
-    if (notification.type === "error") {
+    if (notification.type === "error" || notification.type === "loading") {
       hideNotificationTimer = setTimeout(() => {
         setNotification({ message: "", type: "" });
       }, 3000);
@@ -270,22 +270,24 @@ export default function EditProductPage() {
         <Button variant="contained" id="add-product-button" type="submit">
           Редактирай
         </Button>
-        {isLoading && (
-          <div className="notification-messages loading-message">
-            Редактиране на продукта...
-          </div>
-        )}
-        {notification.message && !isLoading && (
-          <div
-            className={`notification-messages ${
-              notification.type === "success"
-                ? "success-messages"
-                : "error-messages"
-            }`}
-          >
-            {notification.message}
-          </div>
-        )}
+        <Box mt={2}>
+          {(isLoading || notification.type === "loading") && (
+            <div className="notification-messages loading-messages">
+              Зареждане...
+            </div>
+          )}
+          {notification.message && !isLoading && (
+            <div
+              className={`notification-messages ${
+                notification.type === "success"
+                  ? "success-messages"
+                  : "error-messages"
+              }`}
+            >
+              {notification.message}
+            </div>
+          )}
+        </Box>
       </form>
     </div>
   );
