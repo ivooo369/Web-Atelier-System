@@ -121,10 +121,17 @@ export default function AddProductForm({ onProductsUpdate }) {
       onProductsUpdate();
     } catch (error) {
       console.error("Error:", error);
-      setNotification({
-        message: "Грешка при добавяне на продукта!",
-        type: "error",
-      });
+      if (error.response && error.response.status === 409) {
+        setNotification({
+          message: "Вече съществува продукт със същото име и категория!",
+          type: "error",
+        });
+      } else {
+        setNotification({
+          message: "Грешка при добавяне на продукта!",
+          type: "error",
+        });
+      }
     } finally {
       setIsLoading(false);
     }
