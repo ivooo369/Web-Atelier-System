@@ -273,7 +273,7 @@ export default function EditProductPage() {
         <Box mt={2}>
           {(isLoading || notification.type === "loading") && (
             <div className="notification-messages loading-messages">
-              Зареждане...
+              Редактиране на продукта...
             </div>
           )}
           {notification.message && !isLoading && (
