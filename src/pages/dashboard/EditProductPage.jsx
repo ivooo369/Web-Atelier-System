@@ -16,7 +16,7 @@ export default function EditProductPage() {
   const [notification, setNotification] = useState({ message: "", type: "" });
   const [existingProducts, setExistingProducts] = useState([]);
   const [originalProductName, setOriginalProductName] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const fileInputRef = useRef(null);
   const { productId } = useParams();
   const navigateTo = useNavigate();
@@ -29,7 +29,6 @@ export default function EditProductPage() {
 
   useEffect(() => {
     const fetchProduct = async () => {
-      setNotification({ message: "Зареждане...", type: "loading" });
       try {
         const response = await axios.get(
           `${apiUrl}/admin/dashboard/products/edit/${productId}`
@@ -72,7 +71,6 @@ export default function EditProductPage() {
           productId: product.product_id,
         }));
         setExistingProducts(existingProductsData);
-        setNotification({ message: "", type: "" });
       } catch (error) {
         console.error("Грешка при извличане на продукта:", error);
         setNotification({
