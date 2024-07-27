@@ -46,7 +46,7 @@ export default function CalculatorPage() {
     const frameImagePath = queryParams.get("framePath");
     if (frameImagePath) {
       setSelectedInnerFrameName(frameName);
-      setSelectedInnerFrameImage(`/${frameImagePath}`);
+      setSelectedInnerFrameImage(frameImagePath);
     }
   }, [location.search]);
 
@@ -223,7 +223,6 @@ export default function CalculatorPage() {
             setSelectedInnerFrameImage(image);
             setIsInnerFrameSelected(true);
           }}
-          // framesCategory="Рамки"
           onSelectFrame={(frameName) => handleFrameSelect(frameName, true)}
           isInnerFrameSelected={isInnerFrameSelected}
         />
@@ -237,7 +236,6 @@ export default function CalculatorPage() {
             setSelectedOuterFrameImage(image);
             setIsInnerFrameSelected(false);
           }}
-          // framesCategory="Рамки"
           onSelectFrame={(frameName) => handleFrameSelect(frameName, false)}
           isInnerFrameSelected={selectedInnerFrameName}
         />
@@ -256,7 +254,6 @@ export default function CalculatorPage() {
           frameWidth={selectedFrameWidth}
           frameHeight={selectedFrameHeight}
           isInnerFrameSelected={selectedInnerFrameName}
-          // category="Паспарту"
         />
         <CheckboxAccordion
           title="Стъкло"

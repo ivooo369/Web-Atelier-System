@@ -52,12 +52,12 @@ export default function FramesAccordion({
         onSelectFrame("");
         setActiveFrame(null);
       } else {
-        onSelectFrameImage(`/${frame.product_image_path}`);
+        onSelectFrameImage(frame.product_image_path);
         onSelectFrame(frame.product_name);
         setActiveFrame(frame.product_id);
       }
     } else {
-      onSelectFrameImage(`/${frame.product_image_path}`);
+      onSelectFrameImage(frame.product_image_path);
       onSelectFrame(frame.product_name);
       setActiveFrame(frame.product_id);
     }
@@ -121,7 +121,7 @@ export default function FramesAccordion({
                   onClick={() => handleFrameSelect(frame)}
                 >
                   <img
-                    src={`/${frame.product_image_path}`}
+                    src={frame.product_image_path}
                     alt={frame.product_name}
                     className="calculator-products-images"
                   />

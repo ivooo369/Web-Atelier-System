@@ -7,6 +7,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function OrdersDashboard() {
   const [orders, setOrders] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -21,6 +22,8 @@ export default function OrdersDashboard() {
         setOrders(formattedOrders.reverse());
       } catch (error) {
         console.error("Грешка при извличане на поръчките:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -37,8 +40,7 @@ export default function OrdersDashboard() {
     const hours = String(date.getHours()).padStart(2, "0");
     const minutes = String(date.getMinutes()).padStart(2, "0");
 
-    const formattedDate = `${day}.${month}.${year} г. (${hours}:${minutes} ч.)`;
-    return formattedDate;
+    return `${day}.${month}.${year} г. (${hours}:${minutes} ч.)`;
   };
 
   const handleDeleteOrder = async (orderId) => {
@@ -62,7 +64,7 @@ export default function OrdersDashboard() {
         <h1>Поръчки</h1>
       </div>
       <div className="orders-container">
-        {orders.length === 0 ? (
+        {isLoading ? null : orders.length === 0 ? (
           <p className="no-orders">Няма получени поръчки.</p>
         ) : (
           <ul className="orders-list">

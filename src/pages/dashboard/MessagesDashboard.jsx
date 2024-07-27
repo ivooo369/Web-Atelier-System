@@ -6,6 +6,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function MessagesDashboard() {
   const [messages, setMessages] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchMessages = async () => {
@@ -20,6 +21,8 @@ export default function MessagesDashboard() {
         setMessages(formattedMessages.reverse());
       } catch (error) {
         console.error("Грешка при извличане на съобщенията:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -27,8 +30,6 @@ export default function MessagesDashboard() {
     const intervalId = setInterval(fetchMessages, 1000);
     return () => clearInterval(intervalId);
   }, []);
-
-  useEffect(() => {}, []);
 
   const formatMessageDate = (dateString) => {
     const date = new Date(dateString);
@@ -38,8 +39,7 @@ export default function MessagesDashboard() {
     const hours = String(date.getHours()).padStart(2, "0");
     const minutes = String(date.getMinutes()).padStart(2, "0");
 
-    const formattedDate = `${day}.${month}.${year} г. (${hours}:${minutes} ч.)`;
-    return formattedDate;
+    return `${day}.${month}.${year} г. (${hours}:${minutes} ч.)`;
   };
 
   const handleDeleteMessage = async (messageId) => {
@@ -59,7 +59,7 @@ export default function MessagesDashboard() {
         <h1>Съобщения</h1>
       </div>
       <div className="messages-container">
-        {messages.length === 0 ? (
+        {isLoading ? null : messages.length === 0 ? (
           <p className="no-messages">Няма получени съобщения.</p>
         ) : (
           <ul>
