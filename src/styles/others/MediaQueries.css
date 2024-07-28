@@ -164,6 +164,7 @@
   .frame-wrapper,
   .select-inner-frame-message {
     max-width: 600px;
+    max-height: 400px;
   }
   .calculator-page .panel-headers {
     width: 90%;
@@ -210,6 +211,7 @@
   .frame-wrapper,
   .select-inner-frame-message {
     max-width: 495px;
+    max-height: 330px;
   }
 }
 
@@ -272,6 +274,7 @@
   .frame-wrapper,
   .select-inner-frame-message {
     max-width: 400px;
+    max-height: 267px;
   }
   .hanging-examples {
     flex-direction: column;
@@ -355,6 +358,7 @@
   .frame-wrapper,
   .select-inner-frame-message {
     max-width: 300px;
+    /* max-height: 300px; */
   }
   .bg-color-and-image-choice-container {
     width: 320px;
