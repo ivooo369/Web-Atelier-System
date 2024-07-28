@@ -358,7 +358,7 @@
   .frame-wrapper,
   .select-inner-frame-message {
     max-width: 300px;
-    /* max-height: 300px; */
+    max-height: 200px;
   }
   .bg-color-and-image-choice-container {
     width: 320px;

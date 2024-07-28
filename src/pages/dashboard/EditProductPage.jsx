@@ -254,7 +254,7 @@ export default function EditProductPage() {
             <img
               src={imagePreview}
               alt="Product Preview"
-              style={{ maxWidth: "100%", maxHeight: "200px" }}
+              className="dashboard-preview-image"
             />
             <Button
               variant="outlined"
