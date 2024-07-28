@@ -17,7 +17,8 @@
 
 .add-product-form {
   justify-content: center;
-  max-height: 70rem;
+  width: 30rem;
+  max-height: 80rem;
 }
 
 .edit-form {
@@ -65,10 +66,6 @@
   align-items: end;
   margin: 0 auto 1.5rem auto;
   gap: 1rem;
-}
-
-.add-product-form {
-  width: 30rem;
 }
 
 .filter-products-buttons {
