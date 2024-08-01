@@ -84,9 +84,9 @@ describe("Компонент ContactForm", () => {
       target: { value: longText },
     });
 
-    expect(screen.getByLabelText(/Име/i).value.length).toBeLessThanOrEqual(100);
+    expect(screen.getByLabelText(/Име/i).value.length).toBeLessThanOrEqual(255);
     expect(screen.getByLabelText(/Тема/i).value.length).toBeLessThanOrEqual(
-      100
+      255
     );
   });
 

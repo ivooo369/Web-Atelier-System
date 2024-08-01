@@ -57,7 +57,7 @@ export default function ContactForm() {
 
   const handleEmailChange = (e) => {
     const newEmail = e.target.value;
-    handleInputChange(setEmail, newEmail, 100);
+    handleInputChange(setEmail, newEmail, 255);
     setEmailError(false);
   };
 
@@ -78,7 +78,7 @@ export default function ContactForm() {
               id="name-input"
               label="Име"
               value={name}
-              onChange={(e) => handleInputChange(setName, e.target.value, 100)}
+              onChange={(e) => handleInputChange(setName, e.target.value, 255)}
             />
             <TextField
               fullWidth
@@ -99,7 +99,7 @@ export default function ContactForm() {
             id="topic-input"
             label="Тема"
             value={topic}
-            onChange={(e) => handleInputChange(setTopic, e.target.value, 100)}
+            onChange={(e) => handleInputChange(setTopic, e.target.value, 255)}
           />
           <TextField
             required
