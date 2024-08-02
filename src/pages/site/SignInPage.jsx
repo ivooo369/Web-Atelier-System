@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
@@ -113,6 +113,9 @@ export default function SignInPage() {
                 }
                 label="Парола"
               />
+              <Link className="sign-up-link" to={"/sign-up"}>
+                Нямате акаунт? Натиснете тук
+              </Link>
             </FormControl>
           </div>
         </div>

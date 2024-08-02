@@ -83,6 +83,12 @@ body {
   gap: 1rem;
 }
 
+.sign-up-link {
+  color: #551a8b;
+  text-decoration: none;
+  margin-top: 1rem;
+}
+
 .sign-in-form,
 .sign-up-form {
   display: flex;
