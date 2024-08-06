@@ -23,4 +23,25 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.get("/", async (req, res) => {
+  const { email } = req.query;
+  try {
+    const connection = await pool.getConnection();
+    const [rows] = await connection.query(
+      "SELECT customer_name, customer_email FROM customers WHERE customer_email = ?",
+      [email]
+    );
+    connection.release();
+
+    if (rows.length > 0) {
+      res.status(200).json(rows[0]);
+    } else {
+      res.status(404).json({ message: "Потребителят не е намерен!" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Възникна вътрешна грешка в сървъра!" });
+  }
+});
+
 export default router;

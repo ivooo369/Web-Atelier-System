@@ -5,6 +5,27 @@ import axios from "axios";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
+const fetchUserData = async (email, setName, setEmail) => {
+  try {
+    const response = await axios.get(`${apiUrl}/contacts?email=${email}`);
+    console.log("API response:", response.data);
+    const user = response.data;
+    if (user) {
+      setName(user.customer_name || "");
+      setEmail(user.customer_email || "");
+    } else {
+      console.error("Потребителят не е намерен в отговора на API.");
+    }
+  } catch (error) {
+    console.error("Грешка при извличане на данните на потребителя:", error);
+  }
+};
+
+const validateEmail = (email) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};
+
 export default function ContactForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -12,6 +33,14 @@ export default function ContactForm() {
   const [message, setMessage] = useState("");
   const [notification, setNotification] = useState(null);
   const [emailError, setEmailError] = useState(false);
+
+  useEffect(() => {
+    const customerEmail = localStorage.getItem("customerEmail");
+    console.log("customerEmail from localStorage:", customerEmail);
+    if (customerEmail) {
+      fetchUserData(customerEmail, setName, setEmail);
+    }
+  }, []);
 
   useEffect(() => {
     let timeout;
@@ -59,11 +88,6 @@ export default function ContactForm() {
     const newEmail = e.target.value;
     handleInputChange(setEmail, newEmail, 255);
     setEmailError(false);
-  };
-
-  const validateEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
   };
 
   return (
