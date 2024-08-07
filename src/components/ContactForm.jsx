@@ -8,7 +8,6 @@ const apiUrl = import.meta.env.VITE_API_URL;
 const fetchUserData = async (email, setName, setEmail) => {
   try {
     const response = await axios.get(`${apiUrl}/contacts?email=${email}`);
-    console.log("API response:", response.data);
     const user = response.data;
     if (user) {
       setName(user.customer_name || "");
@@ -36,7 +35,6 @@ export default function ContactForm() {
 
   useEffect(() => {
     const customerEmail = localStorage.getItem("customerEmail");
-    console.log("customerEmail from localStorage:", customerEmail);
     if (customerEmail) {
       fetchUserData(customerEmail, setName, setEmail);
     }
