@@ -5,13 +5,14 @@ import axios from "axios";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
-const fetchUserData = async (email, setName, setEmail) => {
+const fetchUserData = async (email, setName, setEmail, setCustomerId) => {
   try {
     const response = await axios.get(`${apiUrl}/contacts?email=${email}`);
     const user = response.data;
     if (user) {
       setName(user.customer_name || "");
       setEmail(user.customer_email || "");
+      setCustomerId(user.customer_id || null);
     } else {
       console.error("Потребителят не е намерен в отговора на API.");
     }
@@ -32,11 +33,12 @@ export default function ContactForm() {
   const [message, setMessage] = useState("");
   const [notification, setNotification] = useState(null);
   const [emailError, setEmailError] = useState(false);
+  const [customerId, setCustomerId] = useState(null);
 
   useEffect(() => {
     const customerEmail = localStorage.getItem("customerEmail");
     if (customerEmail) {
-      fetchUserData(customerEmail, setName, setEmail);
+      fetchUserData(customerEmail, setName, setEmail, setCustomerId);
     }
   }, []);
 
@@ -65,6 +67,7 @@ export default function ContactForm() {
         email,
         topic,
         message,
+        customerId,
       });
       setName("");
       setEmail("");

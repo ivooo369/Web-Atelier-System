@@ -8,11 +8,24 @@ const pool = mysql.createPool(config);
 router.post("/", async (req, res) => {
   try {
     const { name, email, topic, message } = req.body;
+
     const connection = await pool.getConnection();
-    await connection.query(
-      "INSERT INTO messages (message_customer_name, message_customer_email, message_title, message_content, message_submission_date) VALUES (?, ?, ?, ?, ?)",
-      [name, email, topic, message, new Date()]
+
+    const [customerRows] = await connection.query(
+      "SELECT customer_id FROM customers WHERE customer_email = ?",
+      [email]
     );
+
+    let customerId = null;
+    if (customerRows.length > 0) {
+      customerId = customerRows[0].customer_id;
+    }
+
+    await connection.query(
+      "INSERT INTO messages (message_customer_id, message_customer_name, message_customer_email, message_title, message_content, message_submission_date) VALUES (?, ?, ?, ?, ?, ?)",
+      [customerId, name, email, topic, message, new Date()]
+    );
+
     connection.release();
     res.status(201).json({ message: "Съобщението беше запазено успешно!" });
   } catch (error) {
@@ -28,7 +41,7 @@ router.get("/", async (req, res) => {
   try {
     const connection = await pool.getConnection();
     const [rows] = await connection.query(
-      "SELECT customer_name, customer_email FROM customers WHERE customer_email = ?",
+      "SELECT customer_id, customer_name, customer_email FROM customers WHERE customer_email = ?",
       [email]
     );
     connection.release();

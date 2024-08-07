@@ -61,8 +61,21 @@ router.get("/price", async (req, res) => {
 
 router.post("/cart", async (req, res) => {
   const orderData = req.body;
+
   try {
     const connection = await pool.getConnection();
+
+    let customerId = null;
+    if (orderData.customerEmail) {
+      const [customerRows] = await connection.query(
+        "SELECT customer_id FROM customers WHERE customer_email = ?",
+        [orderData.customerEmail]
+      );
+
+      if (customerRows.length > 0) {
+        customerId = customerRows[0].customer_id;
+      }
+    }
 
     if (
       !orderData.customerName ||
@@ -71,22 +84,25 @@ router.post("/cart", async (req, res) => {
       !orderData.customerEmail ||
       !orderData.customerPhone
     ) {
+      connection.release();
       return res
         .status(400)
         .json({ error: "Моля, попълнете всички задължителни полета!" });
     }
     if (!orderData.orderItems || orderData.orderItems.length === 0) {
+      connection.release();
       return res.status(400).json({ error: "Няма артикули в поръчката!" });
     }
 
     const orderQuery = `
       INSERT INTO orders 
-        (order_customer_name, order_customer_city, order_customer_address, order_customer_email, 
+        (order_customer_id, order_customer_name, order_customer_city, order_customer_address, order_customer_email, 
         order_customer_phone, order_additional_info, order_submission_date, order_items) 
       VALUES 
-        (?, ?, ?, ?, ?, ?, NOW(), ?)
+        (?, ?, ?, ?, ?, ?, ?, NOW(), ?)
     `;
     const orderValues = [
+      customerId,
       orderData.customerName,
       orderData.customerCity,
       orderData.customerAddress,
