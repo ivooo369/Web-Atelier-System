@@ -76,7 +76,7 @@ authUserRouter.post("/sign-up", async (req, res) => {
     }
 
     const [result] = await connection.query(
-      "INSERT INTO customers (customer_name, customer_email, customer_password, customer_city, customer_address, customer_phone) VALUES (?, ?, ?, ?, ?, ?)",
+      "INSERT INTO customers (customer_name, customer_email, customer_password, customer_city, customer_address, customer_phone, customer_sign_up_date) VALUES (?, ?, ?, ?, ?, ?, ?)",
       [
         customerName,
         customerEmail,
@@ -84,6 +84,7 @@ authUserRouter.post("/sign-up", async (req, res) => {
         customerCity,
         customerAddress,
         customerPhone,
+        new Date(),
       ]
     );
     connection.release();

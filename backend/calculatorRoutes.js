@@ -99,7 +99,7 @@ router.post("/cart", async (req, res) => {
         (order_customer_id, order_customer_name, order_customer_city, order_customer_address, order_customer_email, 
         order_customer_phone, order_additional_info, order_submission_date, order_items) 
       VALUES 
-        (?, ?, ?, ?, ?, ?, ?, NOW(), ?)
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
     const orderValues = [
       customerId,
@@ -109,6 +109,7 @@ router.post("/cart", async (req, res) => {
       orderData.customerEmail,
       orderData.customerPhone,
       orderData.additionalInformation,
+      new Date(),
       JSON.stringify(orderData.orderItems),
     ];
     await connection.query(orderQuery, orderValues);
