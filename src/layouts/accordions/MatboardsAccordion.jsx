@@ -95,7 +95,7 @@ export default function MatboardsAccordion({
     clearTimeout(timerRef.current);
     if (matboardWidth >= frameWidth || matboardWidth >= frameHeight) {
       setMessage(
-        "Широчината на паспартуто не бива да надвишава широчината или височината на рамката!"
+        "Широчината на паспартуто трябва да е по-малка от широчината и височината на картината!"
       );
       return;
     }
