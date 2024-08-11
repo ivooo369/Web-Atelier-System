@@ -200,9 +200,9 @@ export default function CalculatorVizualization({
                     }%`,
                     height: `${
                       selectedMatboardName
-                        ? 94 -
+                        ? 93 -
                           (selectedMatboardWidth / selectedFrameHeight) * 100
-                        : 94
+                        : 93
                     }%`,
                     position: "absolute",
                     top: "50%",
