@@ -7,14 +7,6 @@ export default function CalculatorHeader() {
   const [cartItemCount, setCartItemCount] = useState(0);
 
   useEffect(() => {
-    if (location.pathname === "/calculator") {
-      document.title = "БРИКС ООД / Калкулатор";
-    } else {
-      document.title = "БРИКС ООД / Количка";
-    }
-  }, [location.pathname]);
-
-  useEffect(() => {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
     setCartItemCount(cart.length);
   }, [location.pathname]);
