@@ -74,8 +74,7 @@ export default function SizesAccordion({
       </AccordionSummary>
       <AccordionDetails>
         <h3 className="panel-content-titles no-bottom-margin-titles">
-          Изберете широчина и височина за вашата картина, гоблен, огледало или
-          икона:
+          Изберете широчина и височина за вашата вътрешна рамка:
         </h3>
         <p className="sizes-info">Максимален размер: 300 см x 300 см</p>
         <div className="width-and-height-inputs">
