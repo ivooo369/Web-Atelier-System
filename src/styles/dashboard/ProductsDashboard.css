@@ -48,18 +48,6 @@
   margin-bottom: 0;
 }
 
-#add-product-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #333333;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-  font-weight: 600;
-  margin: 0 auto;
-  font-size: 1rem;
-}
-
 .product-forms #dashboard-image-preview-container {
   display: flex;
   justify-content: center;

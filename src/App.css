@@ -125,6 +125,19 @@ body .MuiButtonBase-root {
   overflow: hidden;
 }
 
+#add-product-button,
+#edit-product-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #333333;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-weight: 600;
+  margin: 0 auto;
+  font-size: 1rem;
+}
+
 @keyframes fadeInOut {
   0% {
     opacity: 0;

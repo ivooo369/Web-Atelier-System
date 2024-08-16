@@ -265,8 +265,8 @@ export default function EditProductPage() {
             </Button>
           </Box>
         )}
-        <Button variant="contained" id="add-product-button" type="submit">
-          Редактирай
+        <Button variant="contained" id="edit-product-button" type="submit">
+          Запази промените
         </Button>
         <Box mt={2}>
           {(isLoading || notification.type === "loading") && (
