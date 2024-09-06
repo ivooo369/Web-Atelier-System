@@ -1,5 +1,5 @@
 import { useState, useEffect, Fragment } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -49,6 +49,7 @@ export default function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState(
     !!localStorage.getItem("customerAuthToken")
   );
+  const location = useLocation();
 
   const handleSignOut = () => {
     localStorage.removeItem("customerAuthToken");
@@ -148,6 +149,11 @@ export default function Header() {
                         aria-controls="products-menu"
                         aria-haspopup="true"
                         onClick={handleProductsButtonClick}
+                        className={
+                          location.pathname.startsWith("/products")
+                            ? "active-link"
+                            : ""
+                        }
                       >
                         {page}
                         <Menu
@@ -167,7 +173,12 @@ export default function Header() {
                           {productsMenuItems.map((product, index) => (
                             <Link
                               key={product}
-                              className="products-menu-links"
+                              className={`products-menu-links ${
+                                location.pathname ===
+                                `/products/${productsMenuRoutes[index]}`
+                                  ? "active-link"
+                                  : ""
+                              }`}
                               to={`/products/${productsMenuRoutes[index]}`}
                             >
                               <MenuItem
@@ -195,6 +206,11 @@ export default function Header() {
                         sx={{
                           fontWeight: 700,
                         }}
+                        className={
+                          location.pathname === pageRoutes[index]
+                            ? "active-link"
+                            : ""
+                        }
                       >
                         {page}
                       </Button>

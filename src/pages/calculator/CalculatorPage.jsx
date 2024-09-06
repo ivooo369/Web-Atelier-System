@@ -322,8 +322,6 @@ export default function CalculatorPage() {
           handleNumberOfFramesInput={handleNumberOfFrames}
         />
         <PriceAccordion
-          expanded={expanded}
-          handleExpansionChange={handleExpansionChange}
           selectedInnerFrameName={selectedInnerFrameName}
           selectedOuterFrameName={selectedOuterFrameName}
           selectedMatboardName={selectedMatboardName}

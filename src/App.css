@@ -138,6 +138,10 @@ body .MuiButtonBase-root {
   font-size: 1rem;
 }
 
+body .active-link {
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
 @keyframes fadeInOut {
   0% {
     opacity: 0;

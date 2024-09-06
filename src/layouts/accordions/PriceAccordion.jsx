@@ -13,8 +13,6 @@ import {
 } from "../../utils/priceCalculations";
 
 export default function PriceAccordion({
-  expanded,
-  handleExpansionChange,
   selectedInnerFrameName,
   selectedOuterFrameName,
   selectedGlass,
@@ -143,10 +141,7 @@ export default function PriceAccordion({
   const finalPriceFormatted = finalPrice.toFixed(2);
 
   return (
-    <Accordion
-      expanded={expanded === "price"}
-      onChange={handleExpansionChange("price")}
-    >
+    <Accordion expanded={true}>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls="price-content"
