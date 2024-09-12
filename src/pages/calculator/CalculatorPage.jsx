@@ -214,7 +214,7 @@ export default function CalculatorPage() {
           handleFrameSizes={handleFrameSizes}
         />
         <FramesAccordion
-          title="Вътрешна рамка"
+          title="Вътрешна рамка *"
           id="inner-frame"
           expanded={expanded}
           handleExpansionChange={handleExpansionChange}
