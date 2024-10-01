@@ -58,7 +58,12 @@ After entering the username and password, you will gain access to the admin dash
 
 The project is hosted on Render, allowing you to explore its features and functionalities in real-time. You can view the live version of the project by clicking the link below:
 
-[**View Live Demo**](https://website-project-lbpd.onrender.com)
+[**View Live Demo**](https://website-project-lbpd.onrender.com).
+
+You can access the admin dashboard at **http://website-project-lbpd.onrender.com/admin/login** using the following credentials:
+
+- **Username**: atelierBRIKS
+- **Password**: atelierBRIKS
 
 ## Screenshots
 
@@ -90,4 +95,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Contact Information
 
-For questions or feedback, please contact me at [iveliniliev795@gmail.com].
+For questions or feedback, please feel free to contact me at [iveliniliev795@gmail.com](mailto:iveliniliev795@gmail.com).
