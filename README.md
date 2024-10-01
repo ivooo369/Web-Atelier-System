@@ -8,15 +8,15 @@ One of the key features of this system is its dynamic price calculator, which ta
 
 ### User Features
 
-- **User-Friendly Interface**: Provides intuitive navigation for quick access to product information and pricing.
-- **Responsive Design**: Ensures a seamless experience on mobile devices, adapting to various screen sizes for optimal usability.
+- **User-Friendly Interface**: Intuitive navigation for quick access to product information and pricing.
+- **Responsive Design**: Seamless experience on mobile devices, adapting to various screen sizes for optimal usability.
 - **Dynamic Price Calculator**: Accurately computes prices using predefined formulas for various products.
-- **Real-Time Product Visualization**: Allows users to visualize customized products instantly as they configure options.
-- **Customizable Options**: Empowers users to select specific parameters to tailor products to their exact specifications.
-- **Product Filtering**: Enables customers to filter products by various criteria, making it easy to find what they need.
+- **Real-Time Product Visualization**: Instantly visualizes customized products as options are configured.
+- **Customizable Options**: Allows users to select specific parameters to tailor products to their specifications.
+- **Product Filtering**: Enables easy product discovery by filtering through various criteria.
 - **Streamlined Order Placement**: Simplifies the process for customers to place orders directly through the system.
-- **Customer Account Management**: Facilitates account creation for customers to manage their orders and preferences.
-- **Direct Customer Messaging**: Provides a contact form for customers to send inquiries, ensuring prompt communication.
+- **Customer Account Management**: Facilitates account creation for managing orders and preferences.
+- **Direct Customer Messaging**: Enables customers to send inquiries via a contact form for quick responses.
 
 ### Admin Features
 
