@@ -47,7 +47,7 @@ After entering the username and password, you will gain access to the admin dash
 
 ## Technologies Used
 
-- **Frontend**: HTML, CSS, JavaScript, React, Material UI;
+- **Frontend**: HTML, CSS, JavaScript, React, Material UI, Vite;
 - **Backend**: Node.js, Express;
 - **Database**: MySQL;
 - **Development Tools**: Visual Studio Code, MySQL Workbench;
