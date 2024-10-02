@@ -31,14 +31,14 @@ The project can be run locally on localhost. Follow these steps:
 2. Navigate to the cloned directory.
 3. Ensure Node.js is installed on your machine. Install dependencies with `npm install` in the project directory.
 4. Install MySQL and import the provided SQL file for the database. Database connection settings are configured in the `.env` file.
-5. Start the server with `npm start`. By default, it runs at `http://localhost:3000`.
-6. Access the system in your web browser at `http://localhost:3000`.
+5. Start the server with `npm start`. By default, it runs at `http://localhost:5173`.
+6. Access the system in your web browser at `http://localhost:5173`.
 
 ## Usage Instructions
 
 To access the admin dashboard, follow these steps:
 
-1. Enter **http://localhost:3000/admin/login** in the URL bar of your web browser.
+1. Enter **http://localhost:5173/admin/login** in the URL bar of your web browser.
 2. You will be directed to a login page where you need to enter your credentials.
    - **Username**: atelierBRIKS
    - **Password**: atelierBRIKS
